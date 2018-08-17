@@ -4,42 +4,42 @@
   "difficulty": "beginner",
   "time": "15 minutes",
   "details": {
-      "steps": [
-          {
-              "title": "Step 0 - Prepare your hands-on environments",
-              "text": "step0.md"
-          },
-          {
-              "title": "Step 1 - Playbook",
-              "text": "step1.md"
-          },
-          {
-              "title": "Step 2 - Role",
-              "text": "step2.md"
-          }
-      ],
+    "steps": [
+      {
+        "title": "Step 0 - Prepare your hands-on environments",
+        "text": "step0.md"
+      },
+      {
+        "title": "Step 1 - Playbook",
+        "text": "step1.md"
+      },
+      {
+        "title": "Step 2 - Role",
+        "text": "step2.md"
+      }
+    ],
     "intro": {
-        "text": "intro.md",
-        "credits": "",
-        "courseData": "env-init.sh"
+      "text": "intro.md",
+      "credits": "",
+      "courseData": "env-init.sh"
     },
     "finish": {
       "text": "finish.md"
     }
   },
   "environment": {
-      "uilayout": "editor-terminal",
-      "hideintro": true,
-      "hidefinish": true,
-      "showdashboard": true,
-      "dashboards": [
-          {"name": "Tab Name", "port": 8081},
-          {"name": "Tab Name", "port": 8082},
-          {"name": "Tab Name", "port": 8083}
-      ],
-      "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
+    "uilayout": "editor-terminal",
+    "hideintro": true,
+    "hidefinish": true,
+    "showdashboard": true,
+    "dashboards": [
+      {"name": "node-1", "port": 8081},
+      {"name": "node-2", "port": 8082},
+      {"name": "node-3", "port": 8083}
+    ],
+    "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
   },
   "backend": {
-      "imageid": "docker"
+    "imageid": "docker"
   }
 }
