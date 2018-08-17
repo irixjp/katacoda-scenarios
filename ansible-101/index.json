@@ -4,10 +4,20 @@
   "difficulty": "beginner",
   "time": "5 minutes",
   "details": {
-    "steps": [{
-      "title": "Step 1 - Run Command",
-      "text": "step1.md"
-    }],
+      "steps": [
+          {
+              "title": "Step 1 - Run Command",
+              "text": "step1.md"
+          },
+          {
+              "title": "Step 2 - Playbook",
+              "text": "step2.md"
+          },
+          {
+              "title": "Step 3 - Role",
+              "text": "step3.md"
+          }
+      ],
     "intro": {
       "text": "intro.md",
       "credits": ""
