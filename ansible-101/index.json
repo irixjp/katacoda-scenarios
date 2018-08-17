@@ -28,7 +28,7 @@
     }
   },
   "environment": {
-      "uilayout": "editor-terminal"
+      "uilayout": "editor-terminal",
       "hideintro": true,
       "hidefinish": true,
       "showdashboard": true,
