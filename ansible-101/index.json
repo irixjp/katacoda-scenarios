@@ -2,33 +2,33 @@
   "title": "Ansible 101",
   "description": "Let's start Ansible in 5min",
   "difficulty": "beginner",
-  "time": "5 minutes",
+  "time": "15 minutes",
   "details": {
       "steps": [
           {
-              "title": "Step 1 - Run Command",
+              "title": "Step 0 - Prepare your hands-on environments",
+              "text": "step0.md"
+          },
+          {
+              "title": "Step 1 - Playbook",
               "text": "step1.md"
           },
           {
-              "title": "Step 2 - Playbook",
+              "title": "Step 2 - Role",
               "text": "step2.md"
-          },
-          {
-              "title": "Step 3 - Role",
-              "text": "step3.md"
           }
       ],
     "intro": {
-      "text": "intro.md",
-      "credits": ""
+        "text": "intro.md",
+        "credits": "",
+        "courseData": "env-init.sh"
     },
     "finish": {
       "text": "finish.md"
     }
   },
   "environment": {
-    "uilayout": "terminal",
-    "uimessage1": "\u001b[32mYour Interactive Bash Terminal.\r\nStart Kubernetes using `launch.sh`\u001b[m\r\n"
+    "uilayout": "editor-terminal"
   },
   "backend": {
     "imageid": "docker"
