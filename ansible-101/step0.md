@@ -1,10 +1,10 @@
-This is your first step.
+演習環境を設定します。
 
 ## Task
 
-This is an _example_ of creating a scenario and running a **command**
+以下のコマンドを実行して、演習環境を準備します。この操作は5分ほどかかります。
 
-`echo 'Hello World'`{{execute}}
+`bash ./katacoda-scenarios/ansible-101/tools/setup.sh'`{{execute}}
 
 
 This is an _example_ of creating a scenario and running a **command**
