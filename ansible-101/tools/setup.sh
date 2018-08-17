@@ -1,2 +1,2 @@
 #!/bin/bash
-touch ~/test.file
+docker pull centos:7
