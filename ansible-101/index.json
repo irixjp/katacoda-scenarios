@@ -29,7 +29,7 @@
   },
   "environment": {
     "uilayout": "editor-terminal",
-    "hideintro": true,
+    "hideintro": false,
     "hidefinish": true,
     "showdashboard": true,
     "dashboards": [
