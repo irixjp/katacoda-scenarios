@@ -45,7 +45,7 @@
     }
   },
   "environment": {
-    "uilayout": "terminal-terminal",
+    "uilayout": "terminal",
     "hideintro": false,
     "hidefinish": true,
     "showdashboard": true,
