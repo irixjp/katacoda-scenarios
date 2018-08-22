@@ -6,7 +6,7 @@ Ansible の導入。
 
 `yum install -y ansible`{{execute}}
 
-これで導入は終了です。これですぐにAnsibleを実行することができます。
+これで導入は終了です。すぐにAnsibleを実行することができます。
 
 試しに以下のコマンドを実行してみましょう。
 
@@ -15,11 +15,11 @@ Ansible の導入。
 このコマンドで、以下のような出力が確認できればAnsibleが正しく実行されたことになります。
 
 ```
-node-2 | SUCCESS => {
+node-1 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }
-node-1 | SUCCESS => {
+node-2 | SUCCESS => {
     "changed": false,
     "ping": "pong"
 }

@@ -16,7 +16,12 @@
       {
         "title": "Step 2 - Role",
         "text": "step2.md"
+      },
+      {
+        "title": "Step 3 - Role",
+        "text": "step3.md"
       }
+
     ],
     "intro": {
       "text": "intro.md",
