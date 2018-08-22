@@ -1,14 +1,30 @@
-This is your first step.
+Ansible の導入。
 
 ## Task
 
-This is an _example_ of creating a scenario and running a **command**
+以下のコマンド実行して、Ansible を導入します。
 
-`echo 'Hello World'`{{execute}}
+`yum install -y ansible`{{execute}}
 
+これで導入は終了です。すぐにAnsibleを実行することができます。
 
-This is an _example_ of creating a scenario and running a **command**
+試しに以下のコマンドを実行してみましょう。
 
-`echo 'Hello World'`{{execute}}
+`ansible all -m ping`{{execute}}
 
-テストテスト
+このコマンドで、以下のような出力が確認できればAnsibleが正しく実行されたことになります。
+
+```
+node-2 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+node-1 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+node-3 | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
