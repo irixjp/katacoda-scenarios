@@ -21,18 +21,12 @@
     "intro": {
       "text": "intro.md",
       "credits": "",
-      "courseData": "env-init.sh"
+      "courseData": ""
     },
     "assets": {
       "client": [
         {
-          "file": "README.md",
-          "target": "~/"
-        }
-      ],
-      "host01": [
-        {
-          "file": "README.md",
+          "file": "lab_setup.sh",
           "target": "~/"
         }
       ]
