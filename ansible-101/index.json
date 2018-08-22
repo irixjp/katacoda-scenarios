@@ -6,20 +6,32 @@
   "details": {
     "steps": [
       {
-        "title": "Step 0 - Prepare your hands-on environments",
+        "title": "Step 0 - Prepare your hands-on environment",
         "text": "step0.md"
       },
       {
-        "title": "Step 1 - Playbook",
+        "title": "Step 1 - Install Ansible",
         "text": "step1.md"
       },
       {
-        "title": "Step 2 - Role",
+        "title": "Step 2 - Ad-hoc command",
         "text": "step2.md"
       },
       {
-        "title": "Step 3 - Role",
+        "title": "Step 3 - Inventory",
         "text": "step3.md"
+      },
+      {
+        "title": "Step 4 - Playbook",
+        "text": "step4.md"
+      },
+      {
+        "title": "Step 5 - Loop, variables, template",
+        "text": "step5.md"
+      },
+      {
+        "title": "Step 6 - Role",
+        "text": "step6.md"
       }
 
     ],
