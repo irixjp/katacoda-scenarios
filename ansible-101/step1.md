@@ -6,7 +6,7 @@ Ansible の導入。
 
 `yum install -y ansible`{{execute}}
 
-これで導入は終了です。すぐにAnsibleを実行することができます。
+これで導入は終了です。これですぐにAnsibleを実行することができます。
 
 試しに以下のコマンドを実行してみましょう。
 
