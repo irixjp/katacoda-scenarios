@@ -23,6 +23,20 @@
       "credits": "",
       "courseData": "env-init.sh"
     },
+    "assets": {
+      "client": [
+        {
+          "file": "README.md",
+          "target": "~/"
+        }
+      ],
+      "host01": [
+        {
+          "file": "README.md",
+          "target": "~/"
+        }
+      ]
+    },
     "finish": {
       "text": "finish.md"
     }
