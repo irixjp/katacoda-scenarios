@@ -28,6 +28,10 @@
         {
           "file": "lab_setup.sh",
           "target": "~/"
+        },
+        {
+          "file": "ansible.cfg",
+          "target": "~/"
         }
       ]
     },
