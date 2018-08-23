@@ -17,3 +17,8 @@ node-1 ansible_ssh_host=172.20.0.2 ansible_ssh_user=root ansible_ssh_pass=passwo
 node-2 ansible_ssh_host=172.20.0.3 ansible_ssh_user=root ansible_ssh_pass=password
 node-3 ansible_ssh_host=172.20.0.4 ansible_ssh_user=root ansible_ssh_pass=password
 ```
+
+この演習では以下のような環境を利用します。
+
+![image0-1](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/ansible-101/images/image0-1.png "image0-1")
+

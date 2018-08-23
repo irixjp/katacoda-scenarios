@@ -27,7 +27,9 @@ Ansible では「何をやるか」をモジュールを使って `Playbook` と
 
 エディタで `my_inventory` というファイルを作成して、例のようにインベントリを作成してみましょう。
 
-`nano my_inventory`{{execute}}
+`vim my_inventory`{{execute}}
+
+- vi/vim が苦手な方は `nano` エディタも利用可能です。`vim my_inventory`{{execute}} で起動可能です。
 
 例
 ```
@@ -47,11 +49,12 @@ node-3 ansible_ssh_host=IP_ADDR_OF_NODE-3
 ```
 
 `IP_ADDR_OF_NODE-1,2,3` の部分は自分の環境に合わせて読み替えてください。
+オリジナルのファイルよりのいくつかの情報が少なくなっていますが気にしないでください。
 
-- ファイルを保存するには Ctrl-o → エンター
-- エディタを終了するに Ctrl-x
+- ファイルの保存方法
+  - `vim` Esc :wq!、または write/quit メソッドでPlaybookを保存します。
+  - `nano` Ctrl-o → エンター で保存、終了するに Ctrl-x です。
 
-オリジナルのファイルと異なっていますが、気にしないでください。
 
 
 ### ステップ 3

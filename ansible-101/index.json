@@ -24,16 +24,7 @@
       {
         "title": "Step 4 - Playbook",
         "text": "step4.md"
-      },
-      {
-        "title": "Step 5 - Loop, variables, template",
-        "text": "step5.md"
-      },
-      {
-        "title": "Step 6 - Role",
-        "text": "step6.md"
       }
-
     ],
     "intro": {
       "text": "intro.md",
