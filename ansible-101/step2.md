@@ -2,7 +2,7 @@ Ad-Hoc コマンドの実行
 
 ## 説明
 
-![image2-1](./images/image2-1.jpg "image2-1")
+![image2-1](./images/image2-1.png "image2-1")
 
 Ansible ではモジュールと呼ばれる様々な部品を使って「自分のやりたいこと」を Playbook に記述していきます。モジュールは「よくある操作や手順」を部品化したものです。
 
