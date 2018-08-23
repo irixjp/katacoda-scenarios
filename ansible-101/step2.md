@@ -6,7 +6,11 @@ Ad-Hoc コマンドの実行
 
 Ansible ではモジュールと呼ばれる様々な部品を使って「自分のやりたいこと」を Playbook に記述していきます。モジュールは「よくある操作や手順」を部品化したものです。
 
-通常はこのモジュールを集めたPlaybookとして使いますが、このモジュールを直接呼び出して実行することも可能です。これを Ansible では Ad-Hoc（アドホック）コマンドと呼びます。
+Ansible は標準で多数のモジュールを持っています。以下のリンクからモジュールの標準モジュールの一覧を確認することができます。
+
+[https://docs.ansible.com/ansible/latest/modules/modules_by_category.html](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html)
+
+通常はこのモジュールを集めて `Playbook` として記述して使いますが、このモジュールを直接呼び出して小さな処理を実行することも可能です。これを Ansible では Ad-Hoc（アドホック）コマンドと呼びます。
 
 まずいくつかのアドホック・コマンドを走らせてみます。Ansibleのアドホック・コマンドを利用すれば、Playbookを記述せずにリモート・ノード上でtaskを実行できます。アドホック・コマンドは、ちょとした事を様々なリモート・ノードで行う場合にとても便利です。
 
@@ -16,33 +20,40 @@ Ansible ではモジュールと呼ばれる様々な部品を使って「自分
 
 まず最初は簡単なところで、ホストに対してpingを送ってみましょう。pingモジュールでホストの応答を確認できます。
 
-`ansible web -m ping`{{execute}}
+`ansible all -m ping`{{execute}}
 
+これは Ansible として「ping」であり、通常のICMPを使った ping とは意味が異なります。Ansible として対象に到達可能で、制御可能かを確かめる ping です。
+
+`-m` の後にモジュールを指定します。ここで指定している `all` というオプションは一旦気にしないでください。あとで解説を行います。
 
 ### ステップ 2
 
 今度はcommandモジュールを使って基本的なLinuxコマンドを走らせ、その出力をフォーマットしてみます。
 
-`ansible web -m command -a "uptime" -o`{{execute}}
+`ansible all -m command -a "uptime" -o`{{execute}}
 
+`-o` はアドホック・コマンドの出力を1ノード1行にまとめるオプションです。
 
 ### ステップ 3
 
-利用しているWebノードのコンフィギュレーションを確認してみましょう。setupモジュールはAnsibleのエンドポイントの情報を表示します。
+利用しているノードのコンフィギュレーションを確認してみましょう。setupモジュールはAnsibleのエンドポイントの情報を表示します。
 
-`ansible web -m setup`{{execute}}
+`ansible all -m setup`{{execute}}
+
+setup という名前はややこしいですが、対象となるノードの「設定情報」を収集するためのモジュールです。実行すると大量の情報が出力されますが、これはAnsibleが対象ノードから取得した設定情報で JSON 形式で出力してくれています。
+
 
 ### ステップ 4
 
-では次にyumモジュールを用いてApacheをインストールしましょう。
+次にyumモジュールを用いてApacheをインストールしましょう。
 
-`ansible web -m yum -a "name=httpd state=present" -b`{{execute}}
+`ansible all -m yum -a "name=httpd state=present" -b`{{execute}}
 
 ### ステップ 5
 
 Apacheのインストールが終わったので、serviceモジュールを使って起動してみましょう。
 
-`ansible web -m service -a "name=httpd state=started" -b`{{execute}}
+`ansible all -m service -a "name=httpd state=started" -b`{{execute}}
 
 これで制御対象のホストにHTTPDで設定されて起動したはずです。コンソールの上側のある `node-1` `node-2` ... という部分をクリックしてみてください。
 
@@ -53,12 +64,12 @@ Apacheのインストールが終わったので、serviceモジュールを使�
 
 そして最後にクリーンナップします。まずhttpdサービスを停止しましょう。
 
-`ansible web -m service -a "name=httpd state=stopped" -b`{{execute}}
+`ansible all -m service -a "name=httpd state=stopped" -b`{{execute}}
 
 
 ### ステップ 7
 
 そしてApacheパッケージを削除します。
 
-`ansible web -m yum -a "name=httpd state=absent" -b`{{execute}}
+`ansible all -m yum -a "name=httpd state=absent" -b`{{execute}}
 
