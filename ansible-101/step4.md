@@ -45,8 +45,7 @@ tasks の t と、become の b はインデントの位置を合わせ、垂直�
 （YAML形式はインデント＝段差げが意味を持つ記法です。段差げの位置が例と異なると、Playbookはうまく動作しません）
 
 ```
-    
-    tasks:
+      tasks:
      - name: install apache
        yum:
          name: httpd
