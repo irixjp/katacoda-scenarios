@@ -46,15 +46,15 @@ tasks の t と、become の b はインデントの位置を合わせ、垂直�
 
 ```
 tasks:
-  - name: install apache
-    yum:
-      name: httpd
-      state: present
-  
-  - name: start httpd
-    service:
-      name: httpd
-      state: started
+    - name: install apache
+      yum:
+        name: httpd
+        state: present
+    
+    - name: start httpd
+      service:
+        name: httpd
+        state: started
 ```
 
 - tasks: これでこの後1つ以上のtaskが定義されることを示しています。
@@ -96,15 +96,15 @@ Playbook の全体像を確認します。
     name: Install the apache web service
     become: yes
     tasks:
-   - name: install apache
-     yum:
-       name: httpd
-       state: present
-
-   - name: start httpd
-     service:
-       name: httpd
-       state: started
+     - name: install apache
+       yum:
+         name: httpd
+         state: present
+   
+     - name: start httpd
+       service:
+         name: httpd
+         state: started
 ```
 
 Ansible（実際にはYAMLですが）は適切にフォーマットされている必要があり、特にインデント／スペーシングは厳格さが求められます。転ばぬ先の杖ではありませんが、時間ができたならこのYAML Syntaxに少し目を通しておきましょう。それはさておき、以下がここまでで書き終えたPlaybookの全体像です。スペーシングと行頭の揃えに注意して見てください。
