@@ -1,4 +1,4 @@
-Ansible の導入。
+Ansible のインストール
 
 ## Task
 

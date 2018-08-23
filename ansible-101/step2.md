@@ -47,13 +47,13 @@ setup という名前はややこしいですが、対象となるノードの�
 
 次にyumモジュールを用いてApacheをインストールしましょう。
 
-`ansible all -m yum -a "name=httpd state=present" -b`{{execute}}
+`ansible all -m yum -a "name=httpd state=present"`{{execute}}
 
 ### ステップ 5
 
 Apacheのインストールが終わったので、serviceモジュールを使って起動してみましょう。
 
-`ansible all -m service -a "name=httpd state=started" -b`{{execute}}
+`ansible all -m service -a "name=httpd state=started"`{{execute}}
 
 これで制御対象のホストにHTTPDで設定されて起動したはずです。コンソールの上側のある `node-1` `node-2` ... という部分をクリックしてみてください。
 
@@ -64,12 +64,12 @@ Apacheのインストールが終わったので、serviceモジュールを使�
 
 そして最後にクリーンナップします。まずhttpdサービスを停止しましょう。
 
-`ansible all -m service -a "name=httpd state=stopped" -b`{{execute}}
+`ansible all -m service -a "name=httpd state=stopped"`{{execute}}
 
 
 ### ステップ 7
 
 そしてApacheパッケージを削除します。
 
-`ansible all -m yum -a "name=httpd state=absent" -b`{{execute}}
+`ansible all -m yum -a "name=httpd state=absent"`{{execute}}
 
