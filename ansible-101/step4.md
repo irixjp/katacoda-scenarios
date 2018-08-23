@@ -90,22 +90,22 @@ Playbook の全体像を確認します。
 
 出力例が以下と相違ないことを確認してください。
 
-<pre class="file" data-target="clipboard">
----
-- hosts: web
-  name: Install the apache web service
-  become: yes
-  tasks:
-   - name: install apache
-     yum:
-       name: httpd
-       state: present
 
-   - name: start httpd
-     service:
-       name: httpd
-       state: started
-</pre>
+    ---
+    - hosts: web
+      name: Install the apache web service
+      become: yes
+      tasks:
+       - name: install apache
+         yum:
+           name: httpd
+           state: present
+     
+       - name: start httpd
+         service:
+           name: httpd
+           state: started
+
 
 Ansible（実際にはYAMLですが）は適切にフォーマットされている必要があり、特にインデント／スペーシングは厳格さが求められます。転ばぬ先の杖ではありませんが、時間ができたならこのYAML Syntaxに少し目を通しておきましょう。それはさておき、以下がここまでで書き終えたPlaybookの全体像です。スペーシングと行頭の揃えに注意して見てください。
 
