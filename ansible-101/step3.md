@@ -29,7 +29,7 @@ Ansible では「何をやるか」をモジュールを使って `Playbook` と
 
 `vim my_inventory`{{execute}}
 
-- vi/vim が苦手な方は `nano` エディタも利用可能です。`vim my_inventory`{{execute}} で起動可能です。
+- vi/vim が苦手な方は `nano` エディタも利用可能です。`nano my_inventory`{{execute}} で起動可能です。
 
 例
 ```

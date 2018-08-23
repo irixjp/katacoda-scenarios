@@ -23,7 +23,7 @@ Play パートを定義します。ファイル `install_apache.yml` を作成�
 
 以下の例のように記述してください。
 
-```yaml
+```
 ---
 - hosts: web
   name: Install the apache web service
@@ -44,7 +44,7 @@ tasks の t と、become の b はインデントの位置を合わせ、垂直�
 この記述の仕方がとても重要です。Playbook内の記述は、すべてここで示されている形式に倣う必要があります。
 （YAML形式はインデント＝段差げが意味を持つ記法です。段差げの位置が例と異なると、Playbookはうまく動作しません）
 
-```yaml
+```
   tasks:
    - name: install apache
      yum:
@@ -62,7 +62,7 @@ tasks の t と、become の b はインデントの位置を合わせ、垂直�
 
 ここでは2つのモジュールが Taskパートで呼び出されています。
 
-```yaml
+```
 yum:
   name: httpd
   state: present
@@ -70,7 +70,7 @@ yum:
 
 Ansibleのyumモジュールによるhttpdのインストールは3行で記述されています。yumモジュールの全てのオプションは[ここをクリック](https://docs.ansible.com/ansible/latest/modules/yum_module.html)して確認してください。
 
-```yaml
+```
 service:
   name: httpd
   state: started
@@ -90,7 +90,7 @@ Playbook の全体像を確認します。
 
 出力例が以下と相違ないことを確認してください。
 
-```yaml
+```
 ---
 - hosts: web
   name: Install the apache web service
