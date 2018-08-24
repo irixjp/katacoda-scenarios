@@ -1,0 +1,34 @@
+{
+  "title": "Sandbox",
+  "description": "Test something",
+  "difficulty": "beginner",
+  "time": "60 minutes",
+  "details": {
+    "steps": [
+      {
+        "title": "Step 0 - Prepare your hands-on environment",
+        "text": "step0.md"
+      }
+    ],
+    "intro": {
+      "text": "intro.md",
+      "credits": "",
+      "courseData": "env-init.sh"
+    }
+  },
+  "environment": {
+    "uilayout": "terminal",
+    "hideintro": false,
+    "hidefinish": true,
+    "showdashboard": true,
+    "dashboards": [
+      {"name": "node-1", "port": 8081},
+      {"name": "node-2", "port": 8082},
+      {"name": "node-3", "port": 8083}
+    ],
+    "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
+  },
+  "backend": {
+    "imageid": "centos-vm"
+  }
+}
