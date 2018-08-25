@@ -1,18 +1,18 @@
-Ansible のインストール
+Ansible のインストールを行います。
 
-## Task
+## 演習
 
 以下のコマンド実行して、Ansible を導入します。
 
 `yum install -y ansible`{{execute}}
 
-これで導入は終了です。すぐにAnsibleを実行することができます。
+これで導入は終了です。すぐに Ansible を実行することができます。
 
 試しに以下のコマンドを実行してみましょう。
 
 `ansible all -m ping`{{execute}}
 
-このコマンドで、以下のような出力が確認できればAnsibleが正しく実行されたことになります。
+このコマンドで、以下のような出力が確認できれば Ansible が正しく動作しています。
 
 ```
 node-1 | SUCCESS => {

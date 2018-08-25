@@ -1,4 +1,4 @@
-インベントリによる対象の設定
+インベントリを作成して自動化の対象を制御します。
 
 ## 説明
 
@@ -10,7 +10,7 @@ Ansible では「何をやるか」をモジュールを使って `Playbook` と
 
 ## 演習
 
-現在の演習環境では `Inventory` は以下のファイルがデフォルトで使用されるように設定されています。そのため、先の演習では `all` というキーワードを指定するだけでコマンドの実行が可能となっています。`all` は「インベントリに記載されたすべてのノード」を示す特別なキーワードです。
+現在の演習環境では `Inventory` にはデフォルトで `~/inventory` ファイルを使用するように設定されています。そのため、先の演習では `all` というキーワードを指定するだけでコマンドの実行が可能となっています。`all` は「インベントリに記載されたすべてのノード」を示す特別なキーワードです。
 
 ### ステップ 1
 
@@ -33,11 +33,6 @@ Ansible では「何をやるか」をモジュールを使って `Playbook` と
 
 例
 ```
-[web]
-node-1 ansible_ssh_host=IP_ADDR_OF_NODE-1
-node-2 ansible_ssh_host=IP_ADDR_OF_NODE-2
-node-3 ansible_ssh_host=IP_ADDR_OF_NODE-3
-
 [web1]
 node-1 ansible_ssh_host=IP_ADDR_OF_NODE-1
 
@@ -46,6 +41,19 @@ node-2 ansible_ssh_host=IP_ADDR_OF_NODE-2
 
 [web3]
 node-3 ansible_ssh_host=IP_ADDR_OF_NODE-3
+
+[web:children]
+web1
+web2
+web3
+
+[foo:children]
+web1
+web2
+
+[bar:children]
+web2
+web3
 ```
 
 `IP_ADDR_OF_NODE-1,2,3` の部分は自分の環境に合わせて読み替えてください。
@@ -54,8 +62,6 @@ node-3 ansible_ssh_host=IP_ADDR_OF_NODE-3
 - ファイルの保存方法
   - `vim` Esc :wq!、または write/quit メソッドでPlaybookを保存します。
   - `nano` Ctrl-o → エンター で保存、終了するに Ctrl-x です。
-
-
 
 ### ステップ 3
 
@@ -74,14 +80,21 @@ node-3 ansible_ssh_host=IP_ADDR_OF_NODE-3
 
 ### ステップ 4
 
-以下のように、`all` となっていた部分を変更してコマンドを実行してみましょう。
+以下のように、`all` となっていた部分を変更してコマンドを実行してみましょう。この時に、どのノードが対象になったのかを確認してください。
 
 `ansible web1 -i my_inventory -m ping -o -u root -k`{{execute}}
+
 `ansible web2 -i my_inventory -m ping -o -u root -k`{{execute}}
+
 `ansible web3 -i my_inventory -m ping -o -u root -k`{{execute}}
 
 `ansible web -i my_inventory -m ping -o -u root -k`{{execute}}
 
-`[web1]` のようにセクションを作成して、その中にノードの情報を記述することで、ノードのグループ化を行うことが可能となります。
+`ansible foo -i my_inventory -m ping -o -u root -k`{{execute}}
+
+`ansible bar -i my_inventory -m ping -o -u root -k`{{execute}}
+
+- `[web1]` のようにセクションを作成して、その中にノードの情報を記述することで、ノードのグループ化を行うことが可能となります。
+- [xxxx:`children`] というセクションを作ると、別のグループをまとめることも可能です。
 
 よくある使い方として、`[web]`, `[ap]`, `[db]` のように役割ごとにグループ化しておき、処理の内容によって対象のグループを使い分けるという方法があります。
