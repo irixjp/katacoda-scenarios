@@ -42,9 +42,6 @@
           "target": "~/"
         }
       ]
-    },
-    "finish": {
-      "text": "finish.md"
     }
   },
   "environment": {
