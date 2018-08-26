@@ -1,18 +1,11 @@
-Ad-Hoc コマンドを実行しながら、Ansible の「モジュール」について理解を深めます。
+再利用可能な Playbook を作成していきます。
 
 ## 説明
 
 ![image2-1](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/ansible-101/images/image2-1.png "image2-1")
 
-Ansible ではモジュールと呼ばれる様々な部品を使って「自分のやりたいこと」を Playbook に記述していきます。モジュールは「よくある操作や手順」を部品化したものです。
 
-Ansible は標準で多数のモジュールを持っています。以下のリンクからモジュールの標準モジュールの一覧を確認することができます。
 
-[https://docs.ansible.com/ansible/latest/modules/modules_by_category.html](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html)
-
-通常はこのモジュールを組み合わせて `Playbook` として記述して使いますが、ここの演習ではモジュールを直接呼び出して小さな処理を実行していきます。この方法を Ansible では Ad-Hoc（アドホック）コマンドと呼びます。
-
-まずいくつかのアドホック・コマンドを走らせてみます。Ansibleのアドホック・コマンドを利用すれば、Playbookを記述せずにリモート・ノード上でtaskを実行できます。アドホック・コマンドは、ちょとした事を様々なリモート・ノードで行う場合にとても便利です。
 
 ## 演習
 

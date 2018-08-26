@@ -170,7 +170,7 @@ handlers:
         template:
           src: httpd.conf.j2
           dest: /etc/httpd/conf/httpd.conf
-          notify: restart apache service
+        notify: restart apache service
    
       - name: copy index.html
         template:
