@@ -43,7 +43,7 @@
 
 `cd ~/apache-basic-playbook/roles/apache-simple/`{{execute}}
 
-`cd rm -rf files tests`{{execute}}
+`rm -rf files tests`{{execute}}
 
 
 ### ステップ 2
@@ -106,7 +106,7 @@ httpd_packages:
 - defaultsディレクトリ
 - group_varsディレクトリ
 - Playbookのvars:セクション配下
-- コマンドラインを使い--extra_varsオプションで指定された全てのファイル
+- コマンドラインを使い `--extra_vars` オプションで指定された全てのファイル
 
 結論から言えば、[variable precedence（英語）](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable)に目を通し、どこで変数を定義するのか、そしてどのロケーションが優先されるのかを理解する必要があります。融通が利くように、この演習ではrole defaultsを利用していくつかの変数を定義しています。 それに続いて、role defaultsよりも高い優先性を持ち、デフォルトの変数をオーバーライドできる/varsにいくつかの変数を定義しています。
 
@@ -132,7 +132,7 @@ role のハンドラを作成します。
 
 role に tasks を定義します。
 
-`roles/apache-simple/tasks/main.yml`{{execute}}
+`vim roles/apache-simple/tasks/main.yml`{{execute}}
 
 ```yaml
 ---
@@ -203,6 +203,13 @@ role に tasks を定義します。
 `ansible-playbook site.yml`{{execute}}
 
 エラーなく終了したら、正しく HTTPD が起動されたかを確認してみてください。
+
+次に、変数を上書きして実行してみましょう。
+
+`ansible-playbook site.yml -e apache_test_message=vars_from_extra`{{execute}}
+
+終了したら再び、各ノードのページを表示してみましょう。どのように表示されているでしょうか。
+
 
 
 本演習は以上となります。
