@@ -22,6 +22,10 @@ ansible.cfg is below:
 `cat ansible.cfg`{{execute}}
 
 
-Test command:
+Test commands:
 
 `ansible web -m ping -o`{{execute}}
+
+`ansible localhost -m shell -a 'uname -a' -o`{{execute}}
+
+`ansible web -m shell -a 'uname -a' -o`{{execute}}
