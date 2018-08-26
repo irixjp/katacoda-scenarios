@@ -2,7 +2,7 @@
 
 PASSWORD=password
 
-yum install -y ansible jq
+yum install -y ansible jq tree
 
 echo "[web]" > inventory
 

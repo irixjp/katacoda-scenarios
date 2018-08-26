@@ -144,3 +144,4 @@ Playbook のシンタックスチェックを実行してみましょう。
 - [yum モジュールの解説](https://docs.ansible.com/ansible/latest/modules/yum_module.html)
 - [service モジュールの解説](https://docs.ansible.com/ansible/latest/modules/service_module.html)
 
+本演習は以上となります。
