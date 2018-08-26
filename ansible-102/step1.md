@@ -23,6 +23,8 @@ Ansibleの最大の利点は、taskをシンプルかつ再利用可能である
 
 ## 演習
 
+では実際に Playbook を作成していきましょう。
+
 ### ステップ 1
 
 まず、Playbook を作成して、Play パートと変数に関する情報を作成します。
@@ -33,26 +35,26 @@ Ansibleの最大の利点は、taskをシンプルかつ再利用可能である
 ```yaml
 ---
 - hosts: web
-  name: This is a play within a playbook
-  become: yes
-  vars:
-    httpd_packages:
-      - httpd
-      - mod_wsgi
-    apache_test_message: This is a test message
-    apache_max_keep_alive_requests: 115
+    name: This is a play within a playbook
+    become: yes
+    vars:
+      httpd_packages:
+        - httpd
+        - mod_wsgi
+      apache_test_message: This is a test message
+      apache_max_keep_alive_requests: 115
 ```
 
 Taskパートを作成し、install httpd packagesと命名した新規taskを追加します。
 
 ```yaml
 tasks:
-  - name: install httpd packages
-    yum:
-      name: "{{ item }}"
-      state: present
-    with_items: "{{ httpd_packages }}"
-    notify: restart apache service
+    - name: install httpd packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ httpd_packages }}"
+      notify: restart apache service
 ```
 
 - vars: この後に続いて記述されるものが変数名であることをAnsibleに伝えています
@@ -82,26 +84,26 @@ Apache の設定ファイル
 
 ```yaml
 - name: create site-enabled directory
-  file:
-    name: /etc/httpd/conf/sites-enabled
-    state: directory
+    file:
+      name: /etc/httpd/conf/sites-enabled
+      state: directory
 
 - name: copy httpd.conf
-  template:
-    src: httpd.conf.j2
-    dest: /etc/httpd/conf/httpd.conf
-  notify: restart apache service
+    template:
+      src: httpd.conf.j2
+      dest: /etc/httpd/conf/httpd.conf
+    notify: restart apache service
 
 - name: copy index.html
-  template:
-    src: index.html.j2
-    dest: /var/www/html/index.html
+    template:
+      src: index.html.j2
+      dest: /var/www/html/index.html
 
 - name: start httpd
-  service:
-    name: httpd
-    state: started
-    enabled: yes
+    service:
+      name: httpd
+      state: started
+      enabled: yes
 ```
 
 - file: このモジュールを使ってファイル、ディレクトリ、シンボリックリンクの作成、変更、削除を行います。
@@ -116,13 +118,15 @@ Apache の設定ファイル
 
 構成ファイルの実装や新しいパッケージのインストールなど、様々な理由でサービスやプロセスを再起動する必要が出てきます。このセクションには、Playbookへのハンドラの追加、そして意図しているtaskの後でこのハンドラを呼び出す、という2つの内容が含まれています。それではPlaybookへのハンドラの追加を見てみましょう。
 
+ハンドラの階層（インデント）は `tasks:`, `vars:`, `become:` などと同じ階層にする必要があります。
+
 ```yaml
 handlers:
-  - name: restart apache service
-    service:
-      name: httpd
-      state: restarted
-      enabled: yes
+    - name: restart apache service
+      service:
+        name: httpd
+        state: restarted
+        enabled: yes
 ```
 
 - handler: これでplayに対してtasks:の定義が終わり、handlers:の定義が開始されたことを伝えています。これに続く箇所は、名前の定義、そしてモジュールやそのモジュールのオプションの指定のように他のtaskと変わらないように見えますが、これがハンドラの定義になります。
@@ -140,58 +144,58 @@ handlers:
 ```yaml
 ---
 - hosts: web
-  name: This is a play within a playbook
-  become: yes
-  vars:
-    httpd_packages:
-      - httpd
-      - mod_wsgi
-    apache_test_message: This is a test message
-    apache_max_keep_alive_requests: 115
-
-  tasks:
-    - name: install httpd packages
-      yum:
-        name: "{{ item }}"
-        state: present
-      with_items: "{{ httpd_packages }}"
-      notify: restart apache service
-
-    - name: create site-enabled directory
-      file:
-        name: /etc/httpd/conf/sites-enabled
-        state: directory
-
-    - name: copy httpd.conf
-      template:
-        src: httpd.conf.j2
-        dest: /etc/httpd/conf/httpd.conf
+    name: This is a play within a playbook
+    become: yes
+    vars:
+      httpd_packages:
+        - httpd
+        - mod_wsgi
+      apache_test_message: This is a test message
+      apache_max_keep_alive_requests: 115
+   
+    tasks:
+      - name: install httpd packages
+        yum:
+          name: "{{ item }}"
+          state: present
+        with_items: "{{ httpd_packages }}"
         notify: restart apache service
-
-    - name: copy index.html
-      template:
-        src: index.html.j2
-        dest: /var/www/html/index.html
-
-    - name: start httpd
-      service:
-        name: httpd
-        state: started
-        enabled: yes
-
-  handlers:
-    - name: restart apache service
-      service:
-        name: httpd
-        state: restarted
-        enabled: yes
+   
+      - name: create site-enabled directory
+        file:
+          name: /etc/httpd/conf/sites-enabled
+          state: directory
+   
+      - name: copy httpd.conf
+        template:
+          src: httpd.conf.j2
+          dest: /etc/httpd/conf/httpd.conf
+          notify: restart apache service
+   
+      - name: copy index.html
+        template:
+          src: index.html.j2
+          dest: /var/www/html/index.html
+   
+      - name: start httpd
+        service:
+          name: httpd
+          state: started
+          enabled: yes
+   
+    handlers:
+      - name: restart apache service
+        service:
+          name: httpd
+          state: restarted
+          enabled: yes
 ```
 
 ### ステップ 6
 
 実際に Playbook を実行してみましょう。
 
-`ansible-playbook --syntax-check site.yml`{{execute}}
+`ansible-playbook site.yml`{{execute}}
 
 もしエラーが出る場合は、Playbook の内容を見直してください。
 
