@@ -1,12 +1,12 @@
 {
-  "title": "Building...",
-  "description": "Let's start Ansible Tower in 1hour",
+  "title": "Ansible Playbook CI 101",
+  "description": "Let's try a CI cycle for Playbook",
   "difficulty": "beginner",
-  "time": "15 minutes",
+  "time": "30 minutes",
   "details": {
     "steps": [
       {
-        "title": "Prepare your hands-on environment",
+        "title": "Step 0 - Prepare your hands-on environment",
         "text": "step0.md"
       }
     ],
@@ -20,6 +20,10 @@
         {
           "file": "lab_setup.sh",
           "target": "~/"
+        },
+        {
+          "file": "ansible.cfg",
+          "target": "~/"
         }
       ]
     }
@@ -30,8 +34,7 @@
     "hidefinish": true,
     "showdashboard": true,
     "dashboards": [
-      {"name": "Tower UI", "port": 443},
-      {"name": "node-1", "port": 8081}
+      {"name": "http", "port": 80}
     ],
     "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
   },
