@@ -1,5 +1,5 @@
 {
-  "title": "Ansible Playbook CI 101",
+  "title": "Ansible Playbook CI",
   "description": "Let's try a CI cycle for Playbook",
   "difficulty": "beginner",
   "time": "30 minutes",
