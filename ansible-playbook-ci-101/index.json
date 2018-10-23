@@ -12,6 +12,10 @@
       {
         "title": "Step 1 - Run target playbook",
         "text": "step1.md"
+      },
+      {
+        "title": "Step 2 - CI cycle at Travis CI",
+        "text": "step1.md"
       }
     ],
     "intro": {

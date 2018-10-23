@@ -9,6 +9,7 @@ CIを適用するPlaybookを実行します。
 このPlaybookの構造を確認します。
 
 `cd sd2018-ansible-ci`{{execute}}
+
 `tree .`{{execute}}
 
 このリポジトリには1つのロール「web_svr」が保存されています。このロールに対してCIを適用していきます。
@@ -33,7 +34,7 @@ CIを適用するPlaybookを実行します。
 
 先に`main.yml`の結果を見ましたが、同じ階層に`unit_test.yml`というファイルが保存されています。こちらの中身を確認してみましょう。
 
-`cat web_svr/tests/test.yml`{{execute}}
+`cat web_svr/tasks/unit_test.yml`{{execute}}
 
 この`unit_test,yml`の処理は、httpdがインストールされ、index.htmlが存在し、httpdが起動しているかを確認しています。
 
@@ -46,12 +47,13 @@ CIを適用するPlaybookを実行します。
 このテストをあえて失敗させてみます。httpdを停止してから`unit_test.yml`を実行させてみましょう。
 
 `ansible all -i localhost, -c local -m systemd -a 'name=httpd state=stopped'`{{execute}}
+
 `ansible all -i localhost, -c local -m include_role -a 'name=web_svr tasks_from=unit_test'`{{execute}}
 
 今回のテストは失敗したはずです。
 
 
-### ロールの処理を確認するテスト処理
+### ロールの正しさを確認するPlaybook
 
 このようにロールにメインの処理とセットでその動作を確認するためのテストをあわせて実装しておくことで、いつでもロールの正しさを確認できるようになります。
 
@@ -63,3 +65,4 @@ CIを適用するPlaybookを実行します。
 
 `ansible-playbook -i localhost, -c local web_svr/tests/test.yml`{{execute}}
 
+先程停止されたhttpdが`main.yml`から起動され、その後`unit_test.yml`が実行されるため、このPlaybookは成功するはずです。
