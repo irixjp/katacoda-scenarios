@@ -214,5 +214,4 @@ role に tasks を定義します。
 
 本演習は以上となります。
 
-
-
+[Back to top page](https://www.katacoda.com/irixjp)

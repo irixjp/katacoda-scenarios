@@ -22,3 +22,4 @@ node-3 ansible_ssh_host=172.20.0.4 ansible_ssh_user=root ansible_ssh_pass=passwo
 
 ![image0-1](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/ansible-101/images/image0-1.png "image0-1")
 
+[Back to top page](https://www.katacoda.com/irixjp)

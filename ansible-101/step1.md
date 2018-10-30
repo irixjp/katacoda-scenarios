@@ -30,3 +30,5 @@ node-3 | SUCCESS => {
 ```
 
 では、Ansible の詳細について、実際に一つ一つ機能を確認しながら見ていきましょう。
+
+[Back to top page](https://www.katacoda.com/irixjp)

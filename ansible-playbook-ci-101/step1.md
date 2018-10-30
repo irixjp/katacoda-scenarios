@@ -66,3 +66,5 @@ CIを適用するPlaybookを実行します。
 `ansible-playbook -i localhost, -c local web_svr/tests/test.yml`{{execute}}
 
 先程停止されたhttpdが`main.yml`から起動され、その後`unit_test.yml`が実行されるため、このPlaybookは成功するはずです。
+
+[Back to top page](https://www.katacoda.com/irixjp)

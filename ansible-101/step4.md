@@ -145,3 +145,5 @@ Playbook のシンタックスチェックを実行してみましょう。
 - [service モジュールの解説](https://docs.ansible.com/ansible/latest/modules/service_module.html)
 
 本演習は以上となります。
+
+[Back to top page](https://www.katacoda.com/irixjp)

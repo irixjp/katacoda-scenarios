@@ -12,3 +12,6 @@ Ansible 基礎独習コースへようこそ (1/2)
 
 間違えを見つけたら以下へご連絡ください。
 - https://github.com/irixjp/katacoda-scenarios
+
+
+[Back to top page](https://www.katacoda.com/irixjp)

@@ -26,3 +26,5 @@ node-3 ansible_ssh_host=172.20.0.4 ansible_ssh_user=root ansible_ssh_pass=passwo
 利用する Ansible のバージョンは以下で確認できます。
 
 `ansible --version`{{execute}}
+
+[Back to top page](https://www.katacoda.com/irixjp)

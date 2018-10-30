@@ -203,3 +203,5 @@ handlers:
 うまくいけば `template` モジュールで配布されたトップページが確認できるはずです。
 
 この時に、変数部分がどのように置き換えられたかも確認してください。
+
+[Back to top page](https://www.katacoda.com/irixjp)

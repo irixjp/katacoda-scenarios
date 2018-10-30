@@ -75,3 +75,4 @@ Apacheのインストールが終わったので、serviceモジュールを使�
 
 `ansible all -m yum -a "name=httpd state=absent"`{{execute}}
 
+[Back to top page](https://www.katacoda.com/irixjp)

@@ -6,3 +6,4 @@
 
 `bash ./lab_setup.sh`{{execute}}
 
+[Back to top page](https://www.katacoda.com/irixjp)
