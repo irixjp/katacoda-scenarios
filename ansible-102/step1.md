@@ -35,20 +35,20 @@ Ansibleの最大の利点は、taskをシンプルかつ再利用可能である
 ```yaml
 ---
 - hosts: web
-    name: This is a play within a playbook
-    become: yes
-    vars:
-      httpd_packages:
-        - httpd
-        - mod_wsgi
-      apache_test_message: This is a test message
-      apache_max_keep_alive_requests: 115
+  name: This is a play within a playbook
+  become: yes
+  vars:
+    httpd_packages:
+      - httpd
+      - mod_wsgi
+    apache_test_message: This is a test message
+    apache_max_keep_alive_requests: 115
 ```
 
 Taskパートを作成し、install httpd packagesと命名した新規taskを追加します。
 
 ```yaml
-tasks:
+  tasks:
     - name: install httpd packages
       yum:
         name: "{{ item }}"
@@ -83,23 +83,23 @@ Apache の設定ファイル
 `template` モジュールを使ってこれらのファイルをサーバーに配置する時に、`{{ }}` 部分を変数で置換することが可能です。
 
 ```yaml
-- name: create site-enabled directory
+  - name: create site-enabled directory
     file:
       name: /etc/httpd/conf/sites-enabled
       state: directory
 
-- name: copy httpd.conf
+  - name: copy httpd.conf
     template:
       src: httpd.conf.j2
       dest: /etc/httpd/conf/httpd.conf
     notify: restart apache service
 
-- name: copy index.html
+  - name: copy index.html
     template:
       src: index.html.j2
       dest: /var/www/html/index.html
 
-- name: start httpd
+  - name: start httpd
     service:
       name: httpd
       state: started
@@ -121,7 +121,7 @@ Apache の設定ファイル
 ハンドラの階層（インデント）は `tasks:`, `vars:`, `become:` などと同じ階層にする必要があります。
 
 ```yaml
-handlers:
+  handlers:
     - name: restart apache service
       service:
         name: httpd
@@ -144,51 +144,51 @@ handlers:
 ```yaml
 ---
 - hosts: web
-    name: This is a play within a playbook
-    become: yes
-    vars:
-      httpd_packages:
-        - httpd
-        - mod_wsgi
-      apache_test_message: This is a test message
-      apache_max_keep_alive_requests: 115
+  name: This is a play within a playbook
+  become: yes
+  vars:
+    httpd_packages:
+      - httpd
+      - mod_wsgi
+    apache_test_message: This is a test message
+    apache_max_keep_alive_requests: 115
    
-    tasks:
-      - name: install httpd packages
-        yum:
-          name: "{{ item }}"
-          state: present
-        with_items: "{{ httpd_packages }}"
-        notify: restart apache service
-   
-      - name: create site-enabled directory
-        file:
-          name: /etc/httpd/conf/sites-enabled
-          state: directory
-   
-      - name: copy httpd.conf
-        template:
-          src: httpd.conf.j2
-          dest: /etc/httpd/conf/httpd.conf
-        notify: restart apache service
-   
-      - name: copy index.html
-        template:
-          src: index.html.j2
-          dest: /var/www/html/index.html
-   
-      - name: start httpd
-        service:
-          name: httpd
-          state: started
-          enabled: yes
-   
-    handlers:
-      - name: restart apache service
-        service:
-          name: httpd
-          state: restarted
-          enabled: yes
+  tasks:
+    - name: install httpd packages
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ httpd_packages }}"
+      notify: restart apache service
+  
+    - name: create site-enabled directory
+      file:
+        name: /etc/httpd/conf/sites-enabled
+        state: directory
+  
+    - name: copy httpd.conf
+      template:
+        src: httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+      notify: restart apache service
+  
+    - name: copy index.html
+      template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
+  
+    - name: start httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+  
+  handlers:
+    - name: restart apache service
+      service:
+        name: httpd
+        state: restarted
+        enabled: yes
 ```
 
 ### ステップ 6

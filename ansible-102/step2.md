@@ -57,11 +57,11 @@
 ```yaml
 ---
 - hosts: web
-    name: This is my role-based playbook
-    become: yes
+  name: This is my role-based playbook
+  become: yes
    
-    roles:
-      - apache-simple
+  roles:
+    - apache-simple
 ```
 
 Task パートの代わりに `Role` パートを追加しています。ここで呼び出す role を記述しています。複数のロールを順番に呼び出す場合にはここに複数の role 名を並べていきます。
@@ -94,8 +94,8 @@ apache_max_keep_alive_requests: 115
 ---
 # vars file for apache-simple
 httpd_packages:
-    - httpd
-    - mod_wsgi
+  - httpd
+  - mod_wsgi
 ```
 
 ちょっと待ってください…​ いま変数を2つの場所に分けて置きませんでしたか？
@@ -121,10 +121,10 @@ role のハンドラを作成します。
 ---
 # handlers file for apache-simple
 - name: restart apache service
-    service:
-      name: httpd
-      state: restarted
-      enabled: yes
+  service:
+    name: httpd
+    state: restarted
+    enabled: yes
 ```
 
 
@@ -137,30 +137,30 @@ role に tasks を定義します。
 ```yaml
 ---
 # tasks file for apache-simple
-- name: install httpd packages
+  - name: install httpd packages
     yum:
       name: "{{ item }}"
       state: present
     with_items: "{{ httpd_packages }}"
     notify: restart apache service
 
-- name: create site-enabled directory
+  - name: create site-enabled directory
     file:
       name: /etc/httpd/conf/sites-enabled
       state: directory
 
-- name: copy httpd.conf
+  - name: copy httpd.conf
     template:
       src: templates/httpd.conf.j2
       dest: /etc/httpd/conf/httpd.conf
     notify: restart apache service
 
-- name: copy index.html
+  - name: copy index.html
     template:
       src: templates/index.html.j2
       dest: /var/www/html/index.html
 
-- name: start httpd
+  - name: start httpd
     service:
       name: httpd
       state: started

@@ -26,8 +26,8 @@ Play パートを定義します。ファイル `install_apache.yml` を作成�
 ```
 ---
 - hosts: web
-    name: Install the apache web service
-    become: yes
+  name: Install the apache web service
+  become: yes
 ```
 
 - --- はYAMLの開始を意味しています。
@@ -45,7 +45,7 @@ tasks の t と、become の b はインデントの位置を合わせ、垂直�
 （YAML形式はインデント＝段差げが意味を持つ記法です。段差げの位置が例と異なると、Playbookはうまく動作しません）
 
 ```
-tasks:
+  tasks:
     - name: install apache
       yum:
         name: httpd
@@ -63,7 +63,7 @@ tasks:
 ここでは2つのモジュールが Taskパートで呼び出されています。
 
 ```
-yum:
+  yum:
     name: httpd
     state: present
 ```
@@ -71,7 +71,7 @@ yum:
 Ansibleのyumモジュールによるhttpdのインストールは3行で記述されています。yumモジュールの全てのオプションは[ここをクリック](https://docs.ansible.com/ansible/latest/modules/yum_module.html)して確認してください。
 
 ```
-service:
+  service:
     name: httpd
     state: started
 ```
@@ -93,18 +93,18 @@ Playbook の全体像を確認します。
 ```
 ---
 - hosts: web
-    name: Install the apache web service
-    become: yes
-    tasks:
-     - name: install apache
-       yum:
-         name: httpd
-         state: present
+  name: Install the apache web service
+  become: yes
+  tasks:
+    - name: install apache
+      yum:
+        name: httpd
+        state: present
    
-     - name: start httpd
-       service:
-         name: httpd
-         state: started
+    - name: start httpd
+      service:
+        name: httpd
+        state: started
 ```
 
 Ansible（実際にはYAMLですが）は適切にフォーマットされている必要があり、特にインデント／スペーシングは厳格さが求められます。転ばぬ先の杖ではありませんが、時間ができたならこのYAML Syntaxに少し目を通しておきましょう。それはさておき、以下がここまでで書き終えたPlaybookの全体像です。スペーシングと行頭の揃えに注意して見てください。
