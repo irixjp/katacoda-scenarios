@@ -137,34 +137,34 @@ role に tasks を定義します。
 ```yaml
 ---
 # tasks file for apache-simple
-  - name: install httpd packages
-    yum:
-      name: "{{ item }}"
-      state: present
-    with_items: "{{ httpd_packages }}"
-    notify: restart apache service
+- name: install httpd packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ httpd_packages }}"
+  notify: restart apache service
 
-  - name: create site-enabled directory
-    file:
-      name: /etc/httpd/conf/sites-enabled
-      state: directory
+- name: create site-enabled directory
+  file:
+    name: /etc/httpd/conf/sites-enabled
+    state: directory
 
-  - name: copy httpd.conf
-    template:
-      src: templates/httpd.conf.j2
-      dest: /etc/httpd/conf/httpd.conf
-    notify: restart apache service
+- name: copy httpd.conf
+  template:
+    src: templates/httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+  notify: restart apache service
 
-  - name: copy index.html
-    template:
-      src: templates/index.html.j2
-      dest: /var/www/html/index.html
+- name: copy index.html
+  template:
+    src: templates/index.html.j2
+    dest: /var/www/html/index.html
 
-  - name: start httpd
-    service:
-      name: httpd
-      state: started
-      enabled: yes
+- name: start httpd
+  service:
+    name: httpd
+    state: started
+    enabled: yes
 ```
 
 ### ステップ 6

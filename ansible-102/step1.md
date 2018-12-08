@@ -83,27 +83,27 @@ Apache の設定ファイル
 `template` モジュールを使ってこれらのファイルをサーバーに配置する時に、`{{ }}` 部分を変数で置換することが可能です。
 
 ```yaml
-  - name: create site-enabled directory
-    file:
-      name: /etc/httpd/conf/sites-enabled
-      state: directory
-
-  - name: copy httpd.conf
-    template:
-      src: httpd.conf.j2
-      dest: /etc/httpd/conf/httpd.conf
-    notify: restart apache service
-
-  - name: copy index.html
-    template:
-      src: index.html.j2
-      dest: /var/www/html/index.html
-
-  - name: start httpd
-    service:
-      name: httpd
-      state: started
-      enabled: yes
+    - name: create site-enabled directory
+      file:
+        name: /etc/httpd/conf/sites-enabled
+        state: directory
+   
+    - name: copy httpd.conf
+      template:
+        src: httpd.conf.j2
+        dest: /etc/httpd/conf/httpd.conf
+      notify: restart apache service
+   
+    - name: copy index.html
+      template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
+   
+    - name: start httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
 ```
 
 - file: このモジュールを使ってファイル、ディレクトリ、シンボリックリンクの作成、変更、削除を行います。
