@@ -13,7 +13,7 @@ mkswap /swapfile
 swapon /swapfile
 swapon -s
 
-for i in 1
+for i in 1 2
 do
     docker run -d --security-opt label:disable --cap-add SYS_ADMIN --name node-${i} -h node-${i} -p 808${i}:80 irixjp/katacoda:latest /sbin/init
     sleep 3

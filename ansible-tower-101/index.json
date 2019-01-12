@@ -2,7 +2,7 @@
   "title": "Ansible Tower 101 (Building...)",
   "description": "Let's start Ansible Tower in 1hour",
   "difficulty": "beginner",
-  "time": "15 minutes",
+  "time": "180 minutes",
   "details": {
     "steps": [
       {
@@ -31,7 +31,8 @@
     "showdashboard": true,
     "dashboards": [
       {"name": "Tower UI", "port": 443},
-      {"name": "node-1", "port": 8081}
+      {"name": "node-1", "port": 8081},
+      {"name": "node-2", "port": 8082}
     ],
     "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
   },
