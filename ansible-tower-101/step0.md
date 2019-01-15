@@ -63,38 +63,49 @@ There are some ways to get Ansible Tower License.
 `tower-cli project list`{{execute}}
 
 
-### Basic configuration for running playbook
+# Basic configuration for running playbook
 
-#### Project
+## Project
 
 `tower-cli project create -n sample --organization Default --scm-type git --scm-url https://github.com/irixjp/ansible-tower-demo.git --scm-update-on-launch true --monitor`{{execute}}
 
-#### Inventory
+## Inventory
 
 `tower-cli inventory create -n localhost --organization Default`{{execute}}
+
 `tower-cli host create -n localhost -i localhost --variables 'ansible_connection: local'`{{execute}}
 
 `tower-cli inventory create -n demo-clients --organization Default`{{execute}}
+
 `tower-cli host create -n node-1 -i demo-clients --variables 'ansible_host: 172.20.0.2'`{{execute}}
-`tower-cli host create -n node-1 -i demo-clients --variables 'ansible_host: 172.20.0.3'`{{execute}}
+
+`tower-cli host create -n node-2 -i demo-clients --variables 'ansible_host: 172.20.0.3'`{{execute}}
 
 
-#### Credential
+## Credential
 
 `tower-cli credential create -n demo-cred --organization Default --credential-type Machine --inputs='{"username": "root", "password": "password"}'`{{execute}}
 
 
-#### ad-hoc command test
+## ad-hoc command test
 
 `tower-cli ad_hoc launch --job-type run -i localhost --credential demo-cred --module-name ping --monitor`{{execute}}
 `tower-cli ad_hoc launch --job-type run -i demo-clients --credential demo-cred --module-name ping --monitor`{{execute}}
 
 
 
-#### Job template
+## Job template
+
+`tower-cli job_template create -n job1 --job-type run -i demo-clients --project sample --playbook utils/hostname.yml --credential demo-cred`{{execute}}
+
+`tower-cli job launch -J job1 --monitor`{{execute}}
+
+``{{execute}}
+
+``{{execute}}
 
 
-### Run Job Template
+## Run Job Template
 
-### Override variables with Survey
+## Override variables with Survey
 
