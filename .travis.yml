@@ -38,6 +38,8 @@ script:
   - docker top node-1
   - docker top node-2
   - docker top node-3
+
+  - echo ##### 101 ##################################################
   - ansible all -m ping
   - ansible all -m command -a "uptime" -o
   - ansible all -m yum -a "name=httpd state=present"
@@ -48,6 +50,12 @@ script:
   - ansible-playbook ansible-101/tests/install_apache.yml
   - ansible all -c local -m uri -a 'url=http://{{ ansible_ssh_host }}/ status_code=403 return_content=yes'
   - ansible-playbook ansible-101/tests/uninstall_apache.yml
+
+  - echo ##### 102 ##################################################
+  - ansible-playbook ansible-102/tests/site.yml
+  - ansible all -c local -m uri -a 'url=http://{{ ansible_ssh_host }}/ status_code=200 return_content=yes'
+  - ansible-playbook ansible-102/tests/site_role.yml
+  - ansible all -c local -m uri -a 'url=http://{{ ansible_ssh_host }}/ status_code=200 return_content=yes'
 
 notifications:
   email: false
