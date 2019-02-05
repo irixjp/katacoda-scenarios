@@ -1,5 +1,5 @@
 ---
-- hosts: web
+- hosts: all
   name: This is my role-based playbook
   become: yes
 

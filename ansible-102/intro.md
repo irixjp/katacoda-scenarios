@@ -4,13 +4,17 @@
 
 本コースは Ansible の基礎をすばやく学習するためのコースです。以下のポイントを解説しています。
 
-- 実践的な Playbook - Loop, Variables, Template, Handler
+- 実践的な Playbook の作成方法
+  - Loop (ループ)
+  - Variables (変数)
+  - Template (テンプレート)
+  - Handler (ハンドラー)
 - 再利用性の向上 - Playbook の Role 化
 
 作成にあたり以下のコンテンツを参考にしています。
 - https://github.com/ansible/lightbulb
 
-間違えを見つけたら以下へご連絡ください。
+ミスを見つけたら以下へご連絡ください。
 - https://github.com/irixjp/katacoda-scenarios
 
 [Back to top page](https://www.katacoda.com/irixjp)

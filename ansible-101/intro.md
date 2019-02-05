@@ -7,12 +7,12 @@
 - Ansible のインストール
 - Ad-Hoc コマンドを使ったモジュールの実行
 - インベントリを使った対象の制御
-- Playbook 作成の1歩目
+- Playbook 作成の1歩
 
 作成にあたり以下のコンテンツを参考にしています。
 - https://github.com/ansible/lightbulb
 
-間違えを見つけたら以下へご連絡ください。
+ミスを見つけたら以下へご連絡ください。
 - https://github.com/irixjp/katacoda-scenarios
 
 

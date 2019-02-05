@@ -1,8 +1,8 @@
 演習環境の準備を行います。
 
-## 作業
+## 準備作業
 
-以下のコマンドを実行して、演習環境を準備します。この操作は1-2分程度で終わります。
+以下のコマンドを実行して演習環境を準備します。この操作は1-2分程度で終わります。
 
 `bash ./lab_setup.sh`{{execute}}
 
@@ -17,6 +17,7 @@ node-1 ansible_ssh_host=172.20.0.2 ansible_ssh_user=root ansible_ssh_pass=passwo
 node-2 ansible_ssh_host=172.20.0.3 ansible_ssh_user=root ansible_ssh_pass=password
 node-3 ansible_ssh_host=172.20.0.4 ansible_ssh_user=root ansible_ssh_pass=password
 ```
+
 
 この演習では以下のような環境を利用します。
 

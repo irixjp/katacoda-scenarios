@@ -184,12 +184,13 @@ role に tasks を定義します。
 
 `cp ~/ansible.cfg ~/apache-basic-playbook`{{execute}}
 
-ここまでの作業結果を確認しておきましょう。
+
+ここまでの作業結果を確認しておきましょう。以下のコマンドで role のツリー構造を確認できます。
 
 `tree ~/apache-basic-playbook`{{execute}}
 
 
-シンタックスの確認を実施してみましょう。
+ここでもシンタックスの確認を実施してみましょう。とても重要です。
 
 `ansible-playbook --syntax-check site.yml`{{execute}}
 
