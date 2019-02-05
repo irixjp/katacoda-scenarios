@@ -2,7 +2,7 @@
 sudo: required
 language: python
 python:
-  - "2.7"
+  - "3.6"
 services:
   - docker
 
@@ -20,6 +20,7 @@ before_install:
 
 script:
   - ansible --version
+  - PASSWORD=password
   - |
     for i in 1 2 3
     do
@@ -28,7 +29,7 @@ script:
     docker exec -it node-${i}  sh -c "systemctl start sshd"
     docker exec -it node-${i}  sh -c "echo ${PASSWORD:?} | passwd --stdin root"
     IPADDR=`docker inspect node-${i}  | jq -r ".[0].NetworkSettings.IPAddress"`
-    echo node-${i} ansible_ssh_host=${IPADDR:?} ansible_ssh_user=root ansible_ssh_pass=password >> inventory
+    echo node-${i} ansible_ssh_host=${IPADDR:?} ansible_ssh_user=root ansible_ssh_pass=${PASSWORD:?} >> inventory
     done
   - docker ps
   - ansible all -m ping
