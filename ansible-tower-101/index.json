@@ -6,8 +6,16 @@
   "details": {
     "steps": [
       {
-        "title": "Prepare your hands-on environment",
+        "title": "Prepare your hands-on environment and install Tower",
         "text": "step0.md"
+      },
+      {
+        "title": "License setup",
+        "text": "step1.md"
+      },
+      {
+        "title": "Configure Tower",
+        "text": "step2.md"
       }
     ],
     "intro": {
@@ -19,6 +27,10 @@
       "host01": [
         {
           "file": "lab_setup.sh",
+          "target": "~/"
+        },
+        {
+          "file": "tower_setup.sh",
           "target": "~/"
         }
       ]

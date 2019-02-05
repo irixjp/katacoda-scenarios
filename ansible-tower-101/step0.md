@@ -1,12 +1,29 @@
 In order to configure this environment, exec the below command.
 
 
-### Prepare lab environment
+# Prepare lab environment
 
 This operation will take 3-5min
 
 `bash ./lab_setup.sh`{{execute}}
 
+
+# Install Tower
+
+You have two ways to install tower in this environment.
+
+## One Click Install
+
+Just run the below script:
+
+`./tower_setup.sh`{{execute}}
+
+After finishing the script, process to the 2nd page.
+
+
+## Step by step install
+
+You are following the basic install way for all-in-one Tower.
 
 ### Download Ansible Tower Installer
 

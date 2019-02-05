@@ -1,0 +1,37 @@
+---
+sudo: required
+language: python
+python:
+  - "2.7"
+services:
+  - docker
+
+before_install:
+  # Prepare Travis environment
+  - sudo apt-get update
+  - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
+  - sudo service docker restart
+  - sleep 5
+
+  # Install Ansible
+  - sudo pip install -U pip setuptools
+  - sudo pip install ansible
+  - sudo apt install -y jq
+
+script:
+  - ansible --version
+  - |
+    for i in 1 2 3
+    do
+    docker run -d --security-opt label:disable --cap-add SYS_ADMIN --name node-${i} -h node-${i} -p 808${i}:80 irixjp/katacoda:latest /sbin/init
+    sleep 3
+    docker exec -it node-${i}  sh -c "systemctl start sshd"
+    docker exec -it node-${i}  sh -c "echo ${PASSWORD:?} | passwd --stdin root"
+    IPADDR=`docker inspect node-${i}  | jq -r ".[0].NetworkSettings.IPAddress"`
+    echo node-${i} ansible_ssh_host=${IPADDR:?} ansible_ssh_user=root ansible_ssh_pass=password >> inventory
+    done
+  - docker ps
+  - ansible all -m ping
+
+notifications:
+  email: false
