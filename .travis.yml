@@ -39,6 +39,15 @@ script:
   - docker top node-2
   - docker top node-3
   - ansible all -m ping
+  - ansible all -m command -a "uptime" -o
+  - ansible all -m yum -a "name=httpd state=present"
+  - ansible all -m service -a "name=httpd state=started"
+  - ansible all -c local -m uri -a 'url=http://{{ ansible_ssh_host }}/ status_code=403 return_content=yes'
+  - ansible all -m service -a "name=httpd state=stopped"
+  - ansible all -m yum -a "name=httpd state=absent"
+  - ansible-playbook ansible-101/tests/install_apache.yml
+  - ansible all -c local -m uri -a 'url=http://{{ ansible_ssh_host }}/ status_code=403 return_content=yes'
+  - ansible-playbook ansible-101/tests/uninstall_apache.yml
 
 notifications:
   email: false
