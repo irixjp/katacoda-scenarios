@@ -13,10 +13,12 @@ before_install:
   - sudo service docker restart
   - sleep 5
 
+  # Required packages
+  - sudo apt install -y sshpass jq
+
   # Install Ansible
-  - sudo pip install -U pip setuptools
-  - sudo pip install ansible
-  - sudo apt install -y jq
+  - pip install -U pip setuptools
+  - pip install ansible
 
 script:
   - ansible --version
