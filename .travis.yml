@@ -26,12 +26,12 @@ script:
   - |
     for i in 1 2 3
     do
-    docker run -d --security-opt label:disable --cap-add SYS_ADMIN --name node-${i} -h node-${i} -p 808${i}:80 -p 202${i}:22 irixjp/katacoda:latest /sbin/init
+    docker run -d --privileged --name node-${i} -h node-${i} -p 808${i}:80 irixjp/katacoda:latest /sbin/init
     sleep 3
     docker exec -it node-${i}  sh -c "systemctl start sshd"
     docker exec -it node-${i}  sh -c "echo ${PASSWORD:?} | passwd --stdin root"
     IPADDR=`docker inspect node-${i}  | jq -r ".[0].NetworkSettings.IPAddress"`
-    echo node-${i} ansible_ssh_host=localhost ansible_ssh_port=202${i}  ansible_ssh_user=root ansible_ssh_pass=${PASSWORD:?} >> inventory
+    echo node-${i} ansible_ssh_host=${IPADDR:?} ansible_ssh_user=root ansible_ssh_pass=${PASSWORD:?} >> inventory
     done
   - docker ps
   - cat inventory
