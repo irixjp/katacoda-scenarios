@@ -163,7 +163,7 @@ Ansible のモジュールは実際に変更を行う前に、「今から行う
 
 ### ステップ 7
 
-今度は、ここまででやってきたのと反対のことを行ってみます。Apacheを停止させ、Webノードからアンインストールします。まずそのためにPlaybookを編集して、それが終ったらステップ 5のやり方で走らせます。この演習ではこれまでのように逐一の説明は行いませんが、いくつかのヒントを用意しました。
+今度は、ここまででやってきたのと反対のことを行ってみます。Apacheを停止させ、Webノードからアンインストールします。まずそのためにPlaybookを `uninstall_apache.yml` を作成して、それが終ったらステップ 5のやり方で実行します。この演習ではこれまでのように逐一の説明は行いませんが、いくつかのヒントを用意しました。
 
 - 先のPlaybookの最初のtaskがhttpdのインストールで、2つ目のtaskがその起動であったことを考えれば、今回はそれらのtaskをどのような順番にすればよいでしょうか？
 - startedでhttpdサービスが起動したのであれば、それを停止させるためのオプションはなんでしょうか？
@@ -171,7 +171,10 @@ Ansible のモジュールは実際に変更を行う前に、「今から行う
 - [yum モジュールの解説](https://docs.ansible.com/ansible/latest/modules/yum_module.html)
 - [service モジュールの解説](https://docs.ansible.com/ansible/latest/modules/service_module.html)
 
+実行に成功したら node-1, 2, 3 へアクセスし、WEBへアクセスできなくなれば成功です。
 
-本演習は以上となります。
+- 回答例は [こちら](https://github.com/irixjp/katacoda-scenarios/blob/master/ansible-101/tests/uninstall_apache.yml) になります。
+
+本演習は以上となります。 [Ansible 102](https://www.katacoda.com/irixjp/scenarios/ansible-102) へと進んでください。
 
 [Back to top page](https://www.katacoda.com/irixjp)
