@@ -1,6 +1,6 @@
 {
-  "title": "Sandbox",
-  "description": "Test something",
+  "title": "_Sandbox",
+  "description": "Testing",
   "difficulty": "beginner",
   "time": "60 minutes",
   "details": {
@@ -8,6 +8,14 @@
       {
         "title": "Step 0 - Prepare your hands-on environment",
         "text": "step0.md"
+      },
+      {
+        "title": "Step 1 - Install Ansible",
+        "text": "ansible-101/step1.md"
+      },
+      {
+        "title": "Step 2 - Ad-hoc command",
+        "text": "ansible-101/step2.md"
       }
     ],
     "intro": {
@@ -22,6 +30,6 @@
     "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
   },
   "backend": {
-    "imageid": "docker"
+    "imageid": "centos-vm"
   }
 }
