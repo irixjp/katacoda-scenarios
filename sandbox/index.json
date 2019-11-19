@@ -24,6 +24,6 @@
   },
   "backend": {
     "imageid": "centos-vm",
-    "port": 8443
+    "imageid": "centos-vm"
   }
 }
