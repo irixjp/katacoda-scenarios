@@ -1,1 +1,0 @@
-../scenarios/01_overview_and_prepare.md

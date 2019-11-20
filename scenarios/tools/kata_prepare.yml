@@ -1,0 +1,93 @@
+---
+- name: Setup handson environment
+  hosts: localhost
+  gather_facts: no
+  vars:
+    image_name: irixjp/katacoda:latest
+    target_containers:
+      - name: node-1
+        port: 8081
+      - name: node-2
+        port: 8082
+      - name: node-3
+        port: 8083
+    keypair_path: /root/automation-keypair.pem
+    inventory_path: /root/inventory
+  tasks:
+    - name: launch ansible target nodes on a container
+      docker_container:
+        name: "{{ item.name }}"
+        hostname: "{{ item.name }}"
+        image: "{{ image_name }}"
+        command: /sbin/init
+        state: started
+        ports:
+          - "{{ item.port }}:80"
+        security_opts:
+          - "label:disable"
+        capabilities:
+          - "SYS_ADMIN"
+      loop: "{{ target_containers }}"
+      register: containers
+
+    - name: Create a in-memory inventory
+      add_host:
+        host: "{{ item.ansible_facts.docker_container.Config.Hostname }}"
+        group: dockers
+        ansible_user: root
+        ansible_connection: docker
+      loop: "{{ containers.results }}"
+
+    - name: Create a default inventory
+      copy:
+        content: |
+          [web]
+          {% for i in containers.results %}
+          {{ i.ansible_facts.docker_container.Config.Hostname }} ansible_host={{ i.ansible_facts.docker_container.NetworkSettings.IPAddress }}
+          {% endfor %}
+
+          [all:vars]
+          ansible_user=centos
+          ansible_ssh_private_key_file={{ keypair_path }}
+        dest: "{{ inventory_path }}"
+
+    - name: create ssh keypair
+      openssh_keypair:
+        path: /root/automation-keypair.pem
+      register: keypair
+
+    - debug: var=keypair
+
+- hosts: dockers
+  gather_facts: False
+  vars:
+    keypair_path: /root/automation-keypair.pem
+  tasks:
+    - ping:
+
+    - name: add centos user to each node
+      user:
+        name: centos
+        state: present
+
+    - name: start sshd
+      service:
+        name: sshd
+        state: started
+
+    - name: create ssh directory to centos
+      file:
+        path: /home/centos/.ssh
+        state: directory
+        mode: '0755'
+        owner: centos
+        group: centos
+
+    - name: copy pub key to nodes
+      copy:
+        src: "{{ keypair_path }}.pub"
+        dest: /home/centos/.ssh/authorized_keys
+        mode: '0600'
+        owner: centos
+        group: centos
+

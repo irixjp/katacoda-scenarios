@@ -1,6 +1,6 @@
 # Ansible の基礎、インベントリー、認証情報
 ---
-本演習では、Ansible の基本となるインベントリー(inventory)と認証情報(credential)について学習します。これは Ansible を動かす上で最低限準備する3つの情報のうちの2つに該当します。
+Ansible の基本となるインベントリー(inventory)と認証情報(credential)について学習します。これは Ansible を動かす上で最低限準備する3つの情報のうちの2つに該当します。
 
 ![structure.png](./assets/01/structure.png)
 
@@ -46,10 +46,9 @@ tmpfs            99M     0   99M   0% /run/user/1000
 ---
 まず以下のコマンドを実行します。
 
-```bash
-$ cd /notebooks
-$ ansible --version
+`ansible --version`{{execute}}
 
+```bash
 ansible 2.9.0
   config file = /jupyter/.ansible.cfg
   configured module search path = ['/jupyter/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
@@ -57,6 +56,8 @@ ansible 2.9.0
   executable location = /usr/local/bin/ansible
   python version = 3.6.8 (default, Oct  7 2019, 17:58:22) [GCC 8.2.1 20180905 (Red Hat 8.2.1-3)]
 ```
+
+> Note: 出力内容は環境によって異なる場合があります。
 
 ansible コマンドに `--version` オプションをつけると、実行環境に関する基本的な情報が出力されます。バージョンや利用している Python のバージョンなどです。ここでは以下の行に注目します。
 

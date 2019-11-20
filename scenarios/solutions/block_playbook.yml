@@ -1,0 +1,29 @@
+---
+- name: using block statement
+  hosts: node-1
+  become: yes
+  tasks:
+    - name: Install, configure, and start Apache
+      block:
+        - name: install httpd
+          yum:
+            name: httpd
+            state: latest
+
+        - name: Copy Apache configuration file
+          copy:
+            src: files/httpd.conf
+            dest: /etc/httpd/conf/
+
+        - name: start & enabled httpd
+          service:
+            name: httpd
+            state: started
+            enabled: yes
+
+        - name: copy index.html
+          copy:
+            src: files/index.html
+            dest: /var/www/html/
+      when:
+        - ansible_facts['distribution'] == 'CentOS'

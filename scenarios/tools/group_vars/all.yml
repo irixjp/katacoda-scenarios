@@ -1,0 +1,13 @@
+---
+REGION: ap-northeast-1
+VPC_NAME: aitac-automation-vpc
+VPC_CIDR_BLOCK: 10.0.0.0/23
+SUBNET_CIDR_BLOCK: 10.0.0.0/24
+SEC_GROUP_NAME: aitac-automation-sg
+SEC_GROUP_DESC: security group for aitac handson
+AMI_PRODUCT_CODE: aw0evgkw8e5c1q413zgy5pjce
+KEYPAIR_NAME: autmation-keypair
+KEYPAIR_PATH: /jupyter/automation-keypair.pem
+INSTANCE_NAME: aitac-automation-instance
+INSTANCE_NUM: 3
+INVENTORY_PATH: /jupyter/inventory

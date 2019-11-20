@@ -14,7 +14,7 @@
 ---
 以下の演習項目を指示に従い進めてください。各演習は自習可能な形態となっているため、インストラクターが不在でも進めることが可能です。
 
-1. [演習の概要と環境の準備](01_overview_and_prepare.md)
+1. [演習の概要と環境の準備](01_overview_and_prepare_ec2.md)
 2. [Ansible の基礎、インベントリー、認証情報](02_inv_cred.md)
 3. [Ad-Hocコマンドとモジュール](03_adhoc_modules.md)
 4. [Playbookの記述と実行](04_playbook.md)
