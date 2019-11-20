@@ -8,6 +8,10 @@
       {
         "title": "Step 0 - Prepare your hands-on environment",
         "text": "step0.md"
+      },
+      {
+        "title": "Step 1 - Prepare your hands-on environment",
+        "text": "step1.md"
       }
     ],
     "intro": {
@@ -16,16 +20,13 @@
     }
   },
   "environment": {
-    "uilayout": "terminal-terminal",
+    "uilayout": "terminal",
     "uieditorpath": "/root",
     "hideintro": false,
     "hidefinish": true,
     "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
   },
   "backend": {
-    "imageid": "ubuntu",
-    "imageid": "ubuntu",
-    "imageid": "ubuntu",
-    "imageid": "ubuntu"
+    "imageid": "centos-vm"
   }
 }
