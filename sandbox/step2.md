@@ -1,0 +1,1 @@
+../scenarios/02_inv_cred.md

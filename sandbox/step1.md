@@ -1,1 +1,1 @@
-../ansible-101/step1.md
+../scenarios/01_overview_and_prepare.md

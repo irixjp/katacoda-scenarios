@@ -10,8 +10,16 @@
         "text": "step0.md"
       },
       {
-        "title": "Step 1 - Prepare your hands-on environment",
+        "title": "Step 0 - Prepare your hands-on environment",
         "text": "step1.md"
+      },
+      {
+        "title": "Step 0 - Prepare your hands-on environment",
+        "text": "step2.md"
+      },
+      {
+        "title": "Step 1 - Prepare your hands-on environment",
+        "text": "step3.md"
       }
     ],
     "intro": {
