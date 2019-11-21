@@ -1,6 +1,8 @@
 # Ad-Hocコマンドとモジュール
 ---
-ここでは Ansible における重要な要素である `Module` とモジュールを実行するための `Ad-hoc コマンド` について学習します。
+ここでは Ansible における重要な要素である `Module` と、モジュールを実行するための `Ad-hoc コマンド` について学習します。
+
+![structure.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/structure.png)
 
 ## モジュールとは
 ---
@@ -59,17 +61,15 @@ Ansible が持つモジュールの一覧は以下の[公式ドキュメント](
 
 別の方法として Ansible がインストールされた環境では、`ansible-doc` というコマンドでも参照することができます。
 
-インストール済みのモジュールの一覧を表示する
+インストール済みのモジュールの一覧を表示するには以下のコマンドを実行します。
+
+`ansible-doc -l`{{execute}}
+
+特定のモジュールのドキュメントを参照するには以下のように実行します。
+
+`ansible-doc yum`{{execute}}
 
 ```bash
-$ ansible-doc -l
-```
-
-特定のモジュールのドキュメントを参照する
-
-```bash
-$ ansible-doc yum
-
 > YUM    (/usr/local/lib/python3.6/site-packages/ansible/modules/packaging/os/yum.py)
 
         Installs, upgrade, downgrades, removes, and lists packages and
@@ -94,20 +94,15 @@ $ ansible all -m <module_name> -a '<parameters>'
 - `-m <module_name>`: モジュール名を指定します。
 - `-a <parameters>`: モジュールにわたすパラメーターを指定します。省略可能な場合もあります。
 
-Ad-hoc コマンドを利用して、いくつかのモジュールを実際に動作させてみましょう。以下の演習は全て `/notebooks/working` ディレクトリで行います。
-
-```bash
-$ cd /notebooks/working
-```
+Ad-hoc コマンドを利用して、いくつかのモジュールを実際に動作させてみましょう。
 
 ### ping
 ---
-
 [`ping`](https://docs.ansible.com/ansible/latest/modules/ping_module.html) モジュールを実行してみましょう。これは Ansible が操作対象のノードに対して「Ansible としての疎通」が可能かどうかを判定するモジュールで、パラメーターは省略可能です。
 
-```bash
-$ ansible all -m ping
+`ansible all -m ping`{{execute}}
 
+```bash
 node-1 | SUCCESS => {
     "ansible_facts": {
         "discovered_interpreter_python": "/usr/bin/python"
@@ -135,9 +130,9 @@ node-3 | SUCCESS => {
 ---
 次に、[`shell`](https://docs.ansible.com/ansible/latest/modules/shell_module.html) モジュールを呼び出してみましょう。これは対象のノード上任意のコマンドを実行して、その結果を回収するコマンドです。
 
-```bash
-$ ansible all -m shell -a 'hostname'
+`ansible all -m shell -a 'hostname'`{{execute}}
 
+```bash
 node-1 | CHANGED | rc=0 >>
 ip-10-0-0-92.ap-northeast-1.compute.internal
 
@@ -149,45 +144,40 @@ ip-10-0-0-218.ap-northeast-1.compute.internal
 ```
 
 他にもいくつかのコマンドを実行して結果を確かめてください。
-```bash
-$ ansible all -m shell -a 'uname -a'
-$ ansible all -m shell -a 'date'
-$ ansible all -m shell -a 'df -h'
-$ ansible all -m shell -a 'rpm -qa |grep bash'
-```
+
+`ansible all -m shell -a 'uname -a'`{{execute}}
+`ansible all -m shell -a 'date'`{{execute}}
+`ansible all -m shell -a 'df -h'`{{execute}}
+`ansible all -m shell -a 'rpm -qa |grep bash'`{{execute}}
+
 
 ### yum
 ---
 [`yum`](https://docs.ansible.com/ansible/latest/modules/yum_module.html)はパッケージの操作を行うモジュールです。このモジュールを利用して新しくパッケージをインストールしてみます。
 
 今回は screen パッケージをインストールします。まず現在の環境に screen がインストールされていないことを確認します。
-```bash
-$ ansible all -m shell -a 'which screen'
-```
+
+`ansible all -m shell -a 'which screen'`{{execute}}
 
 このコマンドは screen が存在しないためエラーになるはずです。
 
 では、 yum モジュールで screen のインストールを行います。
-```bash
-$ ansible all -b -m yum -a 'name=screen state=latest'
-```
+
+`ansible all -b -m yum -a 'name=screen state=latest'`{{execute}}
 
 - `-b`: become オプション。これは接続先のノードでの操作に root 権限を利用するためのオプションです。パッケージのインストールには root 権限が必要となるため、このオプションをつけています。つけない場合、このコマンドは失敗します。
 
 再度、screen コマンドの確認を行うと、今度はパッケージがインストールされたため成功するはずです。
-```bash
-$ ansible all -m shell -a 'which screen'
-```
 
+`ansible all -m shell -a 'which screen'`{{execute}}
 
 ### setup
 ---
 [`setup`](https://docs.ansible.com/ansible/latest/modules/setup_module.html) は対象ノードの情報を取得するモジュールです。取得された情報は `ansible_xxx` という変数名で自動的にアクセス可能となります。
 
 出力される情報量が多いため、1台のノードのみに実行します。
-```bash
-$ ansible node-1 -m setup
-```
+
+`ansible node-1 -m setup`{{execute}}
 
 このように、Ansible ではノードに対して操作を行う以外に、情報収集を行うことも可能です。
 
