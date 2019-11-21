@@ -61,7 +61,7 @@
 
 ## playbook の作成
 ---
-実際に playbook を作成します。`working/first_playbook.yml` をエディタで開いてください。このファイルには先頭に `---` のみが記載されています。このファイルを完成されていきます。
+実際に playbook を作成します。`~/working/first_playbook.yml` をエディタで開いてください。このファイルには先頭に `---` のみが記載されています。このファイルを完成されていきます。
 
 ここでは、WEBサーバーを構築する playbook を作成します。
 
@@ -119,10 +119,12 @@
 - [`service`](https://docs.ansible.com/ansible/latest/modules/service_module.html): インストールされた httpd を起動し、自動起動の設定を有効にしています。
 
 作成した playbook に構文エラーがないかを以下のコマンドで確認できます。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook first_playbook.yml --syntax-check
 
+`cd ~/working`{{execute}}
+
+`ansible-playbook first_playbook.yml --syntax-check`{{execute}}
+
+```bash
 playbook: first_playbook.yml
 ```
 
