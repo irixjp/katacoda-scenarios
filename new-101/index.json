@@ -1,6 +1,6 @@
 {
   "title": "(re-building...)Ansible 101",
-  "description": "Ansible速習1",
+  "description": "編集中",
   "difficulty": "beginner",
   "time": "60 minutes",
   "details": {
@@ -34,12 +34,16 @@
     "assets": {
       "host01": [
         {
-          "file": "lab_setup.sh",
+          "file": "tools/setup_kata.sh",
           "target": "~/"
         },
         {
-          "file": ".ansible.cfg",
+          "file": "tools/kata_prepare.yml",
           "target": "~/"
+        },
+        {
+          "file": "tools/ansible.cfg",
+          "target": "~/.ansible.cfg"
         }
       ]
     }
