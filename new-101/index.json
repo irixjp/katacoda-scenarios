@@ -17,18 +17,9 @@
     },
     "assets": {
       "host01": [
-        {
-          "file": "tools/setup_kata.sh",
-          "target": "~/"
-        },
-        {
-          "file": "tools/kata_prepare.yml",
-          "target": "~/"
-        },
-        {
-          "file": "tools/ansible.cfg",
-          "target": "~/.ansible.cfg"
-        }
+        { "file": "tools/setup_kata.sh",    "target": "~/" },
+        { "file": "tools/kata_prepare.yml", "target": "~/" },
+        { "file": "tools/ansible.cfg",      "target": "~/.ansible.cfg" }
       ]
     }
   },
