@@ -8,22 +8,6 @@
       {
         "title": "Step 0 - Prepare your hands-on environment",
         "text": "step0.md"
-      },
-      {
-        "title": "Step 1 - Install Ansible",
-        "text": "step1.md"
-      },
-      {
-        "title": "Step 2 - Ad-hoc command",
-        "text": "step2.md"
-      },
-      {
-        "title": "Step 3 - Inventory",
-        "text": "step3.md"
-      },
-      {
-        "title": "Step 4 - Playbook",
-        "text": "step4.md"
       }
     ],
     "intro": {
