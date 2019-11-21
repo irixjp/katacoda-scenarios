@@ -20,7 +20,8 @@
         { "file": "tools/kata_setup.sh",    "target": "~/" },
         { "file": "tools/kata_prepare.yml", "target": "~/" },
         { "file": "tools/.ansible.cfg",     "target": "~/" },
-        { "file": "tools/working/*",        "target": "~/working/" }
+        { "file": "tools/working/first_playbook.yml", "target": "~/working/" },
+        { "file": "tools/working/files/index.html",   "target": "~/working/files" }
       ]
     }
   },
