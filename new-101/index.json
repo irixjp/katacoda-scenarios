@@ -8,6 +8,10 @@
       {
         "title": "Step 0 - Prepare your hands-on environment",
         "text": "step0.md"
+      },
+      {
+        "title": "Step 1 - Ansible configrations, inventories and credentials",
+        "text": "step1.md"
       }
     ],
     "intro": {

@@ -8,10 +8,9 @@ Ansible の基本となるインベントリー(inventory)と認証情報(creden
 ---
 まず以下のコマンドを実行してください。これは Ansible を使って3台の演習ノードのディスク使用量を確認しています。
 
-```bash
-$ cd /notebooks
-$ ansible all -m shell -a 'df -h'
+`ansible all -m shell -a 'df -h'`{{execute}}
 
+```bash
 node-1 | CHANGED | rc=0 >>
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/xvda1       10G  885M  9.2G   9% /
@@ -40,7 +39,9 @@ tmpfs           495M     0  495M   0% /sys/fs/cgroup
 tmpfs            99M     0   99M   0% /run/user/1000
 ```
 
-これで3台のノードからディスク使用量の情報が取得できました。しかし、この3台のノードはどのように決定されたのでしょうか。もちろん、これは演習用に予め設定されているものですが、その情報は Ansible のどこに設定されているか疑問を持つ方もいるはずです。今からその設定について確認していきます。
+> Note: 実際の出力内容と上記の例には差分は無視してください。重要なのは `df -h` が実行されたということです。
+
+これで3台のノードからディスク使用量の情報が取得できました。しかし、この3台のノードはどのように決定されたのでしょうか。もちろんこれは演習用に予め設定されているものですが、その情報は Ansible のどこに設定されているか疑問を持つ方もいるはずです。今からその設定について確認していきます。
 
 ## ansible.cfg
 ---
@@ -67,12 +68,13 @@ ansible コマンドに `--version` オプションをつけると、実行環�
 
 「このディレクトリで実行したとき」という表現をつけましたが、 Ansible は ansible.cfg を検索する順番が決まっています。詳細は [Ansible Configuration Settings](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#the-configuration-file) に記載されております。
 
-ansible.cfg は環境変数で与えられたパス、現在のディレクトリ、ホームディレクトリ、OS全体の共通パスという順序で検索され、今回はホームディレクトリ `/jupyter/.ansible.cfg` が最初に見つかるため、このファイルが利用されています。
+簡単に説明すると、ansible.cfg は環境変数で与えられたパス、現在のディレクトリ、ホームディレクトリ、OS全体の共通パスという順序で検索され、今回はホームディレクトリ `~/.ansible.cfg` が最初に見つかるため、このファイルが利用されています。
 
 この中身を確認してみましょう。
 
+`cat ~/.ansible.cfg`{{execute}}
+
 ```bash
-$ cat /jupyter/.ansible.cfg
 [defaults]
 inventory         = inventory
 host_key_checking = False
@@ -96,9 +98,10 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=
 
 このファイルの内容を確認してみます。
 
-```bash
-$ cat /jupyter/inventory
 
+`cat ~/inventory`{{execute}}
+
+```bash
 [web]
 node-1 ansible_host=3.114.16.114
 node-2 ansible_host=3.114.209.178
@@ -126,10 +129,9 @@ ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 
 実際にこのインベントリーを利用して定義されたノードの対して Ansible を実行してみます。以下のコマンドを実行してください。
 
-```bash
-$ cd /notebooks
-$ ansible web -i ~/inventory -m ping -o
+`ansible web -i ~/inventory -m ping -o`{{execute}}
 
+```bash
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
@@ -144,10 +146,9 @@ node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 
 今回の環境では、 `ansible.cfg` ファイルによって、インベントリーが指定されているため、以下のように `-i ~/inventory` を省略することが可能です。
 
-```bash
-$ cd /notebooks
-$ ansible web -m ping -o
+`ansible web -m ping -o`{{execute}}
 
+```bash
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
@@ -157,29 +158,26 @@ node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 
 以下のように、グループ名の代わりにノード名を指定することも可能です。
 
-```bash
-$ cd /notebooks
-$ ansible node-1 -m ping -o
+`ansible node-1 -m ping -o`{{execute}}
 
+```bash
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 ```
 
 複数のノードを指定することも可能です。
 
-```bash
-$ cd /notebooks
-$ ansible node-1,node-3 -m ping -o
+`ansible node-1,node-3 -m ping -o`{{execute}}
 
+```bash
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 ```
 
 特別なグループである `all` を指定してみます。`all` はインベントリーに含まれる全てのノードを対象とします。今回のインベントリーは `all` と `web` のグループが同じものを指しているため、結果も同じなります。
 
-```bash
-$ cd /notebooks
-$ ansible all -m ping -o
+`ansible all -m ping -o`{{execute}}
 
+```bash
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
@@ -207,11 +205,9 @@ ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 
 - `ansible_password`: Ansible がログインに使用するパスワードを指定する。
 
-この他にも認証情報を与える方法がいくつか提供されいます。代表的なものとしてコマンドラインのオプションとして与ええる方法があります。
+この他にも認証情報を与える方法がいくつか提供されいます。代表的なものとしてコマンドラインのオプションとして与える方法があります。
 
-```bash
-$ ansible all -u centos --private-key /jupyter/aitac-automation-keypair.pem -m ping
-```
+`ansible all -u centos --private-key ~/aitac-automation-keypair.pem -m ping`{{execute}}
 
 - `-u centos`: ログインに使用するユーザー名を指定できます。
 - `--private-key`: ログインに使用する秘密鍵を指定できます。
@@ -239,6 +235,3 @@ node-3 | FAILED! => {
 Ansible に認証情報を渡す仕組みは、他にもいくつかの方法があります。本演習では最もベーシックな手段(変数で直接指定)を用いていますが、実際に本番で利用する際には、認証情報をどう扱うかは事前に熟慮が必要です。
 
 一般的には、[Ansible Tower](https://www.ansible.com/products/tower) や [AWX](https://github.com/ansible/awx) 等の自動化プラットフォームソフトウェアと組み合わせ使う方法がよく採用されます。
-
----
-本演習は以上となります。
