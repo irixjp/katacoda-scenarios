@@ -150,8 +150,11 @@ ip-10-0-0-218.ap-northeast-1.compute.internal
 他にもいくつかのコマンドを実行して結果を確かめてください。
 
 `ansible all -m shell -a 'uname -a'`{{execute}}
+
 `ansible all -m shell -a 'date'`{{execute}}
+
 `ansible all -m shell -a 'df -h'`{{execute}}
+
 `ansible all -m shell -a 'rpm -qa |grep bash'`{{execute}}
 
 

@@ -61,7 +61,9 @@
 
 ## playbook の作成
 ---
-実際に playbook を作成します。`~/working/first_playbook.yml` をエディタで開いてください。このファイルには先頭に `---` のみが記載されています。このファイルを完成されていきます。
+では実際に playbook を作成します。
+
+`~/working/first_playbook.yml` をエディタで開いてください。このファイルには先頭に `---` のみが記載されています。このファイルを完成されていきます。
 
 ここでは、WEBサーバーを構築する playbook を作成します。
 
@@ -130,7 +132,6 @@ playbook: first_playbook.yml
 
 上記はエラー無しのケースです。もしインデントなどに誤りがある場合は以下のようになります。
 ```bash
-$ cd /notebooks/working
 $ ansible-playbook first_playbook.yml --syntax-check
 
 ERROR! Syntax Error while loading YAML.
@@ -152,10 +153,9 @@ The offending line appears to be:
 ---
 作成した playbook を実行します。playbook の実行には `ansible-playbook` コマンドを利用します。成功すれば httpd サーバーが起動して apache の初期画面が参照できるはずです。
 
-```bash
-$ cd /notebooks/working
-$ ansible-playbook first_playbook.yml
+`ansible-playbook first_playbook.yml`{{execute}}
 
+```bash
 PLAY [deploy httpd server] **************************************************
 
 TASK [Gathering Facts] ******************************************************
@@ -190,7 +190,7 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ---
 作成した plyabook にサイトのトップページを配布するタスクを追加します。
 
-`working/files/index.html` をエディタで開きます。画面左のファイルブラウザーで開くときは、ファイルを右クリックして `Open With` → `Editor` で開いてください。
+`working/files/index.html` をエディタで開きます。
 
 ファイルを以下のように編集します。
 ```html
@@ -224,11 +224,13 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
 
 編集が完了したら、構文チェックを実施した後に playbook を実行してみましょう。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook first_playbook.yml --syntax-check
-$ ansible-playbook first_playbook.yml
 
+
+`ansible-playbook first_playbook.yml --syntax-check`{{execute}}
+
+`ansible-playbook first_playbook.yml`{{execute}}
+
+```bash
 PLAY [deploy httpd server] **************************************************
 
 TASK [Gathering Facts] ******************************************************
@@ -274,10 +276,9 @@ Ansible のモジュールを利用するメリットして、記述量を大幅
 
 ここで再度この playbook を実行してみましょう。3つのタスクの状態がどのようになるか考えてから実行してください。
 
-```bash
-$ cd /notebooks/working
-$ ansible-playbook first_playbook.yml
+`ansible-playbook first_playbook.yml`{{execute}}
 
+```bash
 PLAY [deploy httpd server] **************************************************
 
 TASK [Gathering Facts] ******************************************************
@@ -345,7 +346,4 @@ Ansible の各モジュールはこの冪等性を考慮するように作られ
 > Note: ただし、Ansibleも全てのモジュールが完全な冪等性を保証しているわけではありません。モジュールの中には shell のように何が実行されるかわからないものや、操作対象（NW系機器やクラウド環境）によっては原理的に冪等性の確保が難しいものも存在しています。こういったモジュールを使う場合は利用者が注意を払う必要があります
 
 ## 演習の解答
-- [first_playbook.yml](solutions/first_playbook.yml)
-
----
-本演習は以上となります。
+- [first_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/first_playbook.yml)
