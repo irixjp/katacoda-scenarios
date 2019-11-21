@@ -1,1 +1,1 @@
-../master-course-data/02_inv_cred.md
+../master-course-data/01_overview_and_prepare_kata.md

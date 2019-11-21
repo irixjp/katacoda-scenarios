@@ -63,6 +63,8 @@
         state: absent
       loop: "{{ delete_groups }}"
       when: delete_groups | length > 0
+      register: secgroup_del
+      until: secgroup_del is not failed
 
     - name: Collect routeb tables
       ec2_vpc_route_table_info:
