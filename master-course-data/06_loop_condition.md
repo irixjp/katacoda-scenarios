@@ -54,10 +54,12 @@ playbook は YAML 形式で表記するため、基本的には作業やパラ�
 - `name: "{{ item }}"` item 変数は loop の中でのみ利用できる変数で、ここに取り出された変数が格納されています。つまり、1ループ目には apple 、2ループ目には orange となります。
 
 `loop_playbook.yml` を実行します。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook loop_playbook.yml
 
+`cd ~/working`{{execute}}
+
+`ansible-playbook loop_playbook.yml`{{execute}}
+
+```bash
 (省略)
 TASK [Gathering Facts] *******************************
 ok: [node-1]
@@ -71,10 +73,10 @@ changed: [node-1] => (item=pineapple)
 ```
 
 本当にユーザーが追加されたかを確認してみましょう。正しく playbook が記述されていれば、node-1 にユーザーが作成されているはずです。
-```bash
-$ cd /notebooks/working
-$ ansible node-1 -b -m shell -a 'cat /etc/passwd'
 
+`ansible node-1 -b -m shell -a 'cat /etc/passwd'`{{execute}}
+
+```bash
 (省略)
 apple:x:1001:1001::/home/apple:/bin/bash
 orange:x:1002:1002::/home/orange:/bin/bash
@@ -83,10 +85,9 @@ pineapple:x:1003:1003::/home/pineapple:/bin/bash
 
 さらに `mango`, `peach` ユーザーを追加したくなったとします。其の場合には、どのように playbook を編集すれば良いでしょうか。実際に playbook を編集して再度実行してください。以下のような実行結果となれば正しく記述できています。冪等性が働いていることが確認できるはずです。
 
-```bash
-$ cd /notebooks/working
-$ ansible-playbook loop_playbook.yml
+`ansible-playbook loop_playbook.yml`{{execute}}
 
+```bash
 (省略)
 TASK [Gathering Facts] *******************************
 ok: [node-1]
@@ -148,15 +149,14 @@ changed: [node-1] => (item=peach)
   - `- ret.rc == 1` コマンド実行結果の `rc` の値を比較しています。`rc` にはコマンドラインの戻り値が格納されています。つまり、`ps -ef | grep http[d]` でプロセスが「見つからない」場合にはエラーとなり `1` がここに格納されます。
 
 playbook を実行する前に、httpd を停止しておきます。
-```yaml
-$ cd /notebooks/working
-$ ansible node-1 -b -m shell -a 'systemctl stop httpd'
-```
+
+`ansible node-1 -b -m shell -a 'systemctl stop httpd'`{{execute}}
 
 `working/when_playbook.yml` を実行します。
-```bash
-$ ansible-playbook when_playbook.yml
 
+`ansible-playbook when_playbook.yml`{{execute}}
+
+```bash
 TASK [check httpd processes is running] **************
 fatal: [node-1]: FAILED! => {"changed": false, "cmd": "ps -ef |grep http[d]", "delta": "0:00:00.023918", "end": "2019-11-18 06:07:44.403881", "msg": "non-zero return code", "rc": 1, "start": "2019-11-18 06:07:44.379963", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
 ...ignoring
@@ -186,6 +186,9 @@ changed: [node-1]
 ここでは、httpd の起動タスクが `ret.rc == 1` の条件に当てはまったため実行されています。
 
 次に、`working/when_playbook.yml` を再度実行します。今度は httpd が起動している状態です。
+
+`ansible-playbook when_playbook.yml`{{execute}}
+
 ```bash
 TASK [check httpd processes is running] **************
 ok: [node-1]
@@ -230,11 +233,10 @@ skipping: [node-1]
 演習では、`httpd.conf` をサーバーに配布して、ファイルが更新されたら `httpd` を再起動するという playbook を作成します。
 
 まず、配布する `httpd.conf` をサーバーから取得します。
-```bash
-$ cd /notebooks/working
-$ ansible node-1 -m fetch \
-    -a 'src=/etc/httpd/conf/httpd.conf dest=files/httpd.conf flat=yes'
 
+`ansible node-1 -m fetch -a 'src=/etc/httpd/conf/httpd.conf dest=files/httpd.conf flat=yes'`{{execute}}
+
+```bash
 node-1 | CHANGED => {
     "changed": true,
     "checksum": "fdb1090d44c1980958ec96d3e2066b9a73bfda32",
@@ -243,9 +245,11 @@ node-1 | CHANGED => {
     "remote_checksum": "fdb1090d44c1980958ec96d3e2066b9a73bfda32",
     "remote_md5sum": null
 }
+```
 
-$ ls -l files/
+`ls -l files/`{{execute}}
 
+```bash
 total 16
 -rw-r--r-- 1 jupyter jupyter 11753 Nov 18 07:40 httpd.conf
 -rw-r--r-- 1 jupyter jupyter     2 Nov 17 14:35 index.html
@@ -281,10 +285,10 @@ total 16
   `- name: restart_apache`: `notify`の`restart_apache`に対応したタスクを定義します。
 
 `working/handler_playbook.yml` を実行します。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook handler_playbook.yml
 
+`ansible-playbook handler_playbook.yml`{{execute}}
+
+```bash
 PLAY [restart httpd if httpd.conf is changed] ********
 
 TASK [Gathering Facts] *******************************
@@ -307,9 +311,10 @@ ServerAdmin centos@localhost
 ```
 
 再度 `working/handler_playbook.yml` を実行します。
-```bash
-$ ansible-playbook handler_playbook.yml
 
+`ansible-playbook handler_playbook.yml`{{execute}}
+
+```bash
 PLAY [restart httpd if httpd.conf is changed] ********
 
 TASK [Gathering Facts] *******************************
@@ -332,9 +337,7 @@ node-1 : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 ## 演習の解答
 ---
-- [loop_playbook.yml](solutions/loop_playbook.yml)
-- [when_playbook.yml](solutions/when_playbook.yml)
-- [handler_playbook.yml](solutions/handler_playbook.yml)
+- [loop_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/loop_playbook.yml)
+- [when_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/when_playbook.yml)
+- [handler_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/handler_playbook.yml)
 
----
-本演習は以上となります。

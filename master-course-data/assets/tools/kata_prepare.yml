@@ -14,7 +14,7 @@
     keypair_path: /root/automation-keypair.pem
     inventory_path: /root/inventory
   tasks:
-    - name: launch ansible target nodes on a container
+    - name: launch ansible target nodes by container
       docker_container:
         name: "{{ item.name }}"
         hostname: "{{ item.name }}"

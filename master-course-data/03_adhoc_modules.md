@@ -187,6 +187,3 @@ ip-10-0-0-218.ap-northeast-1.compute.internal
 `ansible node-1 -m setup`{{execute}}
 
 このように、Ansible ではノードに対して操作を行う以外に、情報収集を行うことも可能です。
-
----
-本演習は以上となります。

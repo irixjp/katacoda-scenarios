@@ -20,7 +20,7 @@ Ansible における変数は以下の特性を持っています。
 ---
 定義した変数の中身を確認するはに [`debug`](https://docs.ansible.com/ansible/latest/modules/debug_module.html) モジュールが便利です。
 
-`working/vars_playbook_1.yml` を以下のように編集してください。
+`working/vars_debug_playbook.yml` を以下のように編集してください。
 ```yaml
 ---
 - hosts: node-1
@@ -42,11 +42,13 @@ Ansible における変数は以下の特性を持っています。
     - 変数内の辞書データは `.keyname` という形で取り出します。
     - 変数内の配列データは `[index_number]` という形で取り出します。
 
-`vars_playbook_1.yml` を実行します。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook vars_playbook_1.yml
+`vars_debug_playbook.yml` を実行します。
 
+`cd ~/working`{{execute}}
+
+`ansible-playbook vars_debug_playbook.yml`{{execute}}
+
+```bash
 PLAY [node-1] ****************************************
 
 TASK [print all variables] ***************************
@@ -79,7 +81,7 @@ ok: [node-1] => {
 ---
 では実際に変数の定義を行ってみましょう。
 
-`working/vars_playbook_2.yml` を以下のように編集します。
+`working/vars_play_playbook.yml` を以下のように編集します。
 ```yaml
 ---
 - hosts: node-1
@@ -110,11 +112,13 @@ ok: [node-1] => {
   - `play_vars:` 変数名です。自由に設定できます。
     - この変数の値として、3つの要素を持つ配列を作成し、その1つずつに`order` `value` というキーを持つ辞書データを持たせています。
 
-`vars_playbook_2.yml` を実行します。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook vars_playbook_2.yml
+`vars_play_playbook.yml` を実行します。
 
+`cd ~/working`{{execute}}
+
+`ansible-playbook vars_play_playbook.yml`{{execute}}
+
+```bash
 (省略)
 TASK [print play_vars] **************
 ok: [node-1] => {
@@ -151,7 +155,7 @@ ok: [node-1] => {
 ---
 1つのタスク内だけで使う変数を定義したり、一時的に上書きを行うことが可能です。
 
-`working/vars_playbook_3.yml` を以下のように編集します。
+`working/vars_task_playbook.yml` を以下のように編集します。
 ```yaml
 ---
 - hosts: node-1
@@ -174,11 +178,13 @@ ok: [node-1] => {
         var: task_vars
 ```
 
-`vars_playbook_3.yml` を実行します。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook vars_playbook_3.yml
+`vars_task_playbook.yml` を実行します。
 
+`cd /notebooks/working`{{execute}}
+
+`ansible-playbook vars_task_playbook.yml`{{execute}}
+
+```bash
 (省略)
 TASK [print task_vars 1] ************
 ok: [node-1] => {
@@ -200,11 +206,11 @@ ok: [node-1] => {
 
 では更に優先順位の高い `extra_vars` (コマンドラインから指定する変数) を使うとどうなるか見てみましょう。
 
-`vars_playbook_3.yml` に `-e` オプションをつけて実行します。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook vars_playbook_3.yml -e 'task_vars=50'
+`vars_task_playbook.yml` に `-e` オプションをつけて実行します。
 
+`ansible-playbook vars_task_playbook.yml -e 'task_vars=50'`{{execute}}
+
+```bash
 (省略)
 TASK [print task_vars 1] ************
 ok: [node-1] => {
@@ -264,7 +270,7 @@ vars_by_host_vars: 222
 vars_by_host_vars: 333
 ```
 
-`working/vars_playbook_4.yml` を編集してこれらの変数を利用する playbook を作成します。
+`working/vars_host_group_playbook.yml` を編集してこれらの変数を利用する playbook を作成します。
 ```yaml
 ---
 - hosts: all
@@ -287,11 +293,11 @@ vars_by_host_vars: 333
         var: cal_result
 ```
 
-`vars_playbook_4.yml` を実行します。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook vars_playbook_4.yml
+`vars_host_group_playbook.yml` を実行します。
 
+`ansible-playbook vars_host_group_playbook.yml`{{execute}}
+
+```bash
 (省略)
 TASK [print group_vars] ******************************
 ok: [node-1] => {
@@ -338,7 +344,7 @@ ok: [node-3] => {
 ---
 Ansible のモジュールは実行されると様々な戻り値を返します。playbook の中ではこの戻り値をを保存して後続のタスクで利用することができます。。その際に利用するのが `register` 句です。`register` は変数名を指定すると、その変数に戻り値を格納します。
 
-`working/vars_playbook_5.yml` を以下のように編集します。
+`working/vars_register_playbook.yml` を以下のように編集します。
 ```yaml
 ---
 - hosts: node-1
@@ -365,11 +371,11 @@ Ansible のモジュールは実行されると様々な戻り値を返します
 ```
 
 
-`vars_playbook_5.yml` を実行します。
-```bash
-$ cd /notebooks/working
-$ ansible-playbook vars_playbook_5.yml
+`vars_register_playbook.yml` を実行します。
 
+`ansible-playbook vars_register_playbook.yml`{{execute}}
+
+```bash
 (省略)
 TASK [exec hostname command] *************************
 changed: [node-1]
@@ -431,11 +437,13 @@ ok: [node-1] => {
 
 ## 演習の解答
 ---
-- [vars_playbook_1.yml](solutions/vars_playbook_1.yml)
-- [vars_playbook_2.yml](solutions/vars_playbook_2.yml)
-- [vars_playbook_3.yml](solutions/vars_playbook_3.yml)
-- [vars_playbook_4.yml](solutions/vars_playbook_4.yml)
-- [vars_playbook_5.yml](solutions/vars_playbook_5.yml)
+- [vars_debug_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_debug_playbook.yml)
+- [vars_play_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_play_playbook.yml)
+- [vars_task_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_task_playbook.yml)
+- [vars_host_group_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_host_group_playbook.yml)
+  - [host_vars/node-1.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/host_vars/node-1.yml)
+  - [host_vars/node-2.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/host_vars/node-2.yml)
+  - [host_vars/node-3.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/host_vars/node-3.yml)
+  - [group_vars/all.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/group_vars/all.yml)
+- [vars_register_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_register_playbook.yml)
 
----
-本演習は以上となります。
