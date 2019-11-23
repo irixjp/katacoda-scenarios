@@ -25,9 +25,9 @@ script:
   - ansible --version
   - echo ### prepare environment
   - cd ${TEST_HOME:?}/master-course-data/assets/tools
+  - echo "localhost ansible_connection=local ansible_python_interpreter=`which python`"
   - >
     ansible-playbook -i localhost, -c local kata_prepare.yml
-    -e "ansible_python_interpreter=`which python`"
     -e "inventory_path=${HOME:?}/inventory"
     -e "keypair_path=${HOME:?}/automation-keypair.pem"
   - echo ### 101
