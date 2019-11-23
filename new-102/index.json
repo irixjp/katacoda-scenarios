@@ -15,6 +15,9 @@
       "credits": "",
       "courseData": "env-init.sh"
     },
+    "finish": {
+      "text": "finish.md"
+    },
     "assets": {
       "host01": [
         { "file": "tools/kata_setup.sh",    "target": "~/" },
@@ -41,7 +44,7 @@
   "environment": {
     "uilayout": "terminal",
     "hideintro": false,
-    "hidefinish": true,
+    "hidefinish": false,
     "showdashboard": true,
     "dashboards": [
       {"name": "node-1", "port": 8081},
