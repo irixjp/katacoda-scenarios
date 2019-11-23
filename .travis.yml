@@ -22,11 +22,13 @@ before_install:
   - export ANSIBLE_PYTHON_INTERPRETER=/home/travis/virtualenv/python3.6.7/bin/python
 
 script:
+  - which python
   - ansible --version
   - echo ### prepare environment
   - cd master-course-data/assets/tools
-  - ansible-playbook -i localhost, -c local kata_prepare.yml
-  - pwd
+  - >
+    ansible-playbook -i localhost, -c local kata_prepare.yml
+    -e ''  - pwd
   - echo ### 101
   - echo ### 102
   - echo ### 103
