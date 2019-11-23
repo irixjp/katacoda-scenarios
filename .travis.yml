@@ -18,15 +18,17 @@ before_install:
 
   # Install Ansible
   - pip install -U pip setuptools
-  - pip install ansible
+  - pip install ansible docker-py
 
 script:
   - ansible --version
-  - pwd
-  - tree .
   - echo ### prepare environment
   - cd master-course-data/assets/tools
   - ansible-playbook -i localhost, -c local kata_prepare.yml
+  - pwd
+  - echo ### 101
+  - echo ### 102
+  - echo ### 103
 
 notifications:
   email: false
