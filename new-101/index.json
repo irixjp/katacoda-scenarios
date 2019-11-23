@@ -12,8 +12,11 @@
     ],
     "intro": {
       "text": "intro.md",
-      "credits": "",
+      "credits": "https://github.com/irixjp/katacoda-scenarios",
       "courseData": "env-init.sh"
+    },
+    "finish": {
+      "text": "finish.md"
     },
     "assets": {
       "host01": [
@@ -28,7 +31,7 @@
   "environment": {
     "uilayout": "terminal",
     "hideintro": false,
-    "hidefinish": true,
+    "hidefinish": false,
     "showdashboard": true,
     "dashboards": [
       {"name": "node-1", "port": 8081},
