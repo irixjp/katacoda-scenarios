@@ -26,6 +26,9 @@ script:
   - echo ### prepare environment
   - cd ${TEST_HOME:?}/master-course-data/assets/tools
   - echo "localhost ansible_connection=local ansible_python_interpreter=`which python`" > inventory
+  - cat inventory
+  - ls
+  - pwd
   - >
     ansible-playbook -i localhost, -c local kata_prepare.yml
     -e "inventory_path=${HOME:?}/inventory"
