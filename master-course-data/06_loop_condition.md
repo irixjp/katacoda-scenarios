@@ -30,7 +30,7 @@ playbook は YAML 形式で表記するため、基本的には作業やパラ�
 
 この playbook は完全に意図したとおりに3つのユーザーを追加するように動作します。しかし、この方法は同じ記述を何度も繰り返す必要があり冗長的です。仮に `user` モジュールの使用が変わり、新しいパラメーターの与え方が変更されたり、各ユーザーに追加の情報をもたせたいときには、各タスクを全て編集する必要があります。このような時に利用できるのが `loop` です。
 
-`working/loop_playbook.yml` を以下のように編集してください。
+`~/working/loop_playbook.yml` を以下のように編集してください。
 ```yaml
 ---
 - name: add users by loop
@@ -113,7 +113,7 @@ changed: [node-1] => (item=peach)
 ---
 特定の条件下でタスクを実行する・しないを制御するために用いられます。`when` 句を使います。典型的な利用方法として、あるタスクの実行結果を元に、次のタスクを実行する・しないという制御を行うケースです。
 
-実際に以下の`working/when_playbook.yml` を書いてみましょう
+実際に以下の`~/working/when_playbook.yml` を書いてみましょう
 ```yaml
 ---
 - name: start httpd if it's stopped
@@ -152,7 +152,7 @@ playbook を実行する前に、httpd を停止しておきます。
 
 `ansible node-1 -b -m shell -a 'systemctl stop httpd'`{{execute}}
 
-`working/when_playbook.yml` を実行します。
+`~/working/when_playbook.yml` を実行します。
 
 `ansible-playbook when_playbook.yml`{{execute}}
 
@@ -185,7 +185,7 @@ changed: [node-1]
 
 ここでは、httpd の起動タスクが `ret.rc == 1` の条件に当てはまったため実行されています。
 
-次に、`working/when_playbook.yml` を再度実行します。今度は httpd が起動している状態です。
+次に、`~/working/when_playbook.yml` を再度実行します。今度は httpd が起動している状態です。
 
 `ansible-playbook when_playbook.yml`{{execute}}
 
@@ -257,7 +257,7 @@ total 16
 
 - [`fetch`](https://docs.ansible.com/ansible/latest/modules/fetch_module.html) モジュールはリモートサーバーのファイルをローカルへ取得するモジュールです(`copy` モジュールの逆)
 
-`working/handler_playbook.yml` を以下のように編集します。
+`~/working/handler_playbook.yml` を以下のように編集します。
 ```yaml
 ---
 - name: restart httpd if httpd.conf is changed
@@ -284,7 +284,7 @@ total 16
 - `handlers:` ハンドラーセクションを宣言し、これ以下に送信されるコードに対応する処理を記載します。
   `- name: restart_apache`: `notify`の`restart_apache`に対応したタスクを定義します。
 
-`working/handler_playbook.yml` を実行します。
+`~/working/handler_playbook.yml` を実行します。
 
 `ansible-playbook handler_playbook.yml`{{execute}}
 
@@ -310,7 +310,7 @@ ServerAdmin root@localhost
 ServerAdmin centos@localhost
 ```
 
-再度 `working/handler_playbook.yml` を実行します。
+再度 `~/working/handler_playbook.yml` を実行します。
 
 `ansible-playbook handler_playbook.yml`{{execute}}
 
@@ -337,7 +337,7 @@ node-1 : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 ## 演習の解答
 ---
-- [loop_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/loop_playbook.yml)
-- [when_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/when_playbook.yml)
-- [handler_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/handler_playbook.yml)
+- [loop_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/loop_playbook.yml)
+- [when_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/when_playbook.yml)
+- [handler_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/handler_playbook.yml)
 

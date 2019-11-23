@@ -8,7 +8,7 @@
 
 演習環境は以下のような環境となります。
 
-![environment.png](./assets/01/environment.png)
+![environment.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/environment.png)
 
 
 ## 演習環境の準備
@@ -19,19 +19,19 @@
 ---
 JupyterLab上でターミナルを起動します。画面左側の「フォルダ」アイコンをクリックして、ファイルブラウザーを起動します。すでに起動している場合はそのままにしてください。
 
-![open_file_browser](./assets/01/open_file_browser.png)
+![open_file_browser](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/open_file_browser.png)
 
 ファイルブラウザーの「+」ボタンをクリックしランチャーを起動します。
 
-![add_launcher](./assets/01/add_launcher.png)
+![add_launcher](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/add_launcher.png)
 
 ランチャー内の「Other」から「Terminal」アイコンをクリックします。
 
-![open_terminal](./assets/01/open_terminal.png)
+![open_terminal](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/open_terminal.png)
 
 起動したターミナルはタブをドラッグして移動することて表示位置を変更できます。以下の例のように、Markdown と並べて表示することもできますので、演習が進めやすいように各自配置を変更してください。
 
-![vertical_split_terminal](./assets/01/vertical_split_terminal.png)
+![vertical_split_terminal](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/vertical_split_terminal.png)
 
 ### AWS操作のためのセットアップ
 ---
@@ -46,8 +46,9 @@ JupyterLab上でターミナルを起動します。画面左側の「フォル�
 
 ターミナルから以下のコマンドを実行します。上記の値の入力を求められますので、各自「**自分に割り当てられた値**」を入力してください。以下のサンプル値を入力しても演習は行なえません。
 
+`aws configure`{{execute}}
+
 ```bash
-$ aws configure
 AWS Access Key ID [None]: AABBCCDDEEFFGG
 AWS Secret Access Key [None]: AABBCCDDEEFFGGHHIIJJKKLLMMNN
 Default region name [None]: ap-northeast-1
@@ -56,8 +57,9 @@ Default output format [None]: json
 
 動作確認のため、以下のコマンドを実行してください。このコマンドにエラーがでなければ正常に設定は完了しています。
 
+`aws ec2 describe-instances`{{execute}}
+
 ```bash
-$ aws ec2 describe-instances
 {}
 ```
 
@@ -81,10 +83,11 @@ $ aws ec2 describe-instances
 
 早速、上記の手順を実行します。以下のコマンドをターミナルから実行してください。
 
-```bash
-$ cd /notebooks/tools
-$ ansible-playbook ec2_prepare.yml
+`cd ~/tools`{{execute}}
 
+`ansible-playbook ec2_prepare.yml`{{execute}}
+
+```bash
 PLAY [Setup handson environment] **********************
 
 TASK [Create a VPC] ***********************************

@@ -20,7 +20,7 @@ Ansible における変数は以下の特性を持っています。
 ---
 定義した変数の中身を確認するはに [`debug`](https://docs.ansible.com/ansible/latest/modules/debug_module.html) モジュールが便利です。
 
-`working/vars_debug_playbook.yml` を以下のように編集してください。
+`~/working/vars_debug_playbook.yml` を以下のように編集してください。
 ```yaml
 ---
 - hosts: node-1
@@ -81,7 +81,7 @@ ok: [node-1] => {
 ---
 では実際に変数の定義を行ってみましょう。
 
-`working/vars_play_playbook.yml` を以下のように編集します。
+`~/working/vars_play_playbook.yml` を以下のように編集します。
 ```yaml
 ---
 - hosts: node-1
@@ -110,7 +110,9 @@ ok: [node-1] => {
 
 - `vars:` play パートに `vars:` セクションを記述すると、その配下で変数が定義できるようになります。
   - `play_vars:` 変数名です。自由に設定できます。
-    - この変数の値として、3つの要素を持つ配列を作成し、その1つずつに`order` `value` というキーを持つ辞書データを持たせています。
+    - この変数は値として、3つの要素を持つ配列を作成し、その1つずつに`order` `value` というキーを持つ辞書データを持たせています。
+  - `msg: "{{ play_vars[1].order }}"` 配列の値を取り出しています。
+  - `msg: "{{ play_vars[0].value}} {{ play_vars[1].value }} {{ play_vars[2].value }}"` この例のように、複数の変数の値を結合して利用することも可能です。
 
 `vars_play_playbook.yml` を実行します。
 
@@ -155,7 +157,7 @@ ok: [node-1] => {
 ---
 1つのタスク内だけで使う変数を定義したり、一時的に上書きを行うことが可能です。
 
-`working/vars_task_playbook.yml` を以下のように編集します。
+`~/working/vars_task_playbook.yml` を以下のように編集します。
 ```yaml
 ---
 - hosts: node-1
@@ -179,8 +181,6 @@ ok: [node-1] => {
 ```
 
 `vars_task_playbook.yml` を実行します。
-
-`cd /notebooks/working`{{execute}}
 
 `ansible-playbook vars_task_playbook.yml`{{execute}}
 
@@ -246,31 +246,31 @@ ok: [node-1] => {
 
 >Note: この `gourp_vars` `host_vars` というディレクトリ名は Ansible 内で決め打ちされた名前で変えることはできません。
 
-`working/group_vars/all.yml` を編集してグループ変数を定義します。
+`~/working/group_vars/all.yml` を編集してグループ変数を定義します。
 ```yaml
 ---
 vars_by_group_vars: 1000
 ```
 
-`working/host_vars/node-1.yml` を編集してホスト変数を定義します。
+`~/working/host_vars/node-1.yml` を編集してホスト変数を定義します。
 ```yaml
 ---
 vars_by_host_vars: 111
 ```
 
-`working/host_vars/node-2.yml` を編集してホスト変数を定義します。
+`~/working/host_vars/node-2.yml` を編集してホスト変数を定義します。
 ```yaml
 ---
 vars_by_host_vars: 222
 ```
 
-`working/host_vars/node-3.yml` を編集してホスト変数を定義します。
+`~/working/host_vars/node-3.yml` を編集してホスト変数を定義します。
 ```yaml
 ---
 vars_by_host_vars: 333
 ```
 
-`working/vars_host_group_playbook.yml` を編集してこれらの変数を利用する playbook を作成します。
+`~/working/vars_host_group_playbook.yml` を編集してこれらの変数を利用する playbook を作成します。
 ```yaml
 ---
 - hosts: all
@@ -344,7 +344,7 @@ ok: [node-3] => {
 ---
 Ansible のモジュールは実行されると様々な戻り値を返します。playbook の中ではこの戻り値をを保存して後続のタスクで利用することができます。。その際に利用するのが `register` 句です。`register` は変数名を指定すると、その変数に戻り値を格納します。
 
-`working/vars_register_playbook.yml` を以下のように編集します。
+`~/working/vars_register_playbook.yml` を以下のように編集します。
 ```yaml
 ---
 - hosts: node-1
@@ -437,13 +437,13 @@ ok: [node-1] => {
 
 ## 演習の解答
 ---
-- [vars_debug_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_debug_playbook.yml)
-- [vars_play_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_play_playbook.yml)
-- [vars_task_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_task_playbook.yml)
-- [vars_host_group_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_host_group_playbook.yml)
-  - [host_vars/node-1.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/host_vars/node-1.yml)
-  - [host_vars/node-2.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/host_vars/node-2.yml)
-  - [host_vars/node-3.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/host_vars/node-3.yml)
-  - [group_vars/all.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/group_vars/all.yml)
-- [vars_register_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/vars_register_playbook.yml)
+- [vars_debug_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_debug_playbook.yml)
+- [vars_play_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_play_playbook.yml)
+- [vars_task_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_task_playbook.yml)
+- [vars_host_group_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_host_group_playbook.yml)
+  - [host_vars/node-1.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/host_vars/node-1.yml)
+  - [host_vars/node-2.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/host_vars/node-2.yml)
+  - [host_vars/node-3.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/host_vars/node-3.yml)
+  - [group_vars/all.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/group_vars/all.yml)
+- [vars_register_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_register_playbook.yml)
 

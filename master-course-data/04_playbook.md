@@ -190,7 +190,7 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ---
 作成した plyabook にサイトのトップページを配布するタスクを追加します。
 
-`working/files/index.html` をエディタで開きます。
+`~/working/files/index.html` をエディタで開きます。
 
 ファイルを以下のように編集します。
 ```html
@@ -346,4 +346,4 @@ Ansible の各モジュールはこの冪等性を考慮するように作られ
 > Note: ただし、Ansibleも全てのモジュールが完全な冪等性を保証しているわけではありません。モジュールの中には shell のように何が実行されるかわからないものや、操作対象（NW系機器やクラウド環境）によっては原理的に冪等性の確保が難しいものも存在しています。こういったモジュールを使う場合は利用者が注意を払う必要があります
 
 ## 演習の解答
-- [first_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/solutions/first_playbook.yml)
+- [first_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/first_playbook.yml)

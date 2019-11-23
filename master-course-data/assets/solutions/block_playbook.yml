@@ -10,11 +10,6 @@
             name: httpd
             state: latest
 
-        - name: Copy Apache configuration file
-          copy:
-            src: files/httpd.conf
-            dest: /etc/httpd/conf/
-
         - name: start & enabled httpd
           service:
             name: httpd
@@ -26,4 +21,4 @@
             src: files/index.html
             dest: /var/www/html/
       when:
-        - ansible_facts['distribution'] == 'CentOS'
+        - exec_block == 'yes'
