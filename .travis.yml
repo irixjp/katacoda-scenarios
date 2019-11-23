@@ -24,12 +24,16 @@ script:
   - export TEST_HOME=`pwd`
   - ansible --version
   - echo ### prepare environment
+  - docker run -d --security-opt label:disable --cap-add SYS_ADMIN --name node-1 -h node-${i} -p 8081:80 irixjp/katacoda:latest /sbin/init
+  - docker ps -a
+  - docker top node-1
+  - docker exec -it node-1  sh -c "systemctl start sshd"
   - cd ${TEST_HOME:?}/master-course-data/assets/tools
-  - echo "localhost ansible_connection=local ansible_python_interpreter=`which python`" > inventory
-  - >
-    ansible-playbook -i inventory -c local kata_prepare.yml
-    -e "inventory_path=${HOME:?}/inventory"
-    -e "keypair_path=${HOME:?}/automation-keypair.pem"
+#  - echo "localhost ansible_connection=local ansible_python_interpreter=`which python`" > inventory
+#  - >
+#    ansible-playbook -i inventory -c local kata_prepare.yml
+#    -e "inventory_path=${HOME:?}/inventory"
+#    -e "keypair_path=${HOME:?}/automation-keypair.pem"
   - echo "### 101"
   - echo "### 102"
   - echo "### 103"
