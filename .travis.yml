@@ -19,16 +19,17 @@ before_install:
   # Install Ansible
   - pip install -U pip setuptools docker
   - pip install ansible
-  - export ANSIBLE_PYTHON_INTERPRETER=/home/travis/virtualenv/python3.6.7/bin/python
 
 script:
-  - which python
+  - export TEST_HOME=`pwd`
   - ansible --version
   - echo ### prepare environment
-  - cd master-course-data/assets/tools
+  - cd ${TEST_HOME:?}/master-course-data/assets/tools
   - >
     ansible-playbook -i localhost, -c local kata_prepare.yml
-    -e ''  - pwd
+    -e "ansible_python_interpreter=`which python`"
+    -e "inventory_path=${HOME:?}/inventory"
+    -e "keypair_path=${HOME:?}/automation-keypair.pem"
   - echo ### 101
   - echo ### 102
   - echo ### 103
