@@ -19,6 +19,7 @@ before_install:
   # Install Ansible
   - pip install -U pip setuptools docker
   - pip install ansible
+  - export ANSIBLE_PYTHON_INTERPRETER=/home/travis/virtualenv/python3.6.7/bin/python
 
 script:
   - ansible --version
