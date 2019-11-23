@@ -17,8 +17,8 @@ before_install:
   - sudo apt install -y sshpass jq
 
   # Install Ansible
-  - pip install -U pip setuptools
-  - pip install ansible docker-py
+  - pip install -U pip setuptools docker
+  - pip install ansible
 
 script:
   - ansible --version

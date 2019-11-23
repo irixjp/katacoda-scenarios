@@ -179,7 +179,10 @@ node-2  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
 
-上記のような出力となれば成功です。node-1,2,3 に対してブラウザでアクセスしてサイトの動作を確認してください。アクセスするIPアドレスは `~/inventory` で確認できます。
+上記のような出力となれば成功です。node-1,2,3 に対してブラウザでアクセスしてサイトの動作を確認してください。
+
+> Note: katacoda 上で演習をしている場合は、画面上部の `node-1,2,3` をクリック
+> Note: Jupyter 上で演習をしている場合は、アクセスするIPアドレスは `~/inventory` で確認し、ブラウザでアクセスしてください。
 
 以下のような画面が表示されれば成功です。
 
