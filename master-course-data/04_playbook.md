@@ -183,7 +183,7 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 以下のような画面が表示されれば成功です。
 
-![apache_top_page.png](./assets/01/apache_top_page.png)
+![apache_top_page.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/apache_top_page.png)
 
 
 ## タスクの追加
