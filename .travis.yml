@@ -7,6 +7,20 @@ services:
   - docker
 
 before_install:
+  # Create inventory
+  - export TEST_HOME=`pwd`
+  - |
+    cat << EOF > ${HOME:?}/inventory
+    [web]
+    node-1
+    node-2
+    node-3
+    
+    [all:vars]
+    ansible_user=centos
+    ansible_connection=docker
+  - cat ${HOME:?}/inventory
+
   # Prepare Travis environment
   - sudo apt-get update
   - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
@@ -37,7 +51,6 @@ before_install:
     [all:vars]
     ansible_user=centos
     ansible_connection=docker
-    EOF
   - cat ${HOME:?}/inventory
 
 script:
