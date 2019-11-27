@@ -32,12 +32,13 @@ script:
     -e "keypair_path=${HOME:?}/automation-keypair.pem"
     --skip-tags travis
   - echo "ansible_connection=docker" >> ${HOME:?}/inventory
+  - docker ps -a
   - cd ${TEST_HOME:?}/master-course-data/assets/solutions
   - echo "### 101"
   - ls -alF
   - cat ${HOME:?}/inventory
   - ansible --version
-  - ansible-playbook -i ${HOME:?}/inventory first_playbook.yml
+  - ansible-playbook -i ${HOME:?}/inventory first_playbook.yml -vvv
   - echo "### 102"
   - echo "### 103"
 
