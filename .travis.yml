@@ -7,20 +7,6 @@ services:
   - docker
 
 before_install:
-  # Create inventory
-  - export TEST_HOME=`pwd`
-  - |
-    cat << EOF > ${HOME:?}/inventory
-    [web]
-    node-1
-    node-2
-    node-3
-    
-    [all:vars]
-    ansible_user=centos
-    ansible_connection=docker
-  - cat ${HOME:?}/inventory
-
   # Prepare Travis environment
   - sudo apt-get update
   - echo 'DOCKER_OPTS="-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock -s devicemapper"' | sudo tee /etc/default/docker > /dev/null
@@ -58,8 +44,14 @@ script:
   - cd ${TEST_HOME:?}/master-course-data/assets/solutions
 
   - echo "### 101"
-  - ansible-playbook -i ${HOME:?}/inventory first_playbook.yml -vvv
+  - ansible-playbook -i ${HOME:?}/inventory first_playbook.yml
   - echo "### 102"
+  - ansible node-1 -i ${HOME:?}/inventory -m fetch -a 'src=/etc/httpd/conf/httpd.conf dest=files/httpd.conf flat=yes
+  - |
+    for i in vars_debug_playbook.yml vars_host_group_playbook.yml vars_play_playbook.yml vars_register_playbook.yml vars_task_playbook.yml when_playbook.yml handler_playbook.yml rescue_playbook.yml block_playbook.yml
+    do
+    ansible-playbook -i ${HOME:?}/inventory $i
+    done
   - echo "### 103"
 
 notifications:
