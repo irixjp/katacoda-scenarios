@@ -63,33 +63,32 @@
   vars:
     keypair_path: /root/automation-keypair.pem
   tasks:
-    - block:
-      - ping:
+    - ping:
 
-      - name: add centos user to each node
-        user:
-          name: centos
-          state: present
+    - name: add centos user to each node
+      user:
+        name: centos
+        state: present
 
-      - name: start sshd
-        service:
-          name: sshd
-          state: started
-
-      - name: create ssh directory to centos
-        file:
-          path: /home/centos/.ssh
-          state: directory
-          mode: '0755'
-          owner: centos
-          group: centos
-
-      - name: copy pub key to nodes
-        copy:
-          src: "{{ keypair_path }}.pub"
-          dest: /home/centos/.ssh/authorized_keys
-          mode: '0600'
-          owner: centos
-          group: centos
+    - name: start sshd
+      service:
+        name: sshd
+        state: started
       tags:
         - travis
+
+    - name: create ssh directory to centos
+      file:
+        path: /home/centos/.ssh
+        state: directory
+        mode: '0755'
+        owner: centos
+        group: centos
+
+    - name: copy pub key to nodes
+      copy:
+        src: "{{ keypair_path }}.pub"
+        dest: /home/centos/.ssh/authorized_keys
+        mode: '0600'
+        owner: centos
+        group: centos
