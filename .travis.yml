@@ -30,7 +30,6 @@ script:
     ansible-playbook -i inventory -c local kata_prepare.yml
     -e "inventory_path=${HOME:?}/inventory"
     -e "keypair_path=${HOME:?}/automation-keypair.pem"
-    --skip-tags travis
   - cd ${TEST_HOME:?}/master-course-data/assets/solutions
   - echo "### 101"
   - ls -alF
