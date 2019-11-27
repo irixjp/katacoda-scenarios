@@ -92,3 +92,5 @@
         mode: '0600'
         owner: centos
         group: centos
+      tags:
+        - travis

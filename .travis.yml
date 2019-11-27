@@ -34,8 +34,9 @@ script:
   - cd ${TEST_HOME:?}/master-course-data/assets/solutions
   - echo "### 101"
   - ls -alF
+  - cat ${HOME:?}/inventory
   - ansible --version
-  - ansible-playbook -i ${HOME:?}/inventory -c docker first_playbook.yml
+  - ansible-playbook -i ${HOME:?}/inventory -c docker -e 'ansible_connection=docker' first_playbook.yml
   - echo "### 102"
   - echo "### 103"
 
