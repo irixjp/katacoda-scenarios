@@ -38,6 +38,7 @@ before_install:
     ansible_user=centos
     ansible_connection=docker
     EOF
+  - cat ${HOME:?}/inventory
 
 script:
   - ansible --version
