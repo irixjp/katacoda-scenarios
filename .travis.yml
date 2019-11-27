@@ -33,6 +33,8 @@ script:
     --skip-tags travis
   - echo "ansible_connection=docker" >> ${HOME:?}/inventory
   - docker ps -a
+  - docker exec node-1 sh -c "pwd"
+  - docker exec -u centos node-1 sh -c "pwd"
   - cd ${TEST_HOME:?}/master-course-data/assets/solutions
   - echo "### 101"
   - ls -alF
