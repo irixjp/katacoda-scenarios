@@ -20,26 +20,30 @@ before_install:
   - pip install -U pip setuptools docker
   - pip install ansible
 
-script:
+  # Prepare target nodes
+  - docker run -d --privileged --name node-1 -h node-1 irixjp/katacoda:latest /sbin/init
+  - docker run -d --privileged --name node-2 -h node-2 irixjp/katacoda:latest /sbin/init
+  - docker run -d --privileged --name node-3 -h node-3 irixjp/katacoda:latest /sbin/init
+
+  # Create inventory
   - export TEST_HOME=`pwd`
+  - |
+    cat << EOF > ${HOME:?}/inventory
+    [web]
+    node-1
+    node-2
+    node-3
+    
+    [all:vars]
+    ansible_user=centos
+    ansible_connection=docker
+    EOF
+
+script:
   - ansible --version
-  - echo ### prepare environment
-  - cd ${TEST_HOME:?}/master-course-data/assets/tools
-  - echo "localhost ansible_connection=local ansible_python_interpreter=`which python`" > inventory
-  - >
-    ansible-playbook -i inventory -c local kata_prepare.yml
-    -e "inventory_path=${HOME:?}/inventory"
-    -e "keypair_path=${HOME:?}/automation-keypair.pem"
-    --skip-tags travis
-  - echo "ansible_connection=docker" >> ${HOME:?}/inventory
-  - sed -i -e 's/ansible_host=[0-9.]*$//g' ${HOME:?}/inventory
-  - cat ${HOME:?}/inventory
-  - docker ps -a
   - cd ${TEST_HOME:?}/master-course-data/assets/solutions
 
   - echo "### 101"
-  - ls -alF
-  - ansible --version
   - ansible-playbook -i ${HOME:?}/inventory first_playbook.yml -vvv
   - echo "### 102"
   - echo "### 103"
