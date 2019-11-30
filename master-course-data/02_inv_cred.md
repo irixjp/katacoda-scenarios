@@ -120,12 +120,12 @@ ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
   - ノード行は `ノードの識別子(node-1)`、ノードに与える`ホスト変数(複数化) (ansible_host=xxxx)` から構成されます。
   - `node-1` の部分にはIPアドレスやFQDNを指定することも可能です。
 - `[web]` でホストのグループを作ることができます。ここでは `web` というグループが作られます。
-  - グループ名は `all` と `localhost` 以外は自由に命名できます。
-  - `[web]` `[ap]` `[db]` という形でシステムをグルーピングしたりします。
+  - グループ名は `all` と `localhost` 以外の名前を自由に使用できます。
+    - 例) `[web]` `[ap]` `[db]` などシステムをグループする分けする目的で使用されます。
 - `[all:vars]` では、`all` というグループに対して `グループ変数` を定義しています。
   - `all` は特別なグループで、インベントリーに記述された全ノードを指し示すグループです。
   - ここで与えられている、 `ansible_user` `ansible_ssh_private_key_file` は特別な変数で、各ノードへのログインに使われるユーザー名とSSH秘密鍵のパスを示しています。
-  - `ansible_xxxx` という変数は特別な変数で、Ansible の挙動を制御したり、Ansible が自動的に取得する環境情報などが可能されています。詳細は変数の項目で解説します。
+    - `ansible_xxxx` という[マジック変数](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html)で、Ansible の挙動を制御したり、Ansible が自動的に取得する環境情報など特別な値が格納されています。詳細は変数の項目で解説します。
 
 実際にこのインベントリーを利用して定義されたノードの対して Ansible を実行してみます。以下のコマンドを実行してください。
 
@@ -144,7 +144,7 @@ node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 - `-m ping`: モジュール `ping` を実行します。モジュールに関しての詳細は後述します。
 - `-o`: 出力を1ノード1行にまとめます。
 
-今回の環境では、 `ansible.cfg` ファイルによって、インベントリーが指定されているため、以下のように `-i ~/inventory` を省略することが可能です。
+今回の環境では、 `ansible.cfg` ファイルによって、デフォルトのインベントリーが指定されているため、以下のように `-i ~/inventory` を省略することが可能です。
 
 `ansible web -m ping -o`{{execute}}
 
@@ -196,7 +196,7 @@ ansible_user=centos
 ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 ```
 
-ここでは、全てのグループに対する変数として `[all:vars]` を定義し、そこで前提の変数を定義しています。
+ここでは、全てのグループに対する変数として `[all:vars]` を定義し、そこで認証に利用する変数を定義しています。
 
 - `ansible_user`: Ansible がログインに利用するユーザー名を指定する。
 - `ansible_ssh_private_key_file`: Ansible がログインに利用する秘密鍵を指定する。
@@ -212,7 +212,7 @@ ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 - `-u centos`: ログインに使用するユーザー名を指定できます。
 - `--private-key`: ログインに使用する秘密鍵を指定できます。
 
-パスワードを使用するには以下のオプションがあります。以下がサンプルになります。
+パスワードを使用する方法もあります。以下がサンプルになります。
 
 ```bash
 $ ansible all -u centos -k -m ping

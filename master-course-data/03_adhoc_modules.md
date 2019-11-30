@@ -85,6 +85,10 @@ Ansible が持つモジュールの一覧は以下の[公式ドキュメント](
   * note: This module has a corresponding action plugin.
 ```
 
+モジュールのドキュメントでは、どのモジュールに与えられるパラメーターの説明や、モジュールが実行された後の戻り値、そして実際の利用方法のサンプルが参照できます。
+
+> Note: モジュールの利用方法のサンプルは非常に参考になります。
+
 ## Ad-hoc コマンド
 ---
 先に紹介したモジュールを1つ呼び出して Ansible に小さな仕事を実行させることができます。この方法を `Ad-hoc コマンド` とよびます。
@@ -102,7 +106,7 @@ Ad-hoc コマンドを利用して、いくつかのモジュールを実際に�
 
 ### ping
 ---
-[`ping`](https://docs.ansible.com/ansible/latest/modules/ping_module.html) モジュールを実行してみましょう。これは Ansible が操作対象のノードに対して「Ansible としての疎通」が可能かどうかを判定するモジュールで、パラメーターは省略可能です。
+[`ping`](https://docs.ansible.com/ansible/latest/modules/ping_module.html) モジュールを実行してみましょう。これは Ansible が操作対象のノードに対して「Ansible としての疎通」が可能かどうかを判定するモジュールです。パラメーターは省略可能です。
 
 `ansible all -m ping`{{execute}}
 
@@ -132,7 +136,7 @@ node-3 | SUCCESS => {
 
 ### shell
 ---
-次に、[`shell`](https://docs.ansible.com/ansible/latest/modules/shell_module.html) モジュールを呼び出してみましょう。これは対象のノード上任意のコマンドを実行して、その結果を回収するコマンドです。
+次に、[`shell`](https://docs.ansible.com/ansible/latest/modules/shell_module.html) モジュールを呼び出してみましょう。これは対象のノード上で任意のコマンドを実行し、その結果を回収するコマンドです。
 
 `ansible all -m shell -a 'hostname'`{{execute}}
 
@@ -186,4 +190,4 @@ ip-10-0-0-218.ap-northeast-1.compute.internal
 
 `ansible node-1 -m setup`{{execute}}
 
-このように、Ansible ではノードに対して操作を行う以外に、情報収集を行うことも可能です。
+このように Ansible は様々なモジュールを持ち、これらを使ってノードに対して操作を行ったり、情報収集を行うことが可能です。
