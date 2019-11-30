@@ -8,7 +8,7 @@
 
 演習環境は以下のような環境となります。
 
-![environment.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/environment.png)
+![environment.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/kata_env.png)
 
 
 ## 演習環境の準備
@@ -118,7 +118,5 @@ node-3    : ok=2  changed=0  unreachable=0 failed=0 skipped=0 rescued=0 ignored=
 
 ## 補足事項
 ---
-本演習環境でファイルを編集する場合には左側にファイルブラウザからファイルを開くことでエディタを起動できます。
+本演習環境でファイルを編集する場合には左側にファイルブラウザからファイルを開くことでエディタを起動できます（ターミナル内で vi を使うことも可能です）。
 
----
-本演習は以上となります。

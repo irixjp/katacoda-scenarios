@@ -65,6 +65,8 @@
       when: delete_groups | length > 0
       register: secgroup_del
       until: secgroup_del is not failed
+      retries: 5
+      delay: 10
 
     - name: Collect routeb tables
       ec2_vpc_route_table_info:
@@ -90,6 +92,11 @@
         state: absent
       loop: "{{ delete_tables }}"
       when: delete_tables | length > 0
+      register: routetable_del
+      until: routetable_del is not failed
+      retries: 5
+      delay: 10
+
 
     - name: Collect Internet gateway
       ec2_vpc_igw_info:
@@ -107,6 +114,11 @@
         state: absent
       loop: "{{ igw.internet_gateways }}"
       when: igw.internet_gateways | length > 0
+      register: igw_del
+      until: igw_del is not failed
+      retries: 5
+      delay: 10
+
 
     - name: Collect subnet info
       ec2_vpc_subnet_info:
@@ -124,6 +136,10 @@
         cidr: "{{ SUBNET_CIDR_BLOCK }}"
       loop: "{{ subnets.subnets }}"
       when: subnets.subnets | length > 0
+      register: subnet_del
+      until: subnet_del is not failed
+      retries: 5
+      delay: 10
 
     - name: Collect VPC info
       ec2_vpc_net_info:
@@ -140,3 +156,7 @@
         name: "{{ VPC_NAME }}"
         cidr_block: "{{ VPC_CIDR_BLOCK }}"
         state: absent
+      register: vpc_del
+      until: vpc_del is not failed
+      retries: 5
+      delay: 10
