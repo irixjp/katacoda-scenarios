@@ -1,0 +1,41 @@
+{
+  "title": "(re-building...)Ansible Playground",
+  "description": "Try something freely with latest ansible",
+  "difficulty": "beginner",
+  "time": "15 minutes",
+  "details": {
+    "steps": [
+      { "title": "Step 1", "text": "step1.md" }
+    ],
+    "intro": {
+      "text": "intro.md",
+      "credits": "https://github.com/irixjp/katacoda-scenarios",
+      "courseData": "env-init.sh"
+    },
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "tools/kata_setup.sh",    "target": "~/" },
+        { "file": "tools/kata_prepare.yml", "target": "~/" },
+        { "file": "tools/.ansible.cfg",     "target": "~/" }
+      ]
+    }
+  },
+  "environment": {
+    "uilayout": "terminal",
+    "hideintro": false,
+    "hidefinish": false,
+    "showdashboard": true,
+    "dashboards": [
+      {"name": "node-1", "port": 8081},
+      {"name": "node-2", "port": 8082},
+      {"name": "node-3", "port": 8083}
+    ],
+    "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
+  },
+  "backend": {
+    "imageid": "centos-vm"
+  }
+}
