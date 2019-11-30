@@ -1,0 +1,7 @@
+---
+- name: using role
+  hosts: web
+  become: yes
+  tasks:
+    - import_role:
+        name: web_setup

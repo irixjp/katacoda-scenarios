@@ -1,0 +1,9 @@
+---
+- name: using galaxy
+  hosts: node-1
+  tasks:
+    - import_role:
+        name: irixjp.role_example_hello
+
+    - import_role:
+        name: irixjp.role_example_uptime

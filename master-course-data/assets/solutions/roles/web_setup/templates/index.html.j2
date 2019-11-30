@@ -1,0 +1,9 @@
+<html><body>
+<h1>This server is running on {{ inventory_hostname }}.</h1>
+
+{% if LANG == "JP" %}
+     Konnichiwa!
+{% else %}
+     Hello!
+{% endif %}
+</body></html>

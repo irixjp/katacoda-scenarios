@@ -22,11 +22,11 @@
 6. [ループ、条件式、ハンドラー](06_loop_condition.md)
 7. [エラーハンドリング](07_block_reduce.md)
 8. [テンプレート](08_template.md)
-9. [Roleによる部品化](09_role.md)
-10. [Galaxy による Role 活用](10_galaxy.md)
-11. [テストの自動化](11_testing.md)
-12. [演習問題](12_exercises.md)
-13. [演習環境のクリーンアップ](13_cleanup.md)
+9. [Role による部品化](09_role.md)
+10. [Role の管理と再利用](10_galaxy.md)
+11. [テストの自動化](12_testing.md)
+12. [演習問題](50_exercises.md)
+13. [演習環境のクリーンアップ](99_cleanup_ec2.md)
 
 ## 演習教材について
 ---
