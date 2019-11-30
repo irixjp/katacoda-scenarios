@@ -26,7 +26,7 @@
         { "file": "working/galaxy_playbook.yml",                     "target": "~/working/" },
         { "file": "working/roles/requirements.yml",                  "target": "~/working/roles/" },
         { "file": "working/roles/web_setup/defaults/main.yml",       "target": "~/working/roles/web_setup/defaults/" },
-        { "file": "working/roles/web_setup/files/dummy",             "target": "~/working/roles/web_setup/files/" },
+        { "file": "working/roles/web_setup/files/dummy_file",        "target": "~/working/roles/web_setup/files/" },
         { "file": "working/roles/web_setup/handlers/main.yml",       "target": "~/working/roles/web_setup/handlers" },
         { "file": "working/roles/web_setup/tasks/main.yml",          "target": "~/working/roles/web_setup/tasks/" },
         { "file": "working/roles/web_setup/templates/index.html.j2", "target": "~/working/roles/web_setup/templates/" }
