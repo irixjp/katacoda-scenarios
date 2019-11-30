@@ -38,8 +38,8 @@
         { "file": "working/host_vars/node-1.yml",         "target": "~/working/host_vars/" },
         { "file": "working/host_vars/node-2.yml",         "target": "~/working/host_vars/" },
         { "file": "working/host_vars/node-3.yml",         "target": "~/working/host_vars/" },
-        { "file": "solutions/files/index.html",           "target": "~/working/files/" },
-        { "file": "solutions/templates/index.html.j2",    "target": "~/working/templates/" }
+        { "file": "working/templates/index.html.j2",      "target": "~/working/templates/" },
+        { "file": "solutions/files/index.html",           "target": "~/working/files/" }
       ]
     }
   },
