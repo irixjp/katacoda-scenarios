@@ -10,7 +10,7 @@
 - ファイルの先頭は `---` から始まる
 - インデントが意味を持つ
   - インデントは `space` で表記する。`tab` ではエラーとなります。
-- `-` はリスト(配列)を表す
+- `-` はリストを表す
 - `key`: `value` で辞書形式となる
 - [json](https://ja.wikipedia.org/wiki/JavaScript_Object_Notation) と相互に変換可能
 

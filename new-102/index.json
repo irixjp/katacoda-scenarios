@@ -34,6 +34,7 @@
         { "file": "working/handler_playbook.yml",         "target": "~/working/" },
         { "file": "working/block_playbook.yml",           "target": "~/working/" },
         { "file": "working/rescue_playbook.yml",          "target": "~/working/" },
+        { "file": "working/template_playbook.yml",          "target": "~/working/" },
         { "file": "working/group_vars/all.yml",           "target": "~/working/group_vars/" },
         { "file": "working/host_vars/node-1.yml",         "target": "~/working/host_vars/" },
         { "file": "working/host_vars/node-2.yml",         "target": "~/working/host_vars/" },

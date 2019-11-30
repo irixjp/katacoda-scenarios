@@ -1,6 +1,6 @@
 # エラーハンドリング
 ---
-playbook で一連のタスクをグループ化してまとめて `when` や `ingore_errors` を適用することができます。ここで登場するのが `block` 句です。また `block` 句にはエラーハンドリングの機能もあり、`block` 内でのエラー に対して `rescue` 句のタスクを実行する、エラーに関係なく実行する `always` 句が使えます。
+playbook で一連のタスクをグループ化し、まとめて `when` や `ingore_errors` を適用することができます。ここで登場するのが `block` 句です。また `block` 句にはエラーハンドリングの機能もあり、`block` 内でのエラー に対して `rescue` 句のタスクを実行したり、エラーに関係なく実行する `always` 句が使えます。
 
 ## block
 ---
@@ -36,7 +36,7 @@ playbook で一連のタスクをグループ化してまとめて `when` や `i
 
 - `block: ~~ when:` ここでは3つのタスクを `block` 句でまとめて、`when` 句で条件をつけています。この `block` 部分は `exec_block == 'yes'` が成立した時にまとめて実行されます。
 
-`block_playbook.yml` を `-e 'exec_block=no'` と `yes` の場合を見てみましょう。
+`block_playbook.yml` を `-e 'exec_block=no'` と `yes` の場合で実行結果にどのような違いがあるか見てみましょう。
 
 `cd ~/working`{{execute}}
 
@@ -55,7 +55,7 @@ TASK [copy index.html] *******************************
 skipping: [node-1]
 ```
 
-4つのタスクがまとめてスキップされていることがわかります。次に条件が成立するケースです。
+3つのタスクがまとめてスキップされていることがわかります。次に条件が成立するケースです。
 
 `ansible-playbook block_playbook.yml -e 'exec_block=yes'`{{execute}}
 
@@ -118,7 +118,7 @@ ok: [node-1]
 - `rescue`: `block` 内でエラーが発生した場合に実行されます。
 - `always`: 必ず実行したい処理を実行します。
 
-この playbook では `error_flag` 変数の値が `no` の場合にはエラーとない、それ以外では正常終了します。
+この playbook は `error_flag` 変数の値が `no` の場合には正常終了し、それ以外ではエラーとなります。
 
 実際に実行して結果を確認します。まず `error_flag=no` として、正常終了させます。
 
@@ -181,9 +181,9 @@ ok: [node-1] => {
 }
 ```
 
-ここではまず `block` のタスクが実行されますがエラーが発生します。すると、`rescue` の処理が呼び出されています。さらに `rescue` 内でもエラーが発生しますが、 playbook は停止セずに `always` が実行されます。
+ここではまず `block` のタスクが実行されますがエラーが発生します。エラーが発生したため `rescue` の処理が呼び出されています。さらに `rescue` 内でもエラーが発生しますが、 playbook は停止せずに `always` が実行されます。
 
-このように、`block`, `rescue`, `always` を使うことで、 playbook 内のエラーハンドリングを行うことが可能となります。典型的な利用シーンとして、`rescue` で失敗時のリカバリ作業を行い、`always` で状態の報告を行うというのがあります。
+このように、`block`, `rescue`, `always` を使うことで、 playbook 内のエラーハンドリングを行うことが可能となります。典型的な利用シーンとして、`rescue` で失敗時のリカバリ作業を行い、`always` で状態の通知を行うという使い方があります。
 
 
 ## 演習の解答

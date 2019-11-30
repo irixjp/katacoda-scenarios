@@ -1,10 +1,10 @@
 # 変数
 ---
-変数を利用することで playbook の汎用性を高めることができます。
+変数を利用することで playbook の汎用性を高めることができます。ここでは様々な変数の利用方法を学習します。
 
 ## 変数の基礎
 ---
-Ansible における変数は以下の特性を持っています。
+Ansible における変数は以下の特徴を持っています。
 
 - 型がない
 - 全てグルーバル変数（スコープがない）
@@ -14,7 +14,7 @@ Ansible における変数は以下の特性を持っています。
 
 変数がどこで定義できて、どのような優先順位を持っているかは[公式ドキュメント](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable)を参照してください。
 
-この演習では代表的な変数の利用方法について学習します。
+この演習では代表的な変数の利用方法について見ていきます。
 
 ## debug モジュール
 ---
@@ -35,12 +35,12 @@ Ansible における変数は以下の特性を持っています。
         msg: "This value is {{ vars.ansible_version.full }}"
 ```
 
-- `gather_facts: no` Ansible はデフォルトでタスクの実行前に `setup` モジュールを実行して、操作対象ノードの情報を収集して変数にセットします。この変数を `no` に設定することで情報収集をスキップします。これは、演習の中で変数の一覧の出力量を抑えて演習を進めやすくするためです(setupモジュールは膨大な情報を収集するためです)。
+- `gather_facts: no` Ansible はデフォルトでタスクの実行前に `setup` モジュールを実行して、操作対象ノードの情報を収集して変数にセットします。この変数を `no` に設定することで情報収集をスキップさせることができます。これは演習を進める上で変数一覧の出力量を抑えて演習を進めやすくするためです(setupモジュールは膨大な情報を収集する)。
 - `- debug:`
-  - `var: vars` var オプションは引数で与えられた変数の内容を標示します。ここでは `vars` という変数を引数として与えています。`vars` は全ての変数が格納された特別な変数です。
+  - `var: vars` var オプションは引数で与えられた変数の内容を表示します。ここでは `vars` という変数を引数として与えています。`vars` は全ての変数が格納された特別な変数です。
   - `msg: "This value is {{ vars.ansible_version.full }}"` msg オプションは任意の文字列を出力します。この中では `{{ }}` でくくった箇所は変数として展開されます。
     - 変数内の辞書データは `.keyname` という形で取り出します。
-    - 変数内の配列データは `[index_number]` という形で取り出します。
+    - 変数内のリストデータは `[index_number]` という形で取り出します。
 
 `vars_debug_playbook.yml` を実行します。
 
@@ -74,10 +74,10 @@ ok: [node-1] => {
 (省略)
 ```
 
-`vars` の内容は Ansible がデフォルトで定義した、いわゆる [マジック変数](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html) です。
+`vars` の内容は Ansible がデフォルトで定義する [マジック変数](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html) が表示されています。
 
 
-## playbook 内での定義
+## playbook 内での変数定義
 ---
 では実際に変数の定義を行ってみましょう。
 
@@ -110,8 +110,8 @@ ok: [node-1] => {
 
 - `vars:` play パートに `vars:` セクションを記述すると、その配下で変数が定義できるようになります。
   - `play_vars:` 変数名です。自由に設定できます。
-    - この変数は値として、3つの要素を持つ配列を作成し、その1つずつに`order` `value` というキーを持つ辞書データを持たせています。
-  - `msg: "{{ play_vars[1].order }}"` 配列の値を取り出しています。
+    - この変数は値として、3つの要素を持つリストを作成し、その1つずつに`order` `value` というキーを持つ辞書データを作成しています。
+  - `msg: "{{ play_vars[1].order }}"` リストの値を取り出しています。
   - `msg: "{{ play_vars[0].value}} {{ play_vars[1].value }} {{ play_vars[2].value }}"` この例のように、複数の変数の値を結合して利用することも可能です。
 
 `vars_play_playbook.yml` を実行します。
@@ -153,7 +153,7 @@ ok: [node-1] => {
 ```
 
 
-## task 内での定義
+## task 内での変数定義
 ---
 1つのタスク内だけで使う変数を定義したり、一時的に上書きを行うことが可能です。
 
@@ -202,11 +202,11 @@ ok: [node-1] => {
 }
 ```
 
-タスクの中での `vars:` 、はそのタスク内でのみ [変数の優先順位](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable) が `play vars` より高いため、上記のような結果となります。
+タスクの中での `vars:` はそのタスク内でのみ [変数の優先順位](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable) が `play vars` より高いため、上記のような結果となります。
 
 では更に優先順位の高い `extra_vars` (コマンドラインから指定する変数) を使うとどうなるか見てみましょう。
 
-`vars_task_playbook.yml` に `-e` オプションをつけて実行します。
+`extra_vars` を与えるには `vars_task_playbook.yml` に `-e` オプションをつけて実行します。
 
 `ansible-playbook vars_task_playbook.yml -e 'task_vars=50'`{{execute}}
 
@@ -228,6 +228,8 @@ ok: [node-1] => {
 }
 ```
 
+全てのタスクにおいて最も優先順位の高い `extra_vars` の値が用いられています。このように、Ansible では変数を定義した場所によって優先順位が異なるため注意が必要です。
+
 ## その他の変数定義
 ---
 その他の変数の定義方法について紹介します。
@@ -242,35 +244,47 @@ ok: [node-1] => {
 
 ### host\_vars, group\_vars での定義
 ---
-インベントリーの項目でも解説した変数です。特定のグループやホストに関連付けられるます。インベントリーファイルに記載する以外にも、実行する playbook と同一ディレクトリに、`gourp_vars` `host_vars` ディレクトリを作成して、そこに `group_name.yml`, `node_name.yml` ファイルを作成することでグループ、ホスト変数として認識させることができます。
+インベントリーの項目でも解説した変数です。特定のグループやホストに関連付けられる変数を定義することができます。インベントリーファイルに記載する以外にも、実行する playbook と同一ディレクトリに、`gourp_vars` `host_vars` ディレクトリを作成して、そこに `<group_name>.yml`, `<node_name>.yml` ファイルを作成することでグループ、ホスト変数として認識させることができます。
 
 >Note: この `gourp_vars` `host_vars` というディレクトリ名は Ansible 内で決め打ちされた名前で変えることはできません。
 
-`~/working/group_vars/all.yml` を編集してグループ変数を定義します。
+実際にいくつかのホスト変数とグループ変数を定義します。
+
+### `~/working/group_vars/all.yml` 
+
+グループ変数を定義します。
 ```yaml
 ---
 vars_by_group_vars: 1000
 ```
 
-`~/working/host_vars/node-1.yml` を編集してホスト変数を定義します。
+### `~/working/host_vars/node-1.yml` 
+
+ホスト変数を定義します。
 ```yaml
 ---
 vars_by_host_vars: 111
 ```
 
-`~/working/host_vars/node-2.yml` を編集してホスト変数を定義します。
+### `~/working/host_vars/node-2.yml`
+
+ホスト変数を定義します。
 ```yaml
 ---
 vars_by_host_vars: 222
 ```
 
-`~/working/host_vars/node-3.yml` を編集してホスト変数を定義します。
+### `~/working/host_vars/node-3.yml`
+
+ホスト変数を定義します。
 ```yaml
 ---
 vars_by_host_vars: 333
 ```
 
-`~/working/vars_host_group_playbook.yml` を編集してこれらの変数を利用する playbook を作成します。
+### `~/working/vars_host_group_playbook.yml`
+
+これらの変数を利用する playbook を作成します。
 ```yaml
 ---
 - hosts: all
@@ -293,7 +307,7 @@ vars_by_host_vars: 333
         var: cal_result
 ```
 
-`vars_host_group_playbook.yml` を実行します。
+ここまで準備が整ったら `vars_host_group_playbook.yml` を実行します。
 
 `ansible-playbook vars_host_group_playbook.yml`{{execute}}
 
@@ -339,10 +353,12 @@ ok: [node-3] => {
 (省略)
 ```
 
+このように、同じ変数でグループやホストごとに別々の値を持たせることが可能となります。
+
 
 ### register による実行結果の保存
 ---
-Ansible のモジュールは実行されると様々な戻り値を返します。playbook の中ではこの戻り値をを保存して後続のタスクで利用することができます。。その際に利用するのが `register` 句です。`register` は変数名を指定すると、その変数に戻り値を格納します。
+Ansible のモジュールは実行されると様々な戻り値を返します。playbook の中ではこの戻り値を保存して後続のタスクで利用することができます。その際に利用するのが `register` 句です。`register` に変数名を指定すると、その変数に戻り値を格納します。
 
 `~/working/vars_register_playbook.yml` を以下のように編集します。
 ```yaml
@@ -434,6 +450,11 @@ ok: [node-1] => {
     }
 }
 ```
+
+この例では、まず `shell` モジュールで hostname コマンドを実行した結果を変数 `ret` に格納し、直後の `debug` モジュールで内容を表示しています。次に、[`file`](https://docs.ansible.com/ansible/latest/modules/file_module.html) モジュールを使ってディレクトリを作成し、その戻り値を `ret` に格納しています。そして同じく `debug` モジュールで内容を確認しています。
+
+各モジュールの戻り値が何を返すかはモジュールのドキュメントで確認することができます。
+
 
 ## 演習の解答
 ---

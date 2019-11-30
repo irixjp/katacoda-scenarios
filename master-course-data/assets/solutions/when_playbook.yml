@@ -3,6 +3,11 @@
   hosts: node-1
   become: yes
   tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: latest
+
     - name: check httpd processes is running
       shell: ps -ef |grep http[d]
       register: ret
