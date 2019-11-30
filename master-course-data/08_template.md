@@ -165,6 +165,8 @@ node-1 | SUCCESS => {
 }
 ```
 
+他にも多数のフィルターが実装されていますので、状況に応じて使い分けることでより簡単に playbook が作成できるようになります。
+
 ## 演習の解答
 ---
 - [template_html_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/block_playbook.yml)
