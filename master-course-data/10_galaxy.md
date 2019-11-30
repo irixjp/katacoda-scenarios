@@ -1,8 +1,8 @@
 # Role の管理と再利用
 ---
-ここでは作成したロールの管理と再利用方法についてみていきます。ロールによって playbook の部品化が可能となりますが、その部品を再利用する時に、毎回 `roles` ディレクトリにロール一式をコピーする方法は管理面からも好ましく有りません。コピーした後に元ロールが変更された場合に、その変更に追随できないためです。またこのようなソースコードの分散を管理しようとしたときの手間も膨大となります。
+ここでは作成したロールの管理と再利用方法についてみていきます。ロールによって playbook の部品化が可能となりますが、その部品を再利用する時に、毎回 `roles` ディレクトリにロール一式をコピーする方法は好ましく有りません。コピーした後に元ロールが変更された場合に、その変更に追随できないためです。またこのようなソースコードの分散を管理しようとしたときの手間も膨大となります。
 
-この問題を解決するために、Ansible では playbook 実行に必要となるロール一式をまとめて取得する方法があります。そのために利用できる仕組みとして [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/galaxy/user_guide.html) があります。
+この問題を解決するために、Ansible では playbook 実行に必要となるロール一式をまとめて取得する方法があります。それが [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/galaxy/user_guide.html) です。
 
 Galaxy の利用とあわせて、Role 管理の手法について解説していきます。
 
@@ -14,7 +14,7 @@ Ansible ではロールの管理に `git` 等のソースコード管理シス�
 
 ロールを git で管理する場合には、「1ロール=1リポジトリ」が基本となります。この管理手法を採用すると、リポジトリが大量にできることになるため、あわせてロールのカタログを作成すると見通しがよくなります。Ansible が公式で提供しているカタログの仕組みとして `Galaxy`(https://galaxy.ansible.com/) というサイトがあり、ここに自分のロールを登録することも可能です。
 
-`Galaxy`(https://galaxy.ansible.com/) には既に膨大な数のロールが登録されており、ほとんどのケースでここを検索すると自分のやりたいことを見つけることができます。
+`Galaxy`(https://galaxy.ansible.com/) には既に膨大な数のロールが登録されており、大抵の場合は検索すると自分のやりたいことを見つけることができます。
 
 > Note: そのまま使えるケースもあれば、改造が必要なケースもあります。しかし、毎回ゼロか調べながらロールを作成するという手間を大幅に削減できます。
 
@@ -24,13 +24,12 @@ Ansible ではロールの管理に `git` 等のソースコード管理シス�
 
 今回利用するロールは以下です。
 
-- [あいさつを表示するだけのロール](https://galaxy.ansible.com/irixjp/role_example_hello)
-- [uptimeの結果を表示するだけのロール](https://galaxy.ansible.com/irixjp/role_example_uptime)
+- [irixjp.role_example_hello](https://galaxy.ansible.com/irixjp/role_example_hello) あいさつを表示するだけのロール
+- [irixjp.role_example_uptime](https://galaxy.ansible.com/irixjp/role_example_uptime) uptimeの結果を表示するだけのロール
 
-> Note: `Galaxy` 用のロールを作成するには通常のロールに [`meta`](https://galaxy.ansible.com/docs/contributing/creating_role.html) データを付加します。
+> Note: `Galaxy` 用のロールを作成するには通常のロールに [`meta`](https://galaxy.ansible.com/docs/contributing/creating_role.html) データを付加し、Galaxy に登録するだけです。
 
-
-ロールを取得するには `requirements.yml` ファイルを準備します。
+これらのロールをまとめて取得するには `requirements.yml` ファイルを準備します。
 
 `~/working/roles/requirements.yml` を以下のように編集してください。
 
@@ -76,7 +75,9 @@ Galaxy からロールを習得します。
 - irixjp.role_example_uptime (master) was installed successfully
 ```
 
-`ansible-galaxy install` では標準でロールを `$HOME/.ansible/roles` へ展開します。これは `-p` オプションで制御することが可能です。また `-f` を使うことで既存でダウンロードされたロールを上書きして習得しますので、常に最新のロールを利用することが可能になります。
+`ansible-galaxy install` コマンドは標準でロールを `$HOME/.ansible/roles` へ展開します。これは `-p` オプションで制御することが可能です。
+
+また `-f` を使うことで既存でダウンロードされたロールを上書きして習得しますので、常に最新のロールを利用することが可能になります。
 
 実際に playbook を実行します。
 
