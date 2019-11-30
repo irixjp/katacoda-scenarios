@@ -7,14 +7,6 @@
     "steps": [
       { "title": "Step 1", "text": "step1.md" }
     ],
-    "intro": {
-      "text": "intro.md",
-      "credits": "https://github.com/irixjp/katacoda-scenarios",
-      "courseData": "env-init.sh"
-    },
-    "finish": {
-      "text": "finish.md"
-    },
     "assets": {
       "host01": [
         { "file": "tools/kata_setup.sh",    "target": "~/" },
@@ -25,8 +17,8 @@
   },
   "environment": {
     "uilayout": "terminal",
-    "hideintro": false,
-    "hidefinish": false,
+    "hideintro": true,
+    "hidefinish": true,
     "showdashboard": true,
     "dashboards": [
       {"name": "node-1", "port": 8081},
