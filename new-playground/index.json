@@ -5,7 +5,7 @@
   "time": "15 minutes",
   "details": {
     "steps": [
-      { "title": "Step 1", "text": "step1.md" }
+      { "title": "Prepare your playground", "text": "step1.md" }
     ],
     "assets": {
       "host01": [
