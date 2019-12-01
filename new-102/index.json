@@ -1,6 +1,6 @@
 {
-  "title": "(re-building...)Ansible 102",
-  "description": "編集中",
+  "title": "Ansible 102",
+  "description": "variables, loop, condition, handler, block, template",
   "difficulty": "beginner",
   "time": "60 minutes",
   "details": {

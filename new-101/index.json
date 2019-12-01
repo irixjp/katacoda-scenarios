@@ -1,6 +1,6 @@
 {
-  "title": "(re-building...)Ansible 101",
-  "description": "編集中",
+  "title": "Ansible 101",
+  "description": "inventory, credential, modules, plyabook",
   "difficulty": "beginner",
   "time": "60 minutes",
   "details": {
