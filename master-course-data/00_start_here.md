@@ -24,9 +24,10 @@
 8. [テンプレート](08_template.md)
 9. [Role による部品化](09_role.md)
 10. [Role の管理と再利用](10_galaxy.md)
-11. [テストの自動化](12_testing.md)
-12. [演習問題](50_exercises.md)
-13. [演習環境のクリーンアップ](99_cleanup_ec2.md)
+11. [コーディング規約](11_lint.md)
+12. [テストの自動化](12_testing.md)
+13. [演習問題](50_exercises.md)
+14. [演習環境のクリーンアップ](99_finish_ec2.md)
 
 ## 演習教材について
 ---
