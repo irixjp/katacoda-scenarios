@@ -46,7 +46,7 @@ script:
   - echo "### 101"
   - ansible-playbook -i ${HOME:?}/inventory first_playbook.yml
   - echo "### 102"
-  - ansible node-1 -i ${HOME:?}/inventory -m fetch -a 'src=/etc/httpd/conf/httpd.conf dest=files/httpd.conf flat=yes
+  - ansible node-1 -i ${HOME:?}/inventory -m fetch -a 'src=/etc/httpd/conf/httpd.conf dest=files/httpd.conf flat=yes'
   - |
     for i in vars_debug_playbook.yml vars_host_group_playbook.yml vars_play_playbook.yml vars_register_playbook.yml vars_task_playbook.yml when_playbook.yml handler_playbook.yml rescue_playbook.yml block_playbook.yml
     do
