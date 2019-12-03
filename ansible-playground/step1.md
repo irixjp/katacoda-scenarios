@@ -25,6 +25,14 @@ This playground has three centos7 clients that is launched as docker container w
 
 You can access port 80 for each nodes via buttons "node-1,2,3" from the top of this console.
 
+There are some related commands.
+
+`ansible-lint --version`{{execute}}
+
+`yamllint --version`{{execute}}
+
+`git --version`{{execute}}
+
 
 Sample commands:
 
