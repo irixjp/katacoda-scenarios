@@ -1,0 +1,44 @@
+{
+  "title": "Ansible 104",
+  "description": "lint, testing",
+  "difficulty": "beginner",
+  "time": "60 minutes",
+  "details": {
+    "steps": [
+      { "title": "Step 1", "text": "step1.md" },
+      { "title": "Step 2", "text": "step2.md" }
+    ],
+    "intro": {
+      "text": "intro.md",
+      "credits": "",
+      "courseData": "env-init.sh"
+    },
+    "finish": {
+      "text": "finish.md"
+    },
+    "assets": {
+      "host01": [
+        { "file": "tools/kata_setup.sh",    "target": "~/" },
+        { "file": "tools/kata_prepare.yml", "target": "~/" },
+        { "file": "tools/.ansible.cfg",     "target": "~/" },
+        { "file": "working/lint_ok_playbook.yml",  "target": "~/working/" },
+        { "file": "working/lint_ng_playbook.yml",  "target": "~/working/" }
+      ]
+    }
+  },
+  "environment": {
+    "uilayout": "terminal",
+    "hideintro": false,
+    "hidefinish": false,
+    "showdashboard": true,
+    "dashboards": [
+      {"name": "node-1", "port": 8081},
+      {"name": "node-2", "port": 8082},
+      {"name": "node-3", "port": 8083}
+    ],
+    "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
+  },
+  "backend": {
+    "imageid": "centos-vm"
+  }
+}

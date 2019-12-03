@@ -40,18 +40,38 @@ ps -ef |grep -v grep
 
 2つ目のコマンドはエラーになったはずです。
 
+ここではエラーコード `[502]` となっていることが確認できます。エラーの概要は `All tasks should be named` となっており、「全てのタスクは name を保つ必要がある」という規約に違反していることがわかります。
 
+`ansible-lint` がデフォルトでチェックするルールを確認してみましょう。以下のコマンドを実行します。
 
+`ansible-lint -L`{{execute}}
 
+デフォルトで多数の規約が定義されていることが確認できます。これらの規約にはタグが割り当てられており、タグを指定してまとめて適用・除外を設定することができます。
 
-## YAML Lint
+タグの一覧を確認を確認するには以下で表示されます。
+
+`ansible-lint -T`{{execute}}
+
+例えばこの例において、今回の `[502]` に該当するルールを除外してみます。`[502]` はタグ`task` に含まれていますので、以下のように実行することができます。
+
+``ansible-lint lint_ng_playbook.yml -x task`{{execute}}`
+
+先の実行では `[502]` のチェックでエラーとなっていましたが、今回は除外されたため正常終了しています。
+
+## 標準以外のルールを定義する
 ---
+標準のチェック以外にも、プロジェクトや組織独自のルールも定義できます。
+
+独自ルールは python で定義します。`AnsibleLintRule` というクラスを継承することで簡単にルールが作成できるようになっています。
+
+詳細は[サンプル](https://github.com/ansible/ansible-lint/blob/master/examples/rules/TaskHasTag.py)を確認してください。
 
 
-
-
+## その他のチェックツール
+---
+変数の命名規則や `name` に与える文言のチェックにはより汎用的な LINT ツールである [YAMLLint](https://github.com/adrienverge/yamllint) が利用できます。
 
 ## 演習の解答
 ---
-- [galaxy_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/galaxy_playbook.yml)
-- [requirements.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/roles/requirements.yml)
+- [lint_ok_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/working/lint_ok_playbook.yml)
+- [lint_ng_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/working/lint_ng_playbook.yml)
