@@ -1,6 +1,6 @@
 {
   "title": "Ansible 102",
-  "description": "variables, loop, condition, handler, block, template",
+  "description": "variables, loop, condition, handler, block, template, filter",
   "difficulty": "beginner",
   "time": "60 minutes",
   "details": {

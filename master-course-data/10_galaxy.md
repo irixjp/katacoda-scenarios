@@ -153,6 +153,11 @@ ok: [node-1] => {
 Galaxy を利用して再配布可能なロールを作成するためにはリポジトリに `galaxy.yml` を含める必要があります。作成方法は [Creating Roles](https://galaxy.ansible.com/docs/contributing/creating_role.html) を参照してください。
 
 
+## 補足の情報
+---
+コマンドラインでは `ansible-galaxy install` をつど実行する必要がありますが、Ansible Tower/AWX では playbook の実行前に自動的に `requirements.yml` からロールをダウンロードする機能がありますので、更新し忘れといった事故を防ぐことが可能です。
+
+
 ## 演習の解答
 ---
 - [galaxy_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/galaxy_playbook.yml)

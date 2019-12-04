@@ -147,6 +147,7 @@ LANG: JP
 `ansible node-1 -m fetch -a 'src=/etc/httpd/conf/httpd.conf dest=files/httpd.conf flat=yes'`{{execute}}
 
 ファイルが取得できていることを確認して、以下のようにファイルを書き換えます。
+
 `ls -l files/`{{execute}}
 
 ```

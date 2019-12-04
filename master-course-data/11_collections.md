@@ -94,6 +94,8 @@ ok: [node-1] => {
 - より詳細な利用方法: [Using collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
 - コレクションを作成する方法: [Developing collections](https://docs.ansible.com/ansible/devel/dev_guide/developing_collections.html)
 
+コマンドラインでは `ansible-galaxy collection install` をつど実行する必要がありますが、Ansible Tower/AWX では playbook の実行前に自動的に `requirements.yml` からロールをダウンロードする機能がありますので、更新し忘れといった事故を防ぐことが可能です。
+
 
 ## 演習の解答
 ---
