@@ -7,3 +7,9 @@
 
     - import_role:
         name: irixjp.role_example_uptime
+
+    - name: get locale
+      sample_get_locale:
+      register: ret
+
+    - debug: var=ret

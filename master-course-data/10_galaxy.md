@@ -100,6 +100,58 @@ ok: [node-1] => {
 
 このようにロールを git 上で管理し、必要なロールを `requirements.yml` で管理することで、ソースコードの分散を抑え、効率と安全性を高めることが可能になります。
 
+## Role 内のカスタムモジュールやカスタムフィルターの利用
+---
+Role に含まれるカスタムモジュールやカスタムフィルターは、そのロールが playbook に読み込まれると、ロール外のタスクでも使用可能になります。
+
+例としてロール `irixjp.role_example_hello` はカスタムモジュール `sample_get_locale` を含んでいます。
+
+このカスタムモジュールは以下のように使用できます。 `~/working/galaxy_playbook.yml` を編集します。
+```yaml
+---
+- name: using galaxy
+  hosts: node-1
+  tasks:
+    - import_role:
+        name: irixjp.role_example_hello
+
+    - import_role:
+        name: irixjp.role_example_uptime
+
+    - name: get locale
+      sample_get_locale:
+      register: ret
+
+    - debug: var=ret
+```
+
+実行します。
+
+`ansible-playbook galaxy_playbook.yml`{{execute}}
+
+```bash
+TASK [get locale] *********************
+ok: [node-1]
+
+TASK [debug] **************************
+ok: [node-1] => {
+    "ret": {
+        "changed": false,
+        "failed": false,
+        "locale": "en_US.UTF-8"
+    }
+}
+```
+
+ロールの後続でカスタムモジュールが実行できていることが確認できます。
+
+このように、ロールはカスタムモジュールの配布の仕組みとして利用することができます。この場合は、ロールの `tasks/main.yml` を空にしておいて、ロール自身はタスクを何も実行しないという形で実装します。
+
+
+## Galaxy 用ロールの作成方法
+---
+Galaxy を利用して再配布可能なロールを作成するためにはリポジトリに `galaxy.yml` を含める必要があります。作成方法は [Creating Roles](https://galaxy.ansible.com/docs/contributing/creating_role.html) を参照してください。
+
 
 ## 演習の解答
 ---

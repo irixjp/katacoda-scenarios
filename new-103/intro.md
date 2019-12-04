@@ -5,7 +5,8 @@
 本コースは Ansible の基礎をすばやく学習するためのコースです。以下のポイントを解説しています。
 
 - Role による部品化
-- Role の管理と再利用(Galaxy)
+- Galaxy による Role の再利用
+- Collections
 
 本教材の作成にあたり以下のコンテンツを参考にしています。
 - https://github.com/ansible/workshops

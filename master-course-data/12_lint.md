@@ -54,9 +54,10 @@ ps -ef |grep -v grep
 
 例えばこの例において、今回の `[502]` に該当するルールを除外してみます。`[502]` はタグ`task` に含まれていますので、以下のように実行することができます。
 
-``ansible-lint lint_ng_playbook.yml -x task`{{execute}}`
+`ansible-lint lint_ng_playbook.yml -x task`{{execute}}`
 
 先の実行では `[502]` のチェックでエラーとなっていましたが、今回は除外されたため正常終了しています。
+
 
 ## 標準以外のルールを定義する
 ---
@@ -66,10 +67,17 @@ ps -ef |grep -v grep
 
 詳細は[サンプル](https://github.com/ansible/ansible-lint/blob/master/examples/rules/TaskHasTag.py)を確認してください。
 
+独自ルールには以下のようなものが定義されることになるでしょう。
+
+- 自社で禁止している操作(コマンド)が playbook に入り込まないようにする
+  - 例えば、自社で使っているルーターのファームにバグがあり、そのコマンドを実行するとスイッチがハングアップしてしまうコマンドを禁止したい場合
+  - その他のコマンドを実行すると問題が発生するような危険コマンドなど。
+
 
 ## その他のチェックツール
 ---
-変数の命名規則や `name` に与える文言のチェックにはより汎用的な LINT ツールである [YAMLLint](https://github.com/adrienverge/yamllint) が利用できます。
+変数の命名規則や `name` に与える文言のチェックにはより汎用的な LINT ツールである [YAMLLint](https://github.com/adrienverge/yamllint) が利用できます。必要に応じて活用してください。
+
 
 ## 演習の解答
 ---
