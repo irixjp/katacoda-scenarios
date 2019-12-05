@@ -20,14 +20,16 @@
 4. [Playbookの記述と実行](04_playbook.md)
 5. [変数](05_variables.md)
 6. [ループ、条件式、ハンドラー](06_loop_condition.md)
-7. [エラーハンドリング](07_block_reduce.md)
-8. [テンプレート](08_template.md)
+7. [ブロックとエラーハンドリング](07_block_reduce.md)
+8. [テンプレートとフィルター](08_template.md)
 9. [Role による部品化](09_role.md)
-10. [Role の管理と再利用](10_galaxy.md)
-11. [コーディング規約](11_lint.md)
-12. [テストの自動化](12_testing.md)
-13. [演習問題](50_exercises.md)
-14. [演習環境のクリーンアップ](99_finish_ec2.md)
+10. [Role の管理と再利用(Galaxy)](10_galaxy.md)
+11. [Collection による共通化](11_collections.md)
+12. [コーディング規約](12_lint.md)
+13. [テストの自動化](13_testing.md)
+14. [Molecule による部品のテスト](14_molecule.md)
+15. [演習問題](50_exercises.md)
+16. [演習環境のクリーンアップ](99_finish_ec2.md)
 
 ## 演習教材について
 ---
