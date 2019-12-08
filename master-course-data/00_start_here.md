@@ -26,7 +26,7 @@
 10. [Role の管理と再利用(Galaxy)](10_galaxy.md)
 11. [Collection による共通化](11_collections.md)
 12. [コーディング規約](12_lint.md)
-13. [テストの自動化](13_testing.md)
+13. [テストと確認の自動化](13_testing.md)
 14. [Molecule による部品のテスト](14_molecule.md)
 15. [演習問題](50_exercises.md)
 16. [演習環境のクリーンアップ](99_finish_ec2.md)
