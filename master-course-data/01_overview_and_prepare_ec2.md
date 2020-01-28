@@ -8,7 +8,7 @@
 
 演習環境は以下のような環境となります。
 
-![environment.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/kata_env.png)
+![environment.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/kata_env.png)
 
 
 ## 演習環境の準備
@@ -19,19 +19,19 @@
 ---
 JupyterLab上でターミナルを起動します。画面左側の「フォルダ」アイコンをクリックして、ファイルブラウザーを起動します。すでに起動している場合はそのままにしてください。
 
-![open_file_browser](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/open_file_browser.png)
+![open_file_browser](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/open_file_browser.png)
 
 ファイルブラウザーの「+」ボタンをクリックしランチャーを起動します。
 
-![add_launcher](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/add_launcher.png)
+![add_launcher](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/add_launcher.png)
 
 ランチャー内の「Other」から「Terminal」アイコンをクリックします。
 
-![open_terminal](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/open_terminal.png)
+![open_terminal](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/open_terminal.png)
 
 起動したターミナルはタブをドラッグして移動することて表示位置を変更できます。以下の例のように、Markdown と並べて表示することもできますので、演習が進めやすいように各自配置を変更してください。
 
-![vertical_split_terminal](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/vertical_split_terminal.png)
+![vertical_split_terminal](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/vertical_split_terminal.png)
 
 ### AWS操作のためのセットアップ
 ---

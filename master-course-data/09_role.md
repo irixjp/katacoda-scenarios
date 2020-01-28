@@ -2,7 +2,7 @@
 ---
 これまでは playbook に直接モジュールを列挙してきました。この方法でも Ansible の自動化は可能ですが、実際に Ansible を使っていくと以前の処理を再利用したくなるケースに多々遭遇します。その際に以前のコードをコピー＆ペーストするのは効率が悪いですし、かといって別の playbook 全体を呼び出そうすると `hosts:` に書かれたグループ名の整合性が取れずうまく動作しないことがほとんどです。そこで登場するのが以下の図の `Role` という考え方です。
 
-![structure.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/structure.png)
+![structure.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/structure.png)
 
 様々な作業単位で自動化をパーツ化して再利用可能な部品とすることができます。`Role` は完全にインベントリーと切り離されており、様々な playbook から呼び出して利用することが可能です。このような playbook の開発・管理方法を Ansible では [best practice](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html) と呼んでいます。
 

@@ -2,7 +2,7 @@
 ---
 ここでは Ansible における重要な要素である `Module` と、モジュールを実行するための `Ad-hoc コマンド` について学習します。
 
-![structure.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/structure.png)
+![structure.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/structure.png)
 
 ## モジュールとは
 ---

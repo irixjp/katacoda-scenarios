@@ -10,7 +10,7 @@
 ---
 この演習では以下のような環境を利用します。`node-1`, `node-2`, `node-3` という3台のサーバーが起動しており、ここに対して Ansible を使って様々な操作を行っていきます。
 
-![image0-1](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/kata_env.png "kata_env.png")
+![image0-1](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/kata_env.png "kata_env.png")
 
 ## 補足事項
 ---
