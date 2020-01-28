@@ -63,8 +63,11 @@ function jupyter_launch () {
 
 function notebook_install () {
     PORT=${1:?}
-    docker exec aitac-${PORT:?} \
-           sh -c "cd /notebooks && git clone ${GIT_URL:?} ."
+    docker exec aitac-${PORT:?} sh -c "cd /notebooks && git clone ${GIT_URL:?} ."
+    docker exec aitac-${PORT:?} sh -c "cp -r /notebooks/master-course-data ~/texts"
+    docker exec aitac-${PORT:?} sh -c "cp -r /notebooks/master-course-data/assets/solutions ~/"
+    docker exec aitac-${PORT:?} sh -c "cp -r /notebooks/master-course-data/assets/working ~/"
+    docker exec aitac-${PORT:?} sh -c "cp -r /notebooks/master-course-data/assets/tools ~/"
 }
 
 function main () {
