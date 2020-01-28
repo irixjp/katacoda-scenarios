@@ -4,7 +4,10 @@
 PUB_IP=`curl -s http://169.254.169.254/latest/meta-data/public-ipv4`
 
 # set git repo
-GIT_URL=https://github.com/irixjp/aitac-automation-handson.git
+GIT_URL=https://github.com/irixjp/katacoda-scenarios.git
+
+# set docekr image
+DOCKER_IMAGE=irixjp/aitac-automation-jupyter:dev
 
 # set path for a student info text file
 STUDENT=student.txt
@@ -53,7 +56,7 @@ function jupyter_launch () {
            -p ${PORT:?}:8888 \
            --name aitac-${PORT:?} \
            -e PASSWORD=${PASS:?} \
-           irixjp/aitac-automation-jupyter:dev
+           ${DOCKER_IMAGE}
 
     echo https://${PUB_IP:?}:${PORT:?} ${PASS:?} >> ${STUDENT:?}
 }
