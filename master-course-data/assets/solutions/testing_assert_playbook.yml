@@ -1,0 +1,15 @@
+---
+- name: Test with assert
+  hosts: node-1
+  become: yes
+  tasks:
+    - name: check httpd processes is running
+      shell: ps -ef |grep http[d]
+      ignore_errors: yes
+      changed_when: no
+      register: ret_check_httpd_proc
+
+    - name: test existing httpd processs
+      assert:
+        that:
+          - ret_check_httpd_proc.rc == 0
