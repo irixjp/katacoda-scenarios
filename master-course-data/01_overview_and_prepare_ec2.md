@@ -146,4 +146,13 @@ bash ./setup.sh ${NUM:?}
 
 4. 実行後に students.txt が作成され、ログイン情報が記載されています。このファイルの内容を受講生に配布してください。
 
+> Note: アクセス情報を配布するために Etherpad を利用するのが便利です。
+
+```
+EP_USER=username
+EP_PASS=password
+
+docker run -d -p 8443:8443 --name eplite -e EP_USER=${EP_USER:?} -e EP_PASS=${EP_PASS:?} irixjp/eplite:latest
+```
+
 5. 環境を削除するにはインスタンスごと削除してください。
