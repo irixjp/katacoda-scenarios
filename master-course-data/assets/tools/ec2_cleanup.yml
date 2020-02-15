@@ -65,7 +65,7 @@
       when: delete_groups | length > 0
       register: secgroup_del
       until: secgroup_del is not failed
-      retries: 5
+      retries: 10
       delay: 10
 
     - name: Collect routeb tables
@@ -94,7 +94,7 @@
       when: delete_tables | length > 0
       register: routetable_del
       until: routetable_del is not failed
-      retries: 5
+      retries: 10
       delay: 10
 
 
@@ -116,7 +116,7 @@
       when: igw.internet_gateways | length > 0
       register: igw_del
       until: igw_del is not failed
-      retries: 5
+      retries: 10
       delay: 10
 
 
@@ -138,7 +138,7 @@
       when: subnets.subnets | length > 0
       register: subnet_del
       until: subnet_del is not failed
-      retries: 5
+      retries: 10
       delay: 10
 
     - name: Collect VPC info
@@ -158,5 +158,5 @@
         state: absent
       register: vpc_del
       until: vpc_del is not failed
-      retries: 5
+      retries: 10
       delay: 10
