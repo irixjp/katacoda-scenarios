@@ -21,7 +21,7 @@ Ansible ではテストや確認作業を自動化することも可能です。
 
 ## テストの記述方法
 ---
-Ansible でのテストはパターンがあり、`shell`, `\*\_command`, `\*\_facts` で情報を取得し、その結果を `assert`, `fail` で判定します。
+Ansible でのテストはパターンがあり、`shell`, `*_command`, `*_facts` で情報を取得し、その結果を `assert`, `fail` で判定します。
 
 サンプル
 ```yaml
@@ -35,7 +35,7 @@ Ansible でのテストはパターンがあり、`shell`, `\*\_command`, `\*\_f
       - ret_AAA.rc == 0
 ```
 
-通常 playbook はエラーが発生すると、エラーとなったタスクで停止してしまいます。設定を行う場合はこれで問題はないのですが、テストの場合には途中でテストも止まってしまうことになります。テストはエラーが発生してもしなくても最後まで実行され、全体のテスト項目のうち何件が成功・エラーなのかを把握できる必要があります。その際に `shell` で発行するコマンドを `block` でまとめて `ignore_error` してエラーを無視するように設定します。
+通常 playbook はエラーが発生すると、エラーとなったタスクで停止してしまいます。設定を行う場合はこれで問題はないのですが、テストの場合には途中でテストも止まってしまうことになります。テストはエラーが発生してもしなくても最後まで実行され、全体のテスト項目のうち何件が成功・エラーなのかを把握できる必要があります。このような場合にはテストコマンドを `block` でまとめて `ignore_error` してエラーを無視するように設定します。
 
 サンプル
 ```yaml
@@ -78,13 +78,96 @@ Ansible でのテストはパターンがあり、`shell`, `\*\_command`, `\*\_f
 
 ## テストの作成
 ---
+実際にテストを作成してみます。ここで想定するテスト対象は、単純な例として httpd サーバーをインストールサーバーとします。具体的には以下を実行して設定サーバーとなります。
+
+`ansible node-1 -b -m yum -a 'name=httpd state=present'`{{execute}}
+
+`ansible node-1 -b -m systemd -a 'name=httpd state=started enabled=yes'`{{execute}}
+
+上記をテストするために以下の確認を行うこととします。
+
+- パッケージ httpd がインストールされていること
+- プロセス httpd が存在していること(起動していること)
+- サービス httpd が自動起動(enabled)になっていること
+
+ファイル `~/working/testing_assert_playbook.yml` を以下のように編集します。
+```yaml
+---
+- name: Test with assert
+  hosts: node-1
+  become: yes
+  gather_facts: no
+  tasks:
+    - ignore_errors: yes
+      block:
+        - name: Is httpd package installed?
+          shell: yum list installed | grep -e '^httpd\.'
+          register: ret_httpd_pkg
+
+        - name: check httpd processes is running
+          shell: ps -ef |grep http[d]
+          register: ret_httpd_proc
+
+        - name: Is httpd service enabled?
+          shell: systemctl is-enabled httpd
+          register: ret_httpd_enabled
+
+    - block:
+        - name: Assert results
+          assert:
+            that:
+              - ret_httpd_pkg.rc == 0
+              - ret_httpd_proc.rc == 0
+              - ret_httpd_enabled.rc == 0
+      always:
+        - name: build report
+          copy:
+            content: |
+              # Test Reports
+              ---
+              | test | result |
+              | ---- | ------ |
+              {% for i in results %}
+              | {{ i.cmd | regex_replace(query, '&#124;') }} | {{ i.rc }} |
+              {% endfor %}
+            dest: result_report_{{ inventory_hostname }}.md
+          vars:
+            results:
+              - "{{ ret_httpd_pkg }}"
+              - "{{ ret_httpd_proc }}"
+              - "{{ ret_httpd_enabled }}"
+            query: "\\|"
+          delegate_to: localhost
+```
+
+- 最初の `ignore_errors` 以下では必要なテストコードを実行し、それぞれの結果を `register` しています。
+- 2つ目の `ignore_errors` では `assert` モジュールで結果の確認を行っています。
+- 最後の `always` でテスト結果のレポートを作成しています。このように指定することで assert が失敗してもレポートが作成されます。
+  - このレポート作成では `copy` モジュールの `content` パラメーターに直接 Jinja2 を記述することで `Markdown` 形式のファイルを作成しています。
+  - `regex_replace` フィルターは正規表現で文字列を置換します。
+    - ここではコマンド中に含まれる `|` を `&#124;` へと置換しています。これは結果をテーブル形式で出力するときに `|` が区切り文字となるため、実行したコマンドに含まれる `|` を別表現(`&#124;`)へと置き換えています。
+
+Playbookを実行します。
+
+`cd ~/working`{{execute}}
+
+`ansible-playbook testing_assert_playbook.yml`{{execute}}
+
+このテストは成功するはずです。 `~/working/result_report_node-1.md` というレポートファイルが作成されているはずなので中身を確認してください。
+
+次にテストを失敗させてみます。 httpd プロセスを停止してからテストを実行します。
+
+`ansible node-1 -b -m systemd -a 'name=httpd state=stopped enabled=yes'`{{execute}}
+
+`ansible-playbook testing_assert_playbook.yml`{{execute}}
+
+こんどは失敗したはずです。レポートがどのようになったのか確認してください。
 
 
-
+このレポートは [pandoc](https://pandoc.org/) などを使うことで html 形式 → pdf と変換できるため、もう少し見た目を整えればそのまま報告書と提出することも可能です。
 
 
 ## 演習の解答
 ---
-- [lint_ok_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/working/lint_ok_playbook.yml)
-- [lint_ng_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/working/lint_ng_playbook.yml)
+- [testing_assert_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/testing_assert_playbook.yml)
 

@@ -2,14 +2,45 @@
 - name: Test with assert
   hosts: node-1
   become: yes
+  gather_facts: no
   tasks:
-    - name: check httpd processes is running
-      shell: ps -ef |grep http[d]
-      ignore_errors: yes
-      changed_when: no
-      register: ret_check_httpd_proc
+    - ignore_errors: yes
+      block:
+        - name: Is httpd package installed?
+          shell: yum list installed | grep -e '^httpd\.'
+          register: ret_httpd_pkg
 
-    - name: test existing httpd processs
-      assert:
-        that:
-          - ret_check_httpd_proc.rc == 0
+        - name: check httpd processes is running
+          shell: ps -ef |grep http[d]
+          register: ret_httpd_proc
+
+        - name: Is httpd service enabled?
+          shell: systemctl is-enabled httpd
+          register: ret_httpd_enabled
+
+    - block:
+        - name: Assert results
+          assert:
+            that:
+              - ret_httpd_pkg.rc == 0
+              - ret_httpd_proc.rc == 0
+              - ret_httpd_enabled.rc == 0
+      always:
+        - name: build report
+          copy:
+            content: |
+              # Test Reports
+              ---
+              | test | result |
+              | ---- | ------ |
+              {% for i in results %}
+              | {{ i.cmd | regex_replace(query, '&#124;') }} | {{ i.rc }} |
+              {% endfor %}
+            dest: result_report_{{ inventory_hostname }}.md
+          vars:
+            results:
+              - "{{ ret_httpd_pkg }}"
+              - "{{ ret_httpd_proc }}"
+              - "{{ ret_httpd_enabled }}"
+            query: "\\|"
+          delegate_to: localhost
