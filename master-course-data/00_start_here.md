@@ -34,8 +34,8 @@
 ---
 本演習環境の素材は以下で管理されています。
 
-- [演習内容](https://github.com/irixjp/aitac-automation-handson)
-- [演習用コンテナ](https://hub.docker.com/r/irixjp/aitac-automation-jupyter)、[Dockerfile](https://github.com/irixjp/aitac-automation-jupyter-docker)
+- [演習内容](https://github.com/irixjp/katacoda-scenarios/tree/master/master-course-data)
+- [演習用コンテナ](https://hub.docker.com/r/irixjp/aitac-automation-jupyter), [Dockerfile](https://github.com/irixjp/aitac-automation-jupyter-docker)
 
 
 本演習環境で利用しているソフトウェアは以下になります。
