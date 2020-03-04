@@ -20,7 +20,7 @@ Inventory file is below:
 
 This playground has three centos7 clients that is launched as docker container with privileges.
 
-![image0-1](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/01/kata_env.png "kata_env.png")
+![image0-1](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/kata_env.png "kata_env.png")
 
 
 You can access port 80 for each nodes via buttons "node-1,2,3" from the top of this console.
