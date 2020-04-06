@@ -42,5 +42,5 @@ irixjp/aitac-automation-jupyter:dev
 
 上記のようにコンテナを起動して、ブラウザで `localhost:8888` へアクセスすると、 jupyter lab へアクセスできます。
 
-`texts/00_start_here.md` を開いて、支持に従い演習を進めてください。
+`texts/00_start_here.md` を開いて、テキストの指示に従い演習を進めてください。
 
