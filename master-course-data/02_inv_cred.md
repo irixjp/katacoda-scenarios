@@ -121,7 +121,7 @@ ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
   - `node-1` の部分にはIPアドレスやFQDNを指定することも可能です。
 - `[web]` でホストのグループを作ることができます。ここでは `web` というグループが作られます。
   - グループ名は `all` と `localhost` 以外の名前を自由に使用できます。
-    - 例) `[web]` `[ap]` `[db]` などシステムをグループする分けする目的で使用されます。
+    - 例) `[web]` `[ap]` `[db]` などシステムをグループ分けする目的で使用されます。
 - `[all:vars]` では、`all` というグループに対して `グループ変数` を定義しています。
   - `all` は特別なグループで、インベントリーに記述された全ノードを指し示すグループです。
   - ここで与えられている、 `ansible_user` `ansible_ssh_private_key_file` は特別な変数で、各ノードへのログインに使われるユーザー名とSSH秘密鍵のパスを示しています。
@@ -173,7 +173,7 @@ node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 ```
 
-特別なグループである `all` を指定してみます。`all` はインベントリーに含まれる全てのノードを対象とします。今回のインベントリーは `all` と `web` のグループが同じものを指しているため、結果も同じなります。
+特別なグループである `all` を指定してみます。`all` はインベントリーに含まれる全てのノードを対象とします。今回のインベントリーは `all` と `web` のグループが同じものを指しているため、結果も同じになります。
 
 `ansible all -m ping -o`{{execute}}
 
