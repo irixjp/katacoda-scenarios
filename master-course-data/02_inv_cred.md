@@ -117,7 +117,7 @@ ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 このインベントリーファイルは以下のルールで記述されています。
 
 - `node-1` `node-2` のように1行1ノードで情報を記述します。
-  - ノード行は `ノードの識別子(node-1)`、ノードに与える`ホスト変数(複数化) (ansible_host=xxxx)` から構成されます。
+  - ノード行は `ノードの識別子(node-1)`、ノードに与える`ホスト変数(複数可) (ansible_host=xxxx)` から構成されます。
   - `node-1` の部分にはIPアドレスやFQDNを指定することも可能です。
 - `[web]` でホストのグループを作ることができます。ここでは `web` というグループが作られます。
   - グループ名は `all` と `localhost` 以外の名前を自由に使用できます。
