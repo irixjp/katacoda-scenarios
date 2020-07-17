@@ -49,6 +49,6 @@
 
 ## 解答例
 ---
-- [lb_web.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/lb_web.yml)
 - [httpd_myip](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/roles/httpd_myip)
 - [nginx_lb](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/roles/nginx_lb)
+- [lb_web.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/lb_web.yml)
