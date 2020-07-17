@@ -44,13 +44,15 @@ JupyterLab上でターミナルを起動します。画面左側の「フォル�
 |Default region name   |ap-northeast-1     | |
 |Default output format |json               | |
 
-ターミナルから以下のコマンドを実行します。上記の値の入力を求められますので、各自「**自分に割り当てられた値**」を入力してください。以下のサンプル値を入力しても演習は行なえません。
+ターミナルから以下のコマンドを実行します。上記の値の入力を求められますので、各自「**自分に割り当てられた値**」を入力してください。以下のサンプル値を入力しても演習は行なえませんので注意してください。
+
+> Note: ここで入力するAWSの情報は、この演習用に事務局から配布されたアカウント情報を利用してください。
 
 `aws configure`{{execute}}
 
 ```bash
-AWS Access Key ID [None]: AABBCCDDEEFFGG
-AWS Secret Access Key [None]: AABBCCDDEEFFGGHHIIJJKKLLMMNN
+AWS Access Key ID [None]: AABBCCDDEEFFGG ← 自分のアクセスキー
+AWS Secret Access Key [None]: AABBCCDDEEFFGGHHIIJJKKLLMMNN ← 自分のシークレットキー
 Default region name [None]: ap-northeast-1
 Default output format [None]: json
 ```
@@ -114,7 +116,30 @@ node-3    : ok=2  changed=0  unreachable=0 failed=0 skipped=0 rescued=0 ignored=
 
 上記の出力例のようにエラーなく終了すれば成功です。これで演習の準備が整います。
 
-もしエラーとなった場合には講師に確認を行ってください。
+> Note: エラーが出た場合の対処(AMIのサブスクリプションを保持していない場合に出ます)
+
+受講者の環境によっては以下のようなエラーが出る場合があります。
+
+```
+TASK [Create instances] ********************************************************
+fatal: [localhost]: FAILED! => {"changed": false, "msg": "Instance creation failed => OptInRequired: In order to use this AWS Marketplace product you need to accept terms and subscribe. To do so please visit https://aws.amazon.com/marketplace/pp?sku=xxxxxyyyyyyzzzzzzzzzzz"}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=16   changed=7    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
+```
+
+このエラーは演習で使うAWSのOSイメージが利用可能な状態になっていないと出ます。以下の手順でイメージを有効化してください。
+
+1. AWSコンソールから一度ログオフする（ログインしている場合）
+2. エラーメッセージに表示されたURLへアクセスする
+  - 上記の例では `https://aws.amazon.com/marketplace/pp?sku=xxxxxyyyyyyzzzzzzzzzzz`
+3. 画面の「Subscribe」 → 「Accept」として CentOS7 のイメージを有効にします。
+  - AWS側の画面のアップデートで文言が変わっている場合もあります。
+  - ここでログインを求められますので、本演習用に配布されたアカウント情報でログインしてください。
+4. Jupyterコンソールに戻り、`ansible-playbook ec2_prepare.yml` を再実行します。
+
+
+もしその他のエラーとなった場合には講師に確認を行ってください。
 
 ## 補足事項
 ---
