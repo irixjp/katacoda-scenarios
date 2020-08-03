@@ -1,6 +1,6 @@
 {
   "title": "Ansible 101",
-  "description": "inventory, credential, modules, plyabook",
+  "description": "inventory, credential, modules, playbook",
   "difficulty": "beginner",
   "time": "60 minutes",
   "details": {
