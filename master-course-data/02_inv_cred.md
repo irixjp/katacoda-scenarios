@@ -8,7 +8,7 @@ Ansible の基本となるインベントリー(inventory)と認証情報(creden
 ---
 まず以下のコマンドを実行してください。これは Ansible を使って3台の演習ノードのディスク使用量を確認しています。
 
-`cd ~/'`{{execute}}
+`cd ~/`{{execute}}
 
 `ansible all -m shell -a 'df -h'`{{execute}}
 
