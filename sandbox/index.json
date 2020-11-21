@@ -1,18 +1,19 @@
 {
   "title": "_Sandbox",
-  "description": "Test something",
+  "description": "inventory, credential, modules, playbook",
   "difficulty": "beginner",
   "time": "60 minutes",
   "details": {
     "steps": [
-      {
-        "title": "Step 1",
-        "text": "step1.md"
-      }
+      { "title": "Step 1", "text": "step1.md" }
     ],
     "intro": {
       "text": "intro.md",
+      "credits": "https://github.com/irixjp/katacoda-scenarios",
       "courseData": "env-init.sh"
+    },
+    "finish": {
+      "text": "finish.md"
     },
     "assets": {
       "host01": [
@@ -26,9 +27,14 @@
   },
   "environment": {
     "uilayout": "terminal",
-    "uieditorpath": "/root",
     "hideintro": false,
-    "hidefinish": true,
+    "hidefinish": false,
+    "showdashboard": true,
+    "dashboards": [
+      {"name": "node-1", "port": 8081},
+      {"name": "node-2", "port": 8082},
+      {"name": "node-3", "port": 8083}
+    ],
     "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
   },
   "backend": {
