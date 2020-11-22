@@ -1,0 +1,189 @@
+---
+- name: Setup handson environment
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Create a VPC
+      ec2_vpc_net:
+        name: "{{ VPC_NAME }}"
+        cidr_block: "{{ VPC_CIDR_BLOCK }}"
+        dns_hostnames: yes
+        dns_support: yes
+        tags:
+          role: aitac-automation
+        region: "{{ REGION }}"
+        state: present
+      register: vpc
+
+    - debug: var=vpc
+
+    - name: Create a subnet
+      ec2_vpc_subnet:
+        cidr: "{{ SUBNET_CIDR_BLOCK }}"
+        vpc_id: "{{ vpc.vpc.id }}"
+        map_public: yes
+        tags:
+          role: aitac-automation
+        region: "{{ REGION }}"
+        state: present
+      register: subnet
+
+    - debug: var=subnet
+
+    - name: Connect to the internet gateway
+      ec2_vpc_igw:
+        vpc_id: "{{ vpc.vpc.id }}"
+        tags:
+          role: aitac-automation
+        region: "{{ REGION }}"
+        state: present
+      register: igw
+
+    - debug: var=igw
+
+    - name: Create a route table
+      ec2_vpc_route_table:
+        vpc_id: "{{ vpc.vpc.id }}"
+        subnets:
+          - "{{ subnet.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ igw.gateway_id }}"
+        tags:
+          role: aitac-automation
+        region: "{{ REGION }}"
+        state: present
+      register: route_table
+
+    - debug: var=route_table
+
+    - name: Create a security group
+      ec2_group:
+        name: "{{ SEC_GROUP_NAME }}"
+        description: "{{ SEC_GROUP_DESC }}"
+        vpc_id: "{{ vpc.vpc.id }}"
+        purge_rules: yes
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 443
+            to_port: 443
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 8080
+            to_port: 8080
+            cidr_ip: 0.0.0.0/0
+        tags:
+          role: aitac-automation
+        region: "{{ REGION }}"
+        state: present
+      register: sg
+
+    - debug: var=sg
+
+    - name: Create a keypair
+      ec2_key:
+        name: "{{ KEYPAIR_NAME }}"
+        region: "{{ REGION }}"
+        state: present
+      register: keypair
+
+    - name: Output private key
+      copy:
+        content: "{{ keypair.key.private_key }}"
+        dest: "{{ KEYPAIR_PATH }}"
+        owner: jupyter
+        group: jupyter
+        mode: "0700"
+      when: keypair.key.private_key is defined
+
+    - name: Collect a ami id
+      ec2_ami_info:
+        filters:
+          "product-code": "{{ AMI_PRODUCT_CODE }}"
+      register: amis
+
+    - debug: var=amis
+
+    - name: Select latest CentOS7 image
+      set_fact:
+        ami: "{{ temp[0] }}"
+      vars:
+        temp: "{{ amis.images | sort(attribute='creation_date', reverse=True) }}"
+
+    - debug: var=ami
+
+    - name:  Create instances
+      ec2:
+        key_name: "{{ KEYPAIR_NAME }}"
+        instance_type: t2.micro
+        image: "{{ ami.image_id }}"
+        wait: yes
+        group: "{{ SEC_GROUP_NAME }}"
+        exact_count: "{{ INSTANCE_NUM }}"
+        count_tag:
+          Name: ansible-target
+          role: aitac-automation
+          automation_group: target
+        vpc_subnet_id: "{{ subnet.subnet.id }}"
+        assign_public_ip: yes
+        region: "{{ REGION }}"
+        instance_tags:
+          Name: ansible-target
+          role: aitac-automation
+          automation_group: target
+        volumes:
+          - device_name: /dev/sda1
+            volume_type: standard
+            volume_size: 10
+            delete_on_termination: true
+      register: ec2
+
+    - debug: var=ec2
+
+    - name: Create a default inventory
+      copy:
+        content: |
+          [web]
+          {% for i in ec2.tagged_instances %}
+          node-{{ loop.index }} ansible_host={{ i.public_ip }}
+          {% endfor %}
+
+          [all:vars]
+          ansible_user=centos
+          ansible_ssh_private_key_file={{ KEYPAIR_PATH }}
+        dest: "{{ INVENTORY_PATH }}"
+
+    - name: Create a in-memory inventory
+      add_host:
+        host: node-{{ ansible_loop.index }}
+        group: tag_automation_group_target
+        ansible_user: centos
+        ansible_host: "{{ item.public_ip }}"
+        ansible_ssh_private_key_file: "{{ KEYPAIR_PATH }}"
+      loop: "{{ ec2.tagged_instances }}"
+      loop_control:
+        extended: yes
+
+- hosts: tag_automation_group_target
+  gather_facts: False
+  tasks:
+    - name: SSH port is up? Waiting 30 sec ...
+      wait_for:
+        host: "{{ ansible_host }}"
+        port: 22
+        delay: 30
+        state: started
+        timeout: 600
+      connection: local
+      vars:
+        ansible_python_interpreter: /usr/bin/python
+
+    - ping:

@@ -1,0 +1,162 @@
+---
+- name: Cleanup handson environment
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Delete the inventory file
+      file:
+        path: "{{ INVENTORY_PATH }}"
+        state: absent
+
+    - name: Collect instance info
+      ec2_instance_info:
+        region: "{{ REGION }}"
+      register: ec2
+
+    - debug: var=ec2
+
+    - name: Retrive instance ids
+      set_fact:
+        delete_ids: "{{ ec2.instances | json_query(query) }}"
+      vars:
+        query: "[?tags.role=='aitac-automation'].instance_id"
+
+    - debug: var=delete_ids
+
+    - name: Delete instances
+      ec2:
+        state: absent
+        instance_ids: "{{ delete_ids }}"
+        region: "{{ REGION }}"
+      when: delete_ids | length > 0
+
+    - name: Delete private key
+      file:
+        path: "{{ KEYPAIR_PATH }}"
+        state: absent
+
+    - name: Delete keypair
+      ec2_key:
+        name: "{{ KEYPAIR_NAME }}"
+        region: "{{ REGION }}"
+        state: absent
+
+    - name: Collect security groups
+      ec2_group_info:
+        region: "{{ REGION  }}"
+      register: secgroup
+
+    - debug: var=secgroup
+
+    - name: Retrive sec group ids
+      set_fact:
+        delete_groups: "{{ secgroup.security_groups | json_query(query) }}"
+      vars:
+        query: "[?tags.role=='aitac-automation'].group_id"
+
+    - debug: var=delete_groups
+
+    - name: Delete sec group
+      ec2_group:
+        region: "{{ REGION  }}"
+        group_id: "{{ item }}"
+        state: absent
+      loop: "{{ delete_groups }}"
+      when: delete_groups | length > 0
+      register: secgroup_del
+      until: secgroup_del is not failed
+      retries: 10
+      delay: 10
+
+    - name: Collect routeb tables
+      ec2_vpc_route_table_info:
+        region: "{{ REGION }}"
+      register: route_tables
+
+    - debug: var=route_tables
+
+    - name: Retrive route table ids
+      set_fact:
+        delete_tables: "{{ route_tables.route_tables | json_query(query) }}"
+      vars:
+        query: "[?tags.role=='aitac-automation'].[id, vpc_id] "
+
+    - debug: var=delete_tables
+
+    - name: Delete route table
+      ec2_vpc_route_table:
+        region: "{{ REGION }}"
+        route_table_id: "{{ item[0] }}"
+        vpc_id: "{{ item[1] }}"
+        lookup: id
+        state: absent
+      loop: "{{ delete_tables }}"
+      when: delete_tables | length > 0
+      register: routetable_del
+      until: routetable_del is not failed
+      retries: 10
+      delay: 10
+
+
+    - name: Collect Internet gateway
+      ec2_vpc_igw_info:
+        region: "{{ REGION }}"
+        filters:
+          "tag:role": "aitac-automation"
+      register: igw
+
+    - debug: var=igw
+
+    - name: Remove internet gateway
+      ec2_vpc_igw:
+        region: "{{ REGION }}"
+        vpc_id: "{{ item.attachments[0].vpc_id }}"
+        state: absent
+      loop: "{{ igw.internet_gateways }}"
+      when: igw.internet_gateways | length > 0
+      register: igw_del
+      until: igw_del is not failed
+      retries: 10
+      delay: 10
+
+
+    - name: Collect subnet info
+      ec2_vpc_subnet_info:
+        region: "{{ REGION }}"
+        filters:
+          "tag:role": "aitac-automation"
+      register: subnets
+
+    - debug: var=subnets
+
+    - name: Remove subnet for database servers
+      ec2_vpc_subnet:
+        state: absent
+        vpc_id: "{{ item.vpc_id }}"
+        cidr: "{{ SUBNET_CIDR_BLOCK }}"
+      loop: "{{ subnets.subnets }}"
+      when: subnets.subnets | length > 0
+      register: subnet_del
+      until: subnet_del is not failed
+      retries: 10
+      delay: 10
+
+    - name: Collect VPC info
+      ec2_vpc_net_info:
+        region: "{{ REGION }}"
+        filters:
+          "tag:role": "aitac-automation"
+      register: vpcs
+
+    - debug: var=vpcs
+
+    - name: Delete VPCs
+      ec2_vpc_net:
+        region: "{{ REGION }}"
+        name: "{{ VPC_NAME }}"
+        cidr_block: "{{ VPC_CIDR_BLOCK }}"
+        state: absent
+      register: vpc_del
+      until: vpc_del is not failed
+      retries: 10
+      delay: 10
