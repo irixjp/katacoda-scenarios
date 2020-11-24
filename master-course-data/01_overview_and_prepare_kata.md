@@ -4,6 +4,7 @@
 ---
 以下のコマンドを実行して演習環境を準備します。この操作は1-2分程度で終わります。
 
+`yum install -y git && git clone https://github.com/irixjp/katacoda-scenarios && cd katacoda-scenarios/assets/tools/`{{execute}}
 `bash ./kata_setup.sh`{{execute}}
 
 ## 環境の概要
