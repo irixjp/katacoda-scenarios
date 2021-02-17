@@ -177,7 +177,9 @@ bash ./setup.sh ${NUM:?}
 EP_USER=username
 EP_PASS=password
 
-docker run -d -p 8443:8443 --name eplite -e EP_USER=${EP_USER:?} -e EP_PASS=${EP_PASS:?} irixjp/eplite:latest
+docker run -d -p 8443:8443 -p 8080:8080 --name eplite -e EP_USER=${EP_USER:?} -e EP_PASS=${EP_PASS:?} irixjp/eplite:latest
 ```
+
+起動後は http/https でポート 8080 or 8443 へアクセスしてください。ユーザー名とパスワードは変数に設定した値です。
 
 5. 環境を削除するにはインスタンスごと削除してください。
