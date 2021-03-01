@@ -133,7 +133,7 @@ localhost                  : ok=16   changed=7    unreachable=0    failed=1    s
 1. AWSコンソールから一度ログオフする（ログインしている場合）
 2. エラーメッセージに表示されたURLへアクセスする
   - 上記の例では `https://aws.amazon.com/marketplace/pp?sku=xxxxxyyyyyyzzzzzzzzzzz`
-3. 画面の「Subscribe」 → 「Accept」として CentOS7 のイメージを有効にします。
+3. 画面の「Continue to Subscribe」 として処理を進めて CentOS7 のイメージを有効にします。
   - AWS側の画面のアップデートで文言が変わっている場合もあります。
   - ここでログインを求められますので、本演習用に配布されたアカウント情報でログインしてください。
 4. Jupyterコンソールに戻り、`ansible-playbook ec2_prepare.yml` を再実行します。
