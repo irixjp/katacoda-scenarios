@@ -1,13 +1,18 @@
 ---
 REGION: ap-northeast-1
-VPC_NAME: aitac-automation-vpc
-VPC_CIDR_BLOCK: 10.0.0.0/23
-SUBNET_CIDR_BLOCK: 10.0.0.0/24
-SEC_GROUP_NAME: aitac-automation-sg
-SEC_GROUP_DESC: security group for aitac handson
+VPC_NAME: aitac-automation-student-vpc
+VPC_CIDR_BLOCK: 10.1.0.0/23
+SUBNET_CIDR_BLOCK: 10.1.0.0/24
+SEC_GROUP_NAME: aitac-automation-student-sg
+SEC_GROUP_DESC: security group for aitac handson student env
 AMI_PRODUCT_CODE: aw0evgkw8e5c1q413zgy5pjce
-KEYPAIR_NAME: autmation-keypair
-KEYPAIR_PATH: /jupyter/automation-keypair.pem
+INSTANCE_TYPE: t3.small
+VOLUME_SIZE: 20
+KEYPAIR_NAME: autmation-keypair-master
+KEYPAIR_PATH: /jupyter/automation-master-keypair.pem
+INSTANCE_NUM: 2
 INSTANCE_NAME: aitac-automation-instance
-INSTANCE_NUM: 3
-INVENTORY_PATH: /jupyter/inventory
+INSTANCE_TAG_NAME: aitac-automation-student
+INSTANCE_TAG_ROLE: aitac-automation-role-student
+INSTANCE_TAG_TARGET: aitac-automation-role-student-target
+INVENTORY_PATH: /jupyter/master-inventory

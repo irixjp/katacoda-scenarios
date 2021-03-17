@@ -123,7 +123,7 @@
     - name:  Create instances
       ec2:
         key_name: "{{ KEYPAIR_NAME }}"
-        instance_type: t2.micro
+        instance_type: "{{ INSTANCE_TYPE }}"
         image: "{{ ami.image_id }}"
         wait: yes
         group: "{{ SEC_GROUP_NAME }}"
@@ -136,13 +136,13 @@
         assign_public_ip: yes
         region: "{{ REGION }}"
         instance_tags:
-          Name: ansible-target
-          role: aitac-automation
-          automation_group: target
+          Name: "{{ INSTANCE_TAG_NAME }}"
+          role: "{{ INSTANCE_TAG_ROLE }}"
+          automation_group: "{{ INSTANCE_TAG_TARGET }}"
         volumes:
           - device_name: /dev/sda1
             volume_type: standard
-            volume_size: 10
+            volume_size: "{{ VOLUME_SIZE }}"
             delete_on_termination: true
       register: ec2
 
