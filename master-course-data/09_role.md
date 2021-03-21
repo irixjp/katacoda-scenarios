@@ -138,7 +138,7 @@ LANG: JP
 
 ### `~/working/roles/web_setup/files/httpd.conf`
 
-このファイルはサーバー側から取得して、以下のように編集してください。
+このファイルはサーバー側から取得します。以下のようにコマンドを実行してファイルを取得した後にファイルを編集してください。
 
 `cd ~/working/roles/web_setup`{{execute}}
 
@@ -146,9 +146,11 @@ LANG: JP
 
 `ansible node-1 -m fetch -a 'src=/etc/httpd/conf/httpd.conf dest=files/httpd.conf flat=yes'`{{execute}}
 
-ファイルが取得できていることを確認して、以下のようにファイルを書き換えます。
+ファイルが取得できていることを確認します。
 
 `ls -l files/`{{execute}}
+
+ファイルの中身を編集します。演習の進み方によっては既に編集済みの場合もありますのでその場合はそのままにしてください。
 
 ```
 ServerAdmin root@localhost
@@ -232,7 +234,7 @@ changed: [node-1]
 
 実行に成功したら、ブラウザで各サーバーにアクセスして結果を確認してください。
 
-ロールを使うことで飛躍的に自動化の再利用性が高まります。これはタスクとインベントリーが完全に切り離されるためです。それと同時に、自動度の高い playbook の記述方法に[best practice](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html)という一定のルールを設けることで、「どこに何が定義されているのか」の見通しが良くなり、他のメンバーからも安心してロールを再利用してもらえるようになります。
+ロールを使うことで飛躍的に自動化の再利用性が高まります。これはタスクとインベントリーが完全に切り離されるためです。しかしだからと言って好き勝手にRole化とPlaybook化を進めてしまうと、記述のスタイルがバラバラになってしまい管理が難しくなります。そこで [best practice](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html) という一定のルールを設けることで、「どこに何が定義されているのか」の見通しが良くなり、他のメンバーからも安心してロールを再利用してもらえるようになります。
 
 
 ## 演習の解答

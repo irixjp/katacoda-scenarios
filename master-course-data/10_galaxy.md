@@ -130,6 +130,7 @@ Role に含まれるカスタムモジュールやカスタムフィルターは
 `ansible-playbook galaxy_playbook.yml`{{execute}}
 
 ```bash
+(省略)
 TASK [get locale] *********************
 ok: [node-1]
 

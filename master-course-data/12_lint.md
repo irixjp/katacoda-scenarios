@@ -29,18 +29,28 @@ Ansible では [ansible-lint](https://github.com/ansible/ansible-lint) という
 
 こちらは正常終了します。
 
+> Note: Warning が出る場合がありますが無視してください。
+
 `ansible-lint lint_ng_playbook.yml`{{execute}}
 
-```bash
+エラー例1
+```text
 [502] All tasks should be named
 lint_ng_playbook.yml:6
 Task/Handler: shell set -o pipefail
 ps -ef |grep -v grep
 ```
 
-2つ目のコマンドはエラーになったはずです。
+エラー例2
+```text
+unnamed-task: All tasks should be named
+lint_ng_playbook.yml:6 Task/Handler: shell  set -o pipefail
+ps -ef |grep -v grep
+```
 
-ここではエラーコード `[502]` となっていることが確認できます。エラーの概要は `All tasks should be named` となっており、「全てのタスクは name を保つ必要がある」という規約に違反していることがわかります。
+2つ目のコマンドは例のようなエラーになったはずです。
+
+エラーの概要は `All tasks should be named` となっており、「全てのタスクは name を保つ必要がある」という規約に違反していることがわかります。
 
 `ansible-lint` がデフォルトでチェックするルールを確認してみましょう。以下のコマンドを実行します。
 
@@ -52,11 +62,7 @@ ps -ef |grep -v grep
 
 `ansible-lint -T`{{execute}}
 
-例えばこの例において、今回の `[502]` に該当するルールを除外してみます。`[502]` はタグ`task` に含まれていますので、以下のように実行することができます。
-
-`ansible-lint lint_ng_playbook.yml -x task`{{execute}}`
-
-先の実行では `[502]` のチェックでエラーとなっていましたが、今回は除外されたため正常終了しています。
+除外したいタグを `-x` オプションで指定することで、そのチェックを除外することができます。試しに `lint_ng_playbook.yml` がOKとなるようにルールを除外してlintを実行してください。
 
 
 ## 標準以外のルールを定義する

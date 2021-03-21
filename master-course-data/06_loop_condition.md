@@ -85,6 +85,8 @@ orange:x:1002:1002::/home/orange:/bin/bash
 pineapple:x:1003:1003::/home/pineapple:/bin/bash
 ```
 
+> Note: `/etc/passwd` ファイルはLinux上のユーザー情報が格納されたファイルです。
+
 さらに `mango`, `peach` ユーザーを追加したくなったとします。その場合には、どのように playbook を編集すれば良いでしょうか。実際に playbook を編集して再度実行してください。以下のような実行結果となれば正しく記述できています。冪等性が働いていることが確認できるはずです。
 
 `ansible-playbook loop_playbook.yml`{{execute}}
@@ -311,7 +313,9 @@ node-1  : ok=2 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 この状態では全てのタスクは `ok` となりました。この時点ではサーバーから取得した httpd.conf をそのままサーバーに配布しているためです。そのため `handler` は動きません。
 
-では、`files/httpd.conf` を編集して、コピーが `changed` となるようにします。以下のように編集してください。
+> Note: copy モジュールの冪等性が働いているためです。コピーしようとしたファイルが既に存在し、かつ中身も同じためコピーする必要がないため ok となります。
+
+では、`~/working/files/httpd.conf` を編集して、コピーが `changed` となるようにします。以下のようにファイルを編集してください。
 ```
 ServerAdmin root@localhost
       ↓
