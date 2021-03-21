@@ -12,7 +12,7 @@ Ansible の基本となるインベントリー(inventory)と認証情報(creden
 
 `ansible all -m shell -a 'df -h'`{{execute}}
 
-```bash
+```text
 node-1 | CHANGED | rc=0 >>
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/xvda1       10G  885M  9.2G   9% /
@@ -51,7 +51,7 @@ tmpfs            99M     0   99M   0% /run/user/1000
 
 `ansible --version`{{execute}}
 
-```bash
+```text
 ansible 2.9.0
   config file = /jupyter/.ansible.cfg
   configured module search path = ['/jupyter/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
@@ -76,7 +76,7 @@ ansible コマンドに `--version` オプションをつけると、実行環�
 
 `cat ~/.ansible.cfg`{{execute}}
 
-```bash
+```ini
 [defaults]
 inventory         = inventory
 host_key_checking = False
@@ -103,7 +103,7 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=
 
 `cat ~/inventory`{{execute}}
 
-```bash
+```text
 [web]
 node-1 ansible_host=3.114.16.114
 node-2 ansible_host=3.114.209.178
@@ -113,6 +113,8 @@ node-3 ansible_host=52.195.15.8
 ansible_user=centos
 ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 ```
+
+> Note: 演習環境によっては `http_access=http://35.73.128.87:8083` のような出力される場合がありますが、気にせず進めてください。
 
 このインベントリーは `ini` ファイル形式で記述されています。他にも `YAML` 形式や、スクリプトで動的にインベントリーを構成する `ダイナミックインベントリー` という仕組みもサポートされています。詳細は [How to build your inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) を確認してください。
 
@@ -133,7 +135,7 @@ ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 
 `ansible web -i ~/inventory -m ping -o`{{execute}}
 
-```bash
+```text
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
@@ -150,7 +152,7 @@ node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 
 `ansible web -m ping -o`{{execute}}
 
-```bash
+```text
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
@@ -162,7 +164,7 @@ node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 
 `ansible node-1 -m ping -o`{{execute}}
 
-```bash
+```text
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 ```
 
@@ -170,7 +172,7 @@ node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 
 `ansible node-1,node-3 -m ping -o`{{execute}}
 
-```bash
+```text
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 ```
@@ -179,7 +181,7 @@ node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 
 `ansible all -m ping -o`{{execute}}
 
-```bash
+```text
 node-1 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
@@ -192,7 +194,7 @@ node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 
 今回の演習環境では、先に見たインベントリーの中で認証情報が指定されています。以下が抜粋となります。
 
-```bash
+```ini
 [all:vars]
 ansible_user=centos
 ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
@@ -216,21 +218,33 @@ ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 
 パスワードを使用する方法もあります。以下がサンプルになります。
 
-```bash
+```text
 $ ansible all -u centos -k -m ping
 SSH password:  ← ここでパスワード入力を求められる
-node-1 | FAILED! => {
-    "msg": "to use the 'ssh' connection type with passwords, you must install the sshpass program"
+node-1 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    }, 
+    "changed": false, 
+    "ping": "pong"
 }
-node-2 | FAILED! => {
-    "msg": "to use the 'ssh' connection type with passwords, you must install the sshpass program"
+node-2 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    }, 
+    "changed": false, 
+    "ping": "pong"
 }
-node-3 | FAILED! => {
-    "msg": "to use the 'ssh' connection type with passwords, you must install the sshpass program"
+node-3 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    }, 
+    "changed": false, 
+    "ping": "pong"
 }
 ```
 
-> Note: 演習環境はパスワードログインが許可されていないため、実際に実行してもこの手順は失敗します。
+> Note: 本演習環境ではインベントリーファイルに秘密鍵が設定されているため、鍵認証が優先されて誤ったパスワードを入力しても操作は成功します。
 
 - `-k`: コマンド実行時に、パスワード入力のプロンプトを出す。
 

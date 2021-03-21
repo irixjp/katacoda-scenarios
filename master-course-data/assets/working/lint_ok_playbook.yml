@@ -1,13 +1,14 @@
 ---
 - hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: true
   tasks:
     - name: get process list
       shell: |
         set -o pipefail
         ps -ef |grep -v grep
-      changed_when: no
+      changed_when: false
       register: ret
 
-    - debug: var=ret
+    - name: print vars
+      debug: var=ret
