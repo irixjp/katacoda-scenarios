@@ -25,8 +25,7 @@
           - "{{ item.port }}:80"
         security_opts:
           - "label:disable"
-        capabilities:
-          - "SYS_ADMIN"
+        privileged: true
       loop: "{{ target_containers }}"
       register: containers
 
