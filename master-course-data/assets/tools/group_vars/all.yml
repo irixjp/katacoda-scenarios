@@ -8,7 +8,7 @@ SEC_GROUP_DESC: security group for aitac handson student env
 AMI_PRODUCT_CODE: aw0evgkw8e5c1q413zgy5pjce
 INSTANCE_TYPE: t3.medium
 VOLUME_SIZE: 20
-INSTANCE_NUM: 2
+INSTANCE_NUM: 50
 RESOURCE_TAG_ROLE: aitac-automation-master-role
 INSTANCE_TAG_NAME: aitac-automation-master-instance
 INSTANCE_TAG_TARGET: aitac-automation-master-target

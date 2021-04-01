@@ -35,7 +35,7 @@ aws configure
 
 ソースをコピー
 ```bash
-cd ~
+cd /notebooks
 git clone https://github.com/irixjp/katacoda-scenarios.git .
 cd master-course-data/assets/tools
 ```
@@ -50,6 +50,13 @@ ansible-playbook ec2_prepare.yml -e 'DOCKERHUB_USERNAME=foo' -e 'DOCKERHUB_PASSW
 - `~/jupyter_url.txt` にアクセス先の情報が格納される。
 - `~/inv_teacher` に全コンテナへのアクセス情報が記載される。
 - `~/inventory` に全インスタンスへのアクセス情報が記載される。
+
+AWSの状態を確認
+```bash
+aws ec2 describe-instances --output=table --query 'Reservations[].Instances[].{id:InstanceId,ipaddr:PublicIpAddress,state:State.Name,name:Tags[?Key==`Name`].Value|[0]}'
+
+aws ec2 describe-vpcs --output table --query "Vpcs[].[VpcId,CidrBlock,DhcpOptionsId,State,OwnerId,InstanceTenancy]"
+```
 
 
 Ehterpad を設定
