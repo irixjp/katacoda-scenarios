@@ -1,5 +1,0 @@
----
-- name: restart_apache
-  service:
-    name: httpd
-    state: restarted

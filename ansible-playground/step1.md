@@ -1,6 +1,9 @@
-In order to configure this environment, exec the below command.
+In order to configure this environment, exec the below commands.
+
+`yum install -y git && git clone https://github.com/irixjp/katacoda-scenarios && cd katacoda-scenarios/master-course-data/assets/tools/`{{execute}}
 
 `bash ./kata_setup.sh`{{execute}}
+
 
 
 Ansible version is below:

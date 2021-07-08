@@ -17,15 +17,6 @@
     },
     "finish": {
       "text": "finish.md"
-    },
-    "assets": {
-      "host01": [
-        { "file": "tools/kata_setup.sh",    "target": "~/" },
-        { "file": "tools/kata_prepare.yml", "target": "~/" },
-        { "file": "tools/.ansible.cfg",     "target": "~/" },
-        { "file": "working/first_playbook.yml", "target": "~/working/" },
-        { "file": "working/files/index.html",   "target": "~/working/files/" }
-      ]
     }
   },
   "environment": {
