@@ -1,0 +1,18 @@
+---
+- name: setup httpd to node-1,2
+  hosts: node-1,node-2
+  become: yes
+  tasks:
+    - import_role:
+        name: httpd_myip
+
+- name: setup nginx to node-3
+  hosts: node-3
+  become: yes
+  tasks:
+    - import_role:
+        name: nginx_lb
+      vars:
+        backend_server_list:
+          - "{{ hostvars['node-1'].ansible_host }}"
+          - "{{ hostvars['node-2'].ansible_host }}"

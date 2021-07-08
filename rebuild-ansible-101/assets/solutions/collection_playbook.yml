@@ -1,0 +1,15 @@
+---
+- name: using collection
+  hosts: node-1
+  tasks:
+    - import_role:
+        name: irixjp.sample_collection_hello.hello
+
+    - import_role:
+        name: irixjp.sample_collection_hello.uptime
+
+    - name: get locale
+      irixjp.sample_collection_hello.sample_get_locale:
+      register: ret
+
+    - debug: var=ret

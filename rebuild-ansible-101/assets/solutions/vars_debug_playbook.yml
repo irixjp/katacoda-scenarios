@@ -1,0 +1,11 @@
+---
+- hosts: node-1
+  gather_facts: no
+  tasks:
+    - name: print all variables
+      debug:
+        var: vars
+
+    - name: get one variable
+      debug:
+        msg: "This value is {{ vars.ansible_version.full }}"
