@@ -6,14 +6,7 @@
   "details": {
     "steps": [
       { "title": "Prepare your playground", "text": "step1.md" }
-    ],
-    "assets": {
-      "host01": [
-        { "file": "tools/kata_setup.sh",    "target": "~/" },
-        { "file": "tools/kata_prepare.yml", "target": "~/" },
-        { "file": "tools/.ansible.cfg",     "target": "~/" }
-      ]
-    }
+    ]
   },
   "environment": {
     "uilayout": "terminal",
