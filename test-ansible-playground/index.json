@@ -9,7 +9,7 @@
     ]
   },
   "environment": {
-    "uilayout": "terminal",
+    "uilayout": "editor-terminal",
     "hideintro": true,
     "hidefinish": true,
     "showdashboard": true,
