@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: no
   vars:
-    image_name: irixjp/katacoda:latest
+    image_name: irixjp/katacoda::centos8-node
     target_containers:
       - name: node-1
         port: 8081
@@ -50,7 +50,7 @@
         dest: "{{ inventory_path }}"
 
     - name: create ssh keypair
-      openssh_keypair:
+      community.crypto.openssh_keypair:
         path: /root/automation-keypair.pem
       register: keypair
 
