@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: no
   vars:
-    image_name: irixjp/katacoda::centos8-node
+    image_name: irixjp/katacoda:centos8-node
     target_containers:
       - name: node-1
         port: 8081
