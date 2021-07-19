@@ -14,4 +14,4 @@ hash -r
 ansible-galaxy collection install community.docker:${DOCKER_COLLECTION}
 ansible-galaxy collection install community.crypto:${CRYPT_COLLECTION}
 
-# ansible-playbook -i localhost, -c local kata_prepare.yml
+ansible-playbook -i localhost, -c local kata_prepare.yml
