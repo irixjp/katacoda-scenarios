@@ -114,7 +114,7 @@ ansible_user=centos
 ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 ```
 
-> Note: 演習環境によっては `http_access=http://35.73.128.87:8083` のような出力される場合がありますが、気にせず進めてください。
+> Note: 演習環境によっては `http_access=http://35.73.128.87:8083` のような出力がされる場合がありますが、気にせず進めてください。
 
 このインベントリーは `ini` ファイル形式で記述されています。他にも `YAML` 形式や、スクリプトで動的にインベントリーを構成する `ダイナミックインベントリー` という仕組みもサポートされています。詳細は [How to build your inventory](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html) を確認してください。
 
@@ -250,4 +250,4 @@ node-3 | SUCCESS => {
 
 Ansible に認証情報を渡す仕組みは、他にもいくつかの方法があります。本演習では最もベーシックな手段(変数で直接指定)を用いていますが、実際に本番で利用する際には、認証情報をどう扱うかは事前に熟慮が必要です。
 
-一般的には、[Ansible Tower](https://www.ansible.com/products/tower) や [AWX](https://github.com/ansible/awx) 等の自動化プラットフォームソフトウェアと組み合わせ使う方法がよく採用されます。
+一般的には、[Ansible Tower](https://www.ansible.com/products/tower) や [AWX](https://github.com/ansible/awx) 等の自動化プラットフォームソフトウェアと組み合わせて使う方法がよく採用されます。
