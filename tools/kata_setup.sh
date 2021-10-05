@@ -1,11 +1,6 @@
 #!/bin/bash -ex
 
-ANSIBLE_CORE=2.11.5
-ANSIBLE_LINT=5.2.0
-YAML_LINT=1.26.3
-DOCKER_PY=5.0.0
-DOCKER_COLLECTION=1.8.0
-CRYPT_COLLECTION=1.7.1
+source ./environments
 
 apt remove -qyy ansible
 pip install -U pip setuptools
@@ -19,4 +14,4 @@ ansible-galaxy collection list
 
 ansible-playbook -i localhost, -c local kata_prepare.yml
 
-cp -r ../working /root/working
+cp -r ../materials/working /root/working
