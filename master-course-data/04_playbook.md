@@ -192,7 +192,7 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 ## タスクの追加
 ---
-作成した plyabook にサイトのトップページを配布するタスクを追加します。
+作成した playbook にサイトのトップページを配布するタスクを追加します。
 
 `~/working/files/index.html` をエディタで開きます。
 
