@@ -4,13 +4,13 @@
 ---
 以下のコマンドを実行して演習環境を準備します。この操作は1-2分程度で終わります。
 
-`mkdir -p /opt/kata-materials && cd /opt/kata-materials && git clone https://github.com/irixjp/katacoda-scenarios.git . && cd tools && bash ./kata_setup.sh`{{execute}}
+`mkdir -p /opt/kata-materials && cd /opt/kata-materials && git clone https://github.com/irixjp/katacoda-scenarios.git . && cd tools && bash ./kata_setup.sh && cd ~/`{{execute}}
 
 ## 環境の概要
 ---
 この演習では以下のような環境を利用します。`node-1`, `node-2`, `node-3` という3台のサーバーが起動しており、ここに対して Ansible を使って様々な操作を行っていきます。
 
-![image0-1](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/kata_env.png "kata_env.png")
+![image0-1](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/materials/images/kata_env.png "kata_env.png")
 
 ## 補足事項
 ---

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 ANSIBLE_CORE=2.11.5
 ANSIBLE_LINT=5.2.0
@@ -19,4 +19,4 @@ ansible-galaxy collection list
 
 ansible-playbook -i localhost, -c local kata_prepare.yml
 
-cd ~/
+cp -r ../working /root/working
