@@ -12,7 +12,8 @@
       - name: node-3
         port: 8083
     keypair_path: /root/automation-keypair.pem
-    inventory_path: /root/inventory
+    inventory_path: /root/inventory_file
+    ansible_cfg_path: /root/.ansible.cfg
   tasks:
     - name: launch ansible target nodes by container
       community.docker.docker_container:
@@ -48,6 +49,19 @@
           ansible_user=centos
           ansible_ssh_private_key_file={{ keypair_path }}
         dest: "{{ inventory_path }}"
+
+    - name: Create ansible.cfg
+      copy:
+        content: |
+          [defaults]
+          inventory         = {{ inventory_path }}
+          host_key_checking = False
+          force_color       = True
+          forks             = 1
+
+          [ssh_connection]
+          ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+        dest: "{{ ansible_cfg_path }}"
 
     - name: create ssh keypair
       community.crypto.openssh_keypair:
