@@ -1,11 +1,14 @@
 {
-  "title": "Test Ansible Playground",
-  "description": "Try something freely with latest ansible",
+  "title": "Test Ansible 101",
+  "description": "inventory, credential, modules, playbook",
   "difficulty": "beginner",
-  "time": "15 minutes",
+  "time": "30 minutes",
   "details": {
     "steps": [
-      { "title": "Prepare your playground", "text": "step1.md" }
+      { "title": "Step1", "text": "step1.md" },
+      { "title": "Step2", "text": "step2.md" },
+      { "title": "Step3", "text": "step3.md" },
+      { "title": "Step4", "text": "step4.md" }
     ]
   },
   "environment": {
