@@ -20,8 +20,8 @@
   },
   "environment": {
     "uilayout": "editor-terminal",
-    "hideintro": true,
-    "hidefinish": true,
+    "hideintro": false,
+    "hidefinish": false,
     "showdashboard": true,
     "dashboards": [
       {"name": "node-1", "port": 8081},
