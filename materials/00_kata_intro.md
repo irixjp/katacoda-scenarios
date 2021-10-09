@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/irixjp/katacoda-scenarios.svg?branch=master)](https://travis-ci.org/irixjp/katacoda-scenarios)
 
 # Ansible 基礎「独習」コースへようこそ
 
@@ -18,11 +17,12 @@
 - 103
   - Role による部品化
   - Role の再利用と管理
-  - Collections
+  - Collections の活用
 
 - 104
   - ansible-lint による規約チェック
   - テストの自動化(作成中)
+  - Molecule(作成中)
 
 本教材の作成にあたり以下のコンテンツを参考にしています。
 - https://github.com/ansible/workshops

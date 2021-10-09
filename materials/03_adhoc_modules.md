@@ -8,15 +8,15 @@
 ---
 モジュールとは「インフラ作業でよくある操作を部品化」したものです。Ansible は膨大な数のモジュールを備えています。正確な表現ではないですが、「インフラ作業におけるライブラリ集」だと言うこともできるかもしれません。
 
-モジュールが提供されることで、自動化の記述をシンプルにすることができます。1つの例として、Ansible で提供される `yum` モジュールについて見てみます。
+モジュールが提供されることで、自動化の記述をシンプルにすることができます。1つの例として、Ansible で提供される `dnf` モジュールについて見てみます。
 
-この `yum` モジュールはOSに対してパッケージの管理を行うモジュールです。このモジュールにパラメーターを渡すことでパッケージのインストールや削除を行うことができます。ここで、同じ動作をするシェルスクリプトを記述することを考えてみましょう。
+この `dnf` モジュールはOSに対してパッケージの管理を行うモジュールです。このモジュールにパラメーターを渡すことでパッケージのインストールや削除を行うことができます。ここで、同じ動作をするシェルスクリプトを記述することを考えてみましょう。
 
 最も単純に実装すると以下のようになります。
 ```bash
-function yum_install () {
+function dnf_install () {
     PKG=$1
-    yum install -y ${PKG}
+    dnf install -y ${PKG}
 }
 ```
 > Note: スクリプト内容は動作を説明するためのもので正確ではありません
@@ -24,12 +24,12 @@ function yum_install () {
 実際に利用するにはこのスクリプトでは不十分です。例えば、インストールしようとしたパッケージがすでにインストールされている場合を考慮しなければなりません。すると以下のようになるはずです。
 
 ```bash
-function yum_install () {
+function dnf_install () {
     PKG=$1
     if [ Does this package already exist? ]; then
         exit 0
     else
-        yum install -y ${PKG}
+        dnf install -y ${PKG}
     fi
 }
 ```
@@ -38,16 +38,16 @@ function yum_install () {
 しかし、まだこれでも不十分です。パッケージが既にインストールされているとして、そのパッケージのバージョンが、いまからインストールするものよりも古い、同じ、新しいといったケースではどうすればよいでしょうか？このケースも考慮するようにスクリプトを拡張しましょう。
 
 ```bash
-function yum_install () {
+function dnf_install () {
     PKG=$1
     VERSION=$2
     if [ Does this package already exist? ]; then
         case ${VERSION} in
-            lower ) yum install -y ${PKG} ;;
+            lower ) dnf install -y ${PKG} ;;
             same ) exit 0
             higher ) exit 0
     else
-        yum install -y ${PKG}
+        dnf install -y ${PKG}
     fi
 }
 ```
@@ -86,18 +86,12 @@ blockinfile     Insert/update/remove a text block surrounded by marker lines
 
 特定のモジュールのドキュメントを参照するには以下のように実行します。
 
-`ansible-doc yum`{{execute}}
+`ansible-doc dnf`{{execute}}
 
 ```text
-> YUM    (/usr/local/lib/python3.6/site-packages/ansible/modules/packaging/os/yum.py)
+> ANSIBLE.BUILTIN.DNF    (/opt/kata-materials/ansible/lib/python3.8/site-packages/ansible/modules/dnf.py)
 
-        Installs, upgrade, downgrades, removes, and lists packages and
-        groups with the `yum' package manager. This module only works
-        on Python 2. If you require Python 3 support see the [dnf]
-        module.
-
-  * This module is maintained by The Ansible Core Team
-  * note: This module has a corresponding action plugin.
+        Installs, upgrade, removes, and lists packages and groups with the `dnf' package manager.
 ```
 > Note: f で進む、b で戻る、q で終了。
 
@@ -170,37 +164,68 @@ ip-10-0-0-218.ap-northeast-1.compute.internal
 他にもいくつかのコマンドを実行して結果を確かめてください。
 
 カーネル情報を取得する
+
 `ansible all -m shell -a 'uname -a'`{{execute}}
 
+
 日付を取得する
+
 `ansible all -m shell -a 'date'`{{execute}}
 
+
 ディスクの使用状況を取得する
+
 `ansible all -m shell -a 'df -h'`{{execute}}
 
+
 インストールされたパッケージの情報から特定の情報を抽出する
+
 `ansible all -m shell -a 'rpm -qa |grep bash'`{{execute}}
 
 
-### yum
+### dnf
 ---
 [`dnf`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/dnf_module.html#ansible-collections-ansible-builtin-dnf-module)はパッケージの操作を行うモジュールです。このモジュールを利用して新しくパッケージをインストールしてみます。
 
 今回は screen パッケージをインストールします。まず現在の環境に screen がインストールされていないことを確認します。
 
-`ansible all -m shell -a 'which screen'`{{execute}}
+`ansible node-1 -m shell -a 'which screen'`{{execute}}
+
+```text
+node-1 | FAILED | rc=1 >>
+which: no screen in (/home/centos/.local/bin:/home/centos/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin)non-zero return code
+```
 
 このコマンドは screen が存在しないためエラーになるはずです。
 
 では、 dnf モジュールで screen のインストールを行います。
 
-`ansible all -b -m dnf -a 'name=screen state=latest'`{{execute}}
+`ansible node-1 -b -m dnf -a 'name=screen state=latest'`{{execute}}
+
+```text
+node-1 | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": true,
+    "msg": "",
+    "rc": 0,
+    "results": [
+        "Installed: screen-4.6.2-12.el8.x86_64"
+    ]
+}
+```
 
 - `-b`: become オプション。これは接続先のノードでの操作に root 権限を利用するためのオプションです。パッケージのインストールには root 権限が必要となるため、このオプションをつけています。つけない場合、このコマンドは失敗します。
 
 再度、screen コマンドの確認を行うと、今度はパッケージがインストールされたため成功するはずです。
 
 `ansible all -m shell -a 'which screen'`{{execute}}
+
+```text
+node-1 | CHANGED | rc=0 >>
+/usr/bin/screen
+```
 
 ### setup
 ---
