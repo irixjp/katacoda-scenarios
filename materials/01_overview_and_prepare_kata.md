@@ -4,7 +4,7 @@
 ---
 以下のコマンドを実行して演習環境を準備します。この操作は1-2分程度で終わります。
 
-`mkdir -p /opt/kata-materials && cd /opt/kata-materials && git clone https://github.com/irixjp/katacoda-scenarios.git . && cd tools && bash ./kata_setup.sh && cd ~/`{{execute}}
+`mkdir -p /opt/kata-materials && cd /opt/kata-materials && pip install virtualenv && virtualenv ansible && source /opt/kata-materials/ansible/bin/activate && git clone https://github.com/irixjp/katacoda-scenarios.git . && cd tools && bash ./kata_setup.sh && cd ~/`{{execute}}
 
 ## 環境の概要
 ---
