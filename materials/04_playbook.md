@@ -1,6 +1,6 @@
 # Playbookの記述と実行
 ---
-先の演習ではモジュールを1つずつ実行しましたが、実際に作業を行う場合はいくつのも手順を連続して実行することになります。このときに使用するのが `playbook` です。playbook には呼出したいモジュールとパラメーターを順番に記述し、一連の手順として連続して実行することができます。
+先の演習ではAd-Hocコマンドを利用してモジュールを1つずつ実行しましたが、実際に作業を行う場合はいくつのも手順を連続して実行することになります。このときに使用するのが `playbook` です。playbook には呼出したいモジュールとパラメーターを順番に記述し、一連の手順として連続して実行することができます。
 
 ## Playbook の基礎
 ---
@@ -10,7 +10,6 @@
 - ファイルの先頭は `---` から始まる
 - インデントが意味を持つ
   - インデントは `space` で表記する。`tab` ではエラーとなります。
-- `-` はリストを表す
 - `key`: `value` で辞書形式となる
 - [json](https://ja.wikipedia.org/wiki/JavaScript_Object_Notation) と相互に変換可能
 
@@ -61,7 +60,7 @@
 
 ## playbook の作成
 ---
-では実際に playbook を作成します。
+実際に playbook を作成していきます。
 
 `~/working/first_playbook.yml` をエディタで開いてください。このファイルには先頭に `---` のみが記載されています。以下の説明に従いこのファイルへ追記を行い、playbook として完成させます。
 
@@ -83,11 +82,11 @@
 - `hosts: all`: playbook の実行対象となるグループやノードを指定します。
 - `become: yes`: この playbook では権限昇格を行うことを宣言しています。コマンドラインで与える `-b` と同じ意味です。
 
-この部分は、playbook 内の `play` パートと呼ばれる部分で全体に関する挙動を宣言します。playパートで指定できる項目の[詳細については公式ドキュメント](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play) を確認してください。
+この部分は、playbook 内の `play` パートと呼ばれる部分で全体に関する挙動を宣言します。playbook全体のヘッダーのようなものだと理解してください。playパートで指定できる項目の[詳細については公式ドキュメント](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play) を確認してください。
 
 ### task パート
 ---
-次に以下を追記します。インデントの階層に注意してください。
+次に以下の状態となるように先のファイルへ追記します。インデントの階層に注意してください。
 
 ```yaml
 ---
@@ -96,7 +95,7 @@
   become: yes
   tasks:
   - name: install httpd
-    yum:
+    dnf:
       name: httpd
       state: latest
 
@@ -111,14 +110,14 @@
 
 - `tasks:` これ以降が task パートであることを宣言しています。
 - `- name: ...` このタスクの説明を記載しています。省略可能
-- `yum:` `service:` 呼び出すモジュールを指定しています。
+- `dnf:` `service:` 呼び出すモジュールを指定しています。
 - 以下はモジュールに与えられているパラメーターです。
   - `name: httpd` `state: latest`
   - `name: httpd` `state: started` `enabled: yes`
 
 ここで呼び出しているモジュールは以下になります。
-- [`yum`](https://docs.ansible.com/ansible/latest/modules/yum_module.html): httpd パッケージをインストールするために利用します。
-- [`service`](https://docs.ansible.com/ansible/latest/modules/service_module.html): インストールされた httpd を起動し、自動起動の設定を有効にしています。
+- `dnf`: httpd パッケージをインストールするために利用します。
+- `service`: インストールされた httpd を起動し、自動起動の設定を有効にしています。
 
 作成した playbook に構文エラーがないかを以下のコマンドで確認できます。
 
@@ -126,12 +125,12 @@
 
 `ansible-playbook first_playbook.yml --syntax-check`{{execute}}
 
-```bash
+```text
 playbook: first_playbook.yml
 ```
 
 上記はエラー無しのケースです。もしインデントなどに誤りがある場合は以下のようになります。
-```bash
+```text
 $ ansible-playbook first_playbook.yml --syntax-check
 
 ERROR! Syntax Error while loading YAML.
@@ -155,7 +154,7 @@ The offending line appears to be:
 
 `ansible-playbook first_playbook.yml`{{execute}}
 
-```bash
+```text
 PLAY [deploy httpd server] **************************************************
 
 TASK [Gathering Facts] ******************************************************
@@ -183,11 +182,11 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 > Note: katacoda 上で演習をしている場合は、画面上部の `node-1,2,3` をクリックします。これらは各ノードのポート80へとリダイレクトされます。
 
-> Note: Jupyter 上で演習をしている場合は、アクセスするIPアドレスを `~/inventory` で確認し、`http_access=http://35.73.128.87:8081` に示されたアドレスへブラウザでアクセスしてください。このアドレスは各ノードのポート80へリダイレクトされます。
+> Note: Jupyter 上で演習をしている場合は、アクセスするIPアドレスを `~/inventory_file` で確認し、`http_access=http://35.73.128.87:8081` に示されたアドレスへブラウザでアクセスしてください。このアドレスは各ノードのポート80へリダイレクトされます。
 
 以下のような画面が表示されれば成功です。
 
-![apache_top_page.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/apache_top_page.png)
+![apache_top_page.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/materials/images/apache_top_page.png)
 
 
 ## タスクの追加
@@ -211,7 +210,7 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
   become: yes
   tasks:
   - name: install httpd
-    yum:
+    dnf:
       name: httpd
       state: latest
 
@@ -234,7 +233,7 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 `ansible-playbook first_playbook.yml`{{execute}}
 
-```bash
+```text
 PLAY [deploy httpd server] **************************************************
 
 TASK [Gathering Facts] ******************************************************
@@ -265,6 +264,7 @@ node-3  : ok=4 changed=1 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 正常終了したら再びブラウザで3台のノードへアクセスしてください。正しく playbook が記述され、動作したのならば先程作成した `index.html` の内容が表示されるはずです。
 
+
 ## 冪等性(べきとうせい)
 ---
 Ansible のモジュールを利用するメリットして、記述量を大幅に減らせるという解説を行いましたが、その他にもメリットがあります。それが `冪等性` です。
@@ -282,7 +282,7 @@ Ansible のモジュールを利用するメリットして、記述量を大幅
 
 `ansible-playbook first_playbook.yml`{{execute}}
 
-```bash
+```text
 PLAY [deploy httpd server] **************************************************
 
 TASK [Gathering Facts] ******************************************************
@@ -315,7 +315,7 @@ node-3  : ok=4 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 
 1回目(タスク2個がchanged)
-```
+```text
 PLAY RECAP ******************************************************************
 node-1  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 node-2  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
@@ -323,7 +323,7 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
 
 2回目(タスク1個がchanged)
-```
+```text
 PLAY RECAP ******************************************************************
 node-1  : ok=4 changed=1 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 node-2  : ok=4 changed=1 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
@@ -331,7 +331,7 @@ node-3  : ok=4 changed=1 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
 
 3回目(changedは0)
-```
+```text
 PLAY RECAP ******************************************************************
 node-1  : ok=4 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 node-2  : ok=4 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
@@ -342,7 +342,7 @@ node-3  : ok=4 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 - Playbookには「処理の手順ではなく、状態を宣言的に記述できる」→ Playbook＝設定パラメータ＋手順書として扱えるようになる。
 - 仮に複数台のホストに対して実行した処理が途中で失敗しても、最初から流し直せる（設定が成功した部分はスキップされるため）
-- 手順の集約ができる。初期設定、ノードの追加など様々なシーンを１つのPlaybookだけでまかなえるようになる。
+- 手順の集約ができる。初期設定、ノードの追加など様々なシーンを１つのPlaybookだけでカバーできるようになる。
 
 Ansible の各モジュールはこの冪等性を考慮するように作られており、このモジュールを利用することで簡単に、そして安全に自動化を記述することができるようになっています。
 
@@ -351,4 +351,5 @@ Ansible の各モジュールはこの冪等性を考慮するように作られ
 > Note: ただし、Ansibleも全てのモジュールが完全な冪等性を保証しているわけではありません。モジュールの中には shell のように何が実行されるかわからないものや、操作対象（NW系機器やクラウド環境）によっては原理的に冪等性の確保が難しいものも存在しています。こういったモジュールを使う場合は利用者が注意を払う必要があります
 
 ## 演習の解答
-- [first_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/first_playbook.yml)
+- [first\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/first_playbook.yml)
+- [files/index.html](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/files/index.html)

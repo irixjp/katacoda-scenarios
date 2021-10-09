@@ -55,11 +55,11 @@ tmpfs            99M     0   99M   0% /run/user/1000
 ansible [core 2.11.5] 
   config file = /root/.ansible.cfg
   configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  ansible python module location = /usr/local/lib/python3.8/dist-packages/ansible
+  ansible python module location = /opt/kata-materials/ansible/lib/python3.8/site-packages/ansible
   ansible collection location = /root/.ansible/collections:/usr/share/ansible/collections
-  executable location = /usr/local/bin/ansible
-  python version = 3.8.5 (default, Jul 28 2020, 12:59:40) [GCC 9.3.0]
-  jinja version = 2.10.1
+  executable location = /opt/kata-materials/ansible/bin/ansible
+  python version = 3.8.10 (default, Sep 28 2021, 16:10:42) [GCC 9.3.0]
+  jinja version = 3.0.2
   libyaml = True
 ```
 
@@ -73,7 +73,7 @@ ansible コマンドに `--version` オプションをつけると、実行環�
 
 これは、このディレクトリで ansible コマンドを実行した際に読み込まれる Ansible の設定ファイルのパスを表示しています。このファイルは Ansible の基本的な挙動を制御するための設定ファイルです。
 
-「このディレクトリで実行したとき」という表現をつけましたが、 Ansible は ansible.cfg を検索する順番が決まっています。詳細は [Ansible Configuration Settings](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#the-configuration-file) に記載されております。
+「このディレクトリで実行したとき」という表現をつけましたが、 Ansible は ansible.cfg を検索する順番が決まっています。詳細は [Ansible Configuration Settings](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#the-configuration-file) に記載されています。
 
 簡単に説明すると、ansible.cfg は環境変数で与えられたパス、現在のディレクトリ、ホームディレクトリ、OS全体の共通パスという順序で検索され、今回はホームディレクトリ `~/.ansible.cfg` が最初に見つかるため、このファイルが利用されています。
 
@@ -83,7 +83,7 @@ ansible コマンドに `--version` オプションをつけると、実行環�
 
 ```ini
 [defaults]
-inventory         = /root/inventory_file
+inventory         = ~/inventory_file
 host_key_checking = False
 force_color       = True
 
@@ -93,7 +93,7 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=
 
 いくつかの設定が演習用に設定されています。ここで重要となるのが以下の設定です。
 
-- `inventory         = /root/inventory_host`
+- `inventory         = ~/inventory_file`
 
 これは、Ansible が自動化の実行対象を決定する「インベントリー」に関する設定です。
 
@@ -101,12 +101,9 @@ ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=
 
 ## インベントリー
 ---
-インベントリーは Ansible が自動化の実行対象を決定するための機能です。ファイルの中身を確認してみましょう。設定ファイルでは `inventory = inventory` となっており、ややわかりにくいですが、これは ansible.cfg からの相対パスで `inventory_host` というファイルが指定されていることを意味しています。
+インベントリーは Ansible が自動化の実行対象を決定するための機能です。ファイルの中身を確認してみましょう。
 
-このファイルの内容を確認してみます。
-
-
-`cat ~/inventory`{{execute}}
+`cat ~/inventory_file`{{execute}}
 
 ```text
 [web]
@@ -138,7 +135,7 @@ ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
 
 実際にこのインベントリーを利用して定義されたノードの対して Ansible を実行してみます。以下のコマンドを実行してください。
 
-`ansible web -i ~/inventory -m ping -o`{{execute}}
+`ansible web -i ~/inventory_file -m ping -o`{{execute}}
 
 ```text
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
@@ -153,7 +150,7 @@ node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 - `-m ping`: モジュール `ping` を実行します。モジュールに関しての詳細は後述します。
 - `-o`: 出力を1ノード1行にまとめます。
 
-今回の環境では、 `ansible.cfg` ファイルによって、デフォルトのインベントリーが指定されているため、以下のように `-i ~/inventory` を省略することが可能です。
+今回の環境では、 `ansible.cfg` ファイルによって、デフォルトのインベントリーが指定されているため、以下のように `-i ~/inventory_file` を省略することが可能です。
 
 `ansible web -m ping -o`{{execute}}
 
@@ -165,7 +162,7 @@ node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 
 > Note: 以降の演習では、上記のようにインベントリーの指定は省略します。
 
-以下のように、グループ名の代わりにノード名を指定することも可能です。
+グループ名の代わりにノード名を指定することも可能です。
 
 `ansible node-1 -m ping -o`{{execute}}
 
@@ -192,10 +189,30 @@ node-2 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"},"changed": false,"ping": "pong"}
 ```
 
+ここまでの例では指定したグループに対して Ansible が何らかの処理(この場合は ping)を実行していますが、処理を行わずに対象のノードのみを確認するこも可能です。その場合は `--list-hosts` オプションを使います。
+
+`ansible web --list-hosts`{{execute}}
+
+```text
+  hosts (3):
+    node-1
+    node-2
+    node-3
+```
+
+`ansible node-2 --list-hosts`{{execute}}
+
+```text
+  hosts (1):
+    node-2
+```
+
 
 ## 認証情報
 ---
 上記のインベントリーの確認では、3台のノードに対して `ping` モジュールを実行しました。このモジュールは実際にノードに対してログインを行い、Ansible が実行可能な状態かを調べています。このときにログインに使われる Credential (認証情報) について見ていきます。
+
+> Note: ネットワークで利用するICMPを送信する ping コマンドとは完全に異なるものです。Ansibleの文脈での `ping` を実行しています。
 
 今回の演習環境では、先に見たインベントリーの中で認証情報が指定されています。以下が抜粋となります。
 
@@ -253,6 +270,6 @@ node-3 | SUCCESS => {
 
 - `-k`: コマンド実行時に、パスワード入力のプロンプトを出す。
 
-Ansible に認証情報を渡す仕組みは、他にもいくつかの方法があります。本演習では最もベーシックな手段(変数で直接指定)を用いていますが、実際に本番で利用する際には、認証情報をどう扱うかは事前に熟慮が必要です。
+Ansible に認証情報を渡す仕組みは、他にもいくつかの方法があります。本演習では最もベーシックでお手軽な手段(変数で直接指定)を用いていますが、実際に本番で利用する際には、認証情報をどう扱うかは事前に熟慮が必要です。当然ですが、ファイルに直接書かれた認証情報はそのファイルにアクセスできる全ての人が別の用途（不正にサーバーを操作するなど）で利用できてしまうためです。
 
-一般的には、[Ansible Tower](https://www.ansible.com/products/tower) や [AWX](https://github.com/ansible/awx) 等の自動化プラットフォームソフトウェアと組み合わせて使う方法がよく採用されます。
+一般的には、[Ansible Automation Platform](https://www.redhat.com/ja/technologies/management/ansible) や [AWX](https://github.com/ansible/awx) 等の自動化プラットフォームソフトウェアと組み合わせて使う方法がよく採用されます。
