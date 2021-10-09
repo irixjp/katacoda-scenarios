@@ -2,7 +2,7 @@
 ---
 ここでは作成したロールの管理と再利用方法についてみていきます。ロールによって playbook の部品化が可能となりますが、その部品を再利用する時に、毎回 `roles` ディレクトリにロール一式をコピーする方法は好ましく有りません。コピーした後に元ロールが変更された場合に、その変更に追随できないためです。またこのようなソースコードの分散を管理しようとしたときの手間も膨大となります。
 
-この問題を解決するために、Ansible では playbook 実行に必要となるロール一式をまとめて取得する方法があります。それが [`ansible-galaxy`](https://docs.ansible.com/ansible/latest/galaxy/user_guide.html) です。
+この問題を解決するために、Ansible では playbook 実行に必要となるロール一式をまとめて取得する方法があります。それが [ansible-galaxy](https://docs.ansible.com/ansible/latest/galaxy/user_guide.html) です。
 
 Galaxy の利用とあわせて、Role 管理の手法について解説していきます。
 
@@ -12,9 +12,9 @@ Ansible ではロールの管理に `git` 等のソースコード管理シス�
 
 > Note: 推奨という表現をしていますが、実質的にほぼ必須です。もちろん手動で Role や playbook のファイルを管理することも可能です。しかし、あくまで可能というだけで、どのような事情があれ「手動管理はすべきでありません」と強く明記しておきます。
 
-ロールを git で管理する場合には、「1ロール=1リポジトリ」が基本となります。この管理手法を採用すると、リポジトリが大量にできることになるため、あわせてロールのカタログを作成すると見通しがよくなります。Ansible が公式で提供しているカタログの仕組みとして `Galaxy`(https://galaxy.ansible.com/) というサイトがあり、ここに自分のロールを登録することも可能です。
+ロールを git で管理する場合には、「1ロール=1リポジトリ」が基本となります。この管理手法を採用すると、リポジトリが大量にできることになるため、あわせてロールのカタログを作成すると見通しがよくなります。Ansible が公式で提供しているカタログの仕組みとして [Galaxy](https://galaxy.ansible.com/) というサイトがあり、ここに自分のロールを登録することも可能です。
 
-`Galaxy`(https://galaxy.ansible.com/) には既に膨大な数のロールが登録されており、大抵の場合は検索すると自分のやりたいことを見つけることができます。
+Galaxy には既に膨大な数のロールが登録されており、大抵の場合は検索すると自分のやりたいことを見つけることができます。
 
 > Note: そのまま使えるケースもあれば、改造が必要なケースもあります。しかし、毎回ゼロか調べながらロールを作成するという手間を大幅に削減できます。
 
@@ -24,8 +24,8 @@ Ansible ではロールの管理に `git` 等のソースコード管理シス�
 
 今回利用するロールは以下です。
 
-- [irixjp.role_example_hello](https://galaxy.ansible.com/irixjp/role_example_hello) あいさつを表示するだけのロール
-- [irixjp.role_example_uptime](https://galaxy.ansible.com/irixjp/role_example_uptime) uptimeの結果を表示するだけのロール
+- [irixjp.role\_example\_hello](https://galaxy.ansible.com/irixjp/role_example_hello) あいさつを表示するだけのロール
+- [irixjp.role\_example\_uptime](https://galaxy.ansible.com/irixjp/role_example_uptime) uptimeの結果を表示するだけのロール
 
 > Note: `Galaxy` 用のロールを作成するには通常のロールに [`meta`](https://galaxy.ansible.com/docs/contributing/creating_role.html) データを付加し、Galaxy に登録するだけです。
 
