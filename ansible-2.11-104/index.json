@@ -18,7 +18,8 @@
     ]
   },
   "environment": {
-    "uilayout": "editor-terminal",
+    "uilayout": "terminal",
+    "showide": true,
     "hideintro": false,
     "hidefinish": false,
     "showdashboard": true,

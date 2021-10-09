@@ -10,9 +10,9 @@
   },
   "environment": {
     "uilayout": "terminal",
+    "showide": true,
     "hideintro": true,
     "hidefinish": true,
-    "showide": true,
     "showdashboard": true,
     "dashboards": [
       {"name": "node-1", "port": 8081},
