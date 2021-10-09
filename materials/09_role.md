@@ -2,7 +2,7 @@
 ---
 これまでは playbook に直接モジュールを列挙してきました。この方法でも Ansible の自動化は可能ですが、実際に Ansible を使っていくと以前の処理を再利用したくなるケースに多々遭遇します。その際に以前のコードをコピー＆ペーストするのは効率が悪いですし、かといって別の playbook 全体を呼び出そうすると `hosts:` に書かれたグループ名の整合性が取れずうまく動作しないことがほとんどです。そこで登場するのが以下の図の `Role` という考え方です。
 
-![structure.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/master-course-data/assets/images/structure.png)
+![structure.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/materials/images/structure.png)
 
 様々な作業単位で自動化をパーツ化して再利用可能な部品とすることができます。`Role` は完全にインベントリーと切り離されており、様々な playbook から呼び出して利用することが可能です。このような playbook の開発・管理方法を Ansible では [best practice](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html) と呼んでいます。
 
@@ -47,8 +47,8 @@ roles/          # playbook と同じ階層の roles ディレクトリに
 
 このように `import_role`  `include_role` というモジュールを使ってロールの名前を指定するだけで処理が呼びだせるようになります。この2つのモジュールは両方ともロールを呼出しますが、違いは以下です。
 
-- [`import_role`](https://docs.ansible.com/ansible/latest/modules/import_role_module.html) playbook の実行前にロールを読み込む（先読み）
-- [`include_role`](https://docs.ansible.com/ansible/latest/modules/include_role_module.html) タスクの実行時にロールが読み込まれる（後読み）
+- [`import_role`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/import_role_module.html) playbook の実行前にロールを読み込む（先読み）
+- [`include_role`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/include_role_module.html) タスクの実行時にロールが読み込まれる（後読み）
 
 > Note: 現時点でこの2つの使い分けは意識する必要はありません。基本的には `import_role` を使う方が安全でシンプルです。`include_role` は処理によって呼び出すロールを動的に変更するような、複雑な処理を記述する際に利用します。
 
@@ -103,7 +103,8 @@ roles
     - restart_apache
 ```
 
-ロールには `play` パートを記述する必要はありませんのでタスクのみを列挙していきます。また、ロール内の `templates` `files` ディレクトリは、明示的にパスを指定しなくてもモジュールからファイルを参照できるようになっています。そのため、`copy` と `template` モジュールの `src` にはファイル名しか記述されていません。
+`tasks` ディレクトリには実行したいタスクのみを記述します。
+またロールには `play` パートを記述する必要はありませんのでタスクのみを列挙していきます。また、ロール内の `templates` `files` ディレクトリは、明示的にパスを指定しなくてもモジュールからファイルを参照できるようになっています。そのため、`copy` と `template` モジュールの `src` にはファイル名しか記述されていません。
 
 ### `~/working/roles/web_setup/handlers/main.yml`
 
@@ -115,12 +116,18 @@ roles
     state: restarted
 ```
 
+`handlers` ディレクトリにはハンドラーとして呼び出したい処理のみを記述します。
+
 ### `~/working/roles/web_setup/defaults/main.yml`
 
 ```yaml
 ---
 LANG: JP
 ```
+
+`defaults` にはこのRoleの内で利用する変数のデフォルト値を記述します。Roleのデフォルト変数は上書き優先順位が低いため、呼び出したPlaybook側で上書きして実行することも可能です。また、この変数はRoleが呼び出されるとPlaybook全体から参照できる値となるため、変数名の重複には注意しましょう。
+
+> Note: 一般的にRole内で利用する変数名にはプリフィックスとしてRole名をつけることが多い。
 
 ### `~/working/roles/web_setup/templates/index.html.j2`
 
@@ -135,6 +142,8 @@ LANG: JP
 {% endif %}
 </body></html>
 ```
+
+`templates` には `template` モジュールが利用するテンプレートファイルを配置しておく。ここに配置したファイルは、Role内で呼び出される特定のモジュールからファイル名のみでアクセスできるようになります。
 
 ### `~/working/roles/web_setup/files/httpd.conf`
 
@@ -157,6 +166,9 @@ ServerAdmin root@localhost
       ↓
 ServerAdmin centos_role@localhost
 ```
+
+`files` にはRoleで配布等に利用するファイルを配置します。このディレクトリもRole内から特定のモジュールがファイル名のみでアクセスできるようになります。
+
 
 ### `~/working/role_playbook.yml`
 
@@ -181,7 +193,7 @@ ServerAdmin centos_role@localhost
 `tree roles`{{execute}}
 
 以下のような構造になっていれば必要なファイルの準備が整っています。
-```bash
+```text
 roles
 └── web_setup
     ├── defaults
@@ -203,7 +215,7 @@ roles
 
 `ansible-playbook role_playbook.yml`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [web_setup : install httpd] *********************
 ok: [node-1]
@@ -239,5 +251,5 @@ changed: [node-1]
 
 ## 演習の解答
 ---
-- [role_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/role_playbook.yml)
-- [web_setup](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/roles/web_setup)
+- [role\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/role_playbook.yml)
+- [web\_setup](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/roles/web_setup)

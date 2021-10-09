@@ -62,9 +62,9 @@ Galaxy からロールを習得します。
 
 `cd ~/working`{{execute}}
 
-`ansible-galaxy install -r roles/requirements.yml`{{execute}}
+`ansible-galaxy role install -r roles/requirements.yml`{{execute}}
 
-```bash
+```text
 - downloading role 'role_example_hello', owned by irixjp
 - downloading role from https://github.com/irixjp/ansible-role-sample-hello/archive/master.tar.gz
 - extracting irixjp.role_example_hello to /jupyter/.ansible/roles/irixjp.role_example_hello
@@ -79,11 +79,21 @@ Galaxy からロールを習得します。
 
 また `-f` を使うことで既存でダウンロードされたロールを上書きして習得しますので、常に最新のロールを利用することが可能になります。
 
+ダウンロードされたロールを確認するは以下のコマンドを実行します。
+
+`ansible-galaxy role list`{{execute}}
+
+```text
+# /root/.ansible/roles
+- irixjp.role_example_uptime, master
+- irixjp.role_example_hello, master
+```
+
 実際に playbook を実行します。
 
 `ansible-playbook galaxy_playbook.yml`{{execute}}
 
-```bash
+```text
 TASK [irixjp.role_example_hello : say hello!] ********
 ok: [node-1] => {
     "msg": "Hello"
@@ -129,7 +139,7 @@ Role に含まれるカスタムモジュールやカスタムフィルターは
 
 `ansible-playbook galaxy_playbook.yml`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [get locale] *********************
 ok: [node-1]
@@ -156,10 +166,10 @@ Galaxy を利用して再配布可能なロールを作成するためにはリ�
 
 ## 補足の情報
 ---
-コマンドラインでは `ansible-galaxy install` をつど実行する必要がありますが、Ansible Tower/AWX では playbook の実行前に自動的に `requirements.yml` からロールをダウンロードする機能がありますので、更新し忘れといった事故を防ぐことが可能です。
+コマンドラインでは `ansible-galaxy role install` をつど実行する必要がありますが、Ansible Automation Platform や /AWX では playbook の実行前に自動的に `requirements.yml` からロールをダウンロードする機能がありますので、更新し忘れといった事故をシステム的に防止することが可能です。
 
 
 ## 演習の解答
 ---
-- [galaxy_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/galaxy_playbook.yml)
-- [requirements.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/roles/requirements.yml)
+- [galaxy\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/galaxy_playbook.yml)
+- [requirements.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/roles/requirements.yml)
