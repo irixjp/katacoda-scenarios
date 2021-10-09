@@ -1,0 +1,16 @@
+---
+- name: install httpd
+  yum:
+    name: httpd
+    state: latest
+
+- name: start & enabled httpd
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: Put index.html from template
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html

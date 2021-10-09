@@ -18,7 +18,7 @@ Ansible における変数は以下の特徴を持っています。
 
 ## debug モジュール
 ---
-定義した変数の中身を確認するはに [`debug`](https://docs.ansible.com/ansible/latest/modules/debug_module.html) モジュールが便利です。
+定義した変数の中身を確認するはに [`debug`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html) モジュールが便利です。
 
 `~/working/vars_debug_playbook.yml` を以下のように編集してください。
 ```yaml
@@ -237,7 +237,7 @@ ok: [node-1] => {
 
 ### set_fact での定義
 ---
-[set_fact](https://docs.ansible.com/ansible/latest/modules/set_fact_module.html) モジュールを使って、タスクパートの中で任意の変数を定義することができます。一般的な用途として、1つのタスクの実行結果を受け取り、その値を加工して新たな変数を定義し、その値を後続のタスクで利用する場合があります。
+[set_fact](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html) モジュールを使って、タスクパートの中で任意の変数を定義することができます。一般的な用途として、1つのタスクの実行結果を受け取り、その値を加工して新たな変数を定義し、その値を後続のタスクで利用する場合があります。
 
 `set_fact` を使う演習は次のパートで登場します。
 

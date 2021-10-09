@@ -74,6 +74,8 @@ ok: [node-1]
 
 このように、関連するタスクをグループ化することで `when` 句などを使ってまとめて制御することが可能になります。
 
+`block` に対して使用できるキーワードは [Playbook Keywords](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#block) に記載されています。
+
 
 ## rescue, always
 ---
