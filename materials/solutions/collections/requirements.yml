@@ -1,3 +1,4 @@
 ---
 collections:
-- irixjp.sample_collection_hello
+- name: irixjp.sample_collection_hello
+  version: 1.0.0

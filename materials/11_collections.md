@@ -42,7 +42,7 @@ community.docker 1.8.0
 
 このコマンドで数字が表示されるので、その値をメモしていてください（警告が表示される場合もありますが無視してください）
 
-ここに新たなコレクション `[cisco.ios](https://docs.ansible.com/ansible/latest/collections/cisco/ios/index.html)` をインストールしてみます。
+ここに新たなコレクション [`cisco.ios`](https://docs.ansible.com/ansible/latest/collections/cisco/ios/index.html) をインストールしてみます。
 
 `ansible-galaxy collection install cisco.ios`{{execute}}
 
@@ -97,7 +97,7 @@ drwxr-xr-x 3 root root 4096 Oct  9 13:15 cisco/
 drwxr-xr-x 4 root root 4096 Oct  9 13:12 community/
 ```
 
-インストール先を変える時にはオプション `-p` をつけてディレクトリを指定します。ただし、インストール後にコレクションを Playbook から参照するには `[COLLECTIONS_PATHS](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#collections-paths)` にそのディレクトリが含まれている必要があります。
+インストール先を変える時にはオプション `-p` をつけてディレクトリを指定します。ただし、インストール後にコレクションを Playbook から参照するには [`COLLECTIONS_PATHS`](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#collections-paths) にそのディレクトリが含まれている必要があります。
 
 アンインストールするコマンドはありませんので、コレクションを削除したい場合にはコレクションのディレクトリを削除します。
 
@@ -126,7 +126,7 @@ community.docker  1.8.0
 
 利用可能なモジュール数も減っているはずです。
 
-`ls -alF ~/.ansible/collections/ansible_collections/`{{execute}}
+`ansible-doc -l | wc -l`{{execute}}
 
 コレクションのインストールにはコレクションのバージョンを指定することも可能です。インストール時に `<namespace>.<collection_name>:<version>` と指定します(バージョンを指定しなかった場合は最新版がインストールされます)
 
@@ -167,7 +167,8 @@ community.docker  1.8.0
 ```yaml
 ---
 collections:
-- irixjp.sample_collection_hello
+- name: irixjp.sample_collection_hello
+  version: 1.0.0
 ```
 
 コレクションを取得するには以下を実行します。

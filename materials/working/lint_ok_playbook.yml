@@ -1,7 +1,6 @@
 ---
-- hosts: localhost
-  connection: local
-  gather_facts: true
+- hosts: node-1
+  gather_facts: false
   tasks:
     - name: get process list
       shell: |

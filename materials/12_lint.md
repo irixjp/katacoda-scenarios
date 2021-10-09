@@ -48,9 +48,11 @@ lint_ng_playbook.yml:6 Task/Handler: shell  set -o pipefail
 ps -ef |grep -v grep
 ```
 
-2つ目のコマンドは例のようなエラーになったはずです。
+2つ目のコマンドは例のようなエラーになったはずです。上記以外のエラーも出ているはずです。
 
-エラーの概要は `All tasks should be named` となっており、「全てのタスクは name を保つ必要がある」という規約に違反していることがわかります。
+> Note: チェック内容がLintのバージョンごとに若干の差異があるためです。基本的に新しいバージョンの方が厳しくなる傾向があります。
+
+エラーの一つとして `All tasks should be named` があり、「全てのタスクは name を保つ必要がある」という規約に違反していることがわかります。
 
 `ansible-lint` がデフォルトでチェックするルールを確認してみましょう。以下のコマンドを実行します。
 
@@ -62,8 +64,13 @@ ps -ef |grep -v grep
 
 `ansible-lint -T`{{execute}}
 
-除外したいタグを `-x` オプションで指定することで、そのチェックを除外することができます。試しに `lint_ng_playbook.yml` がOKとなるようにルールを除外してlintを実行してください。
+除外したいタグを `-x` オプションで指定することで、そのチェックを除外することができます。試しに `lint_ng_playbook.yml` がOKとなるようにルールを除外してlintを実行してください。エラー内容を確かめて、違反しているルールのタグを確認して `-x` に続いて指定します。
 
+> Note: `-x` は一回のコマンドで複数回使用することが可能です。例 `ansible-lint -x unnamed-task -x yaml`
+
+次に、ルール除外を使わずに `lint_ng_playbook.yml` がエラーとならないように playbook を修正してください。修正できたら以下を実行して結果を確かめます。
+
+`ansible-lint lint_ng_playbook.yml`{{execute}}
 
 ## 標準以外のルールを定義する
 ---
@@ -87,5 +94,5 @@ ps -ef |grep -v grep
 
 ## 演習の解答
 ---
-- [lint_ok_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/working/lint_ok_playbook.yml)
-- [lint_ng_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/working/lint_ng_playbook.yml)
+- [lint\_ok\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/working/lint_ok_playbook.yml)
+- [lint\_ng\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/working/lint_ng_playbook.yml)

@@ -4,24 +4,25 @@ Ansible ではテストや確認作業を自動化することも可能です。
 
 ここではテストを実行する playbook の作成方法を見ていきます。
 
-## テストに使えるモジュール
+## テストでよく使用するモジュール
 ---
-はじめにテストに使えるモジュールを紹介します。
+はじめにテストでよく使用するモジュールを紹介します。もちろんこれ以外にも様々なモジュールを活用して自動テストを記述するこが可能です。
 
-- [shell](https://docs.ansible.com/ansible/latest/modules/shell_module.html) モジュール: 任意のコマンドを実行してその結果を回収します。
-- [uri](https://docs.ansible.com/ansible/latest/modules/uri_module.html) モジュール: 任意のURLにHTTPメソッドを発行します。
-- \*\_command モジュール: 主にネットワーク機器に対して任意のコマンドを発行し、その結果を回収するモジュールです。例 [ios_command](https://docs.ansible.com/ansible/latest/modules/ios_command_module.html) [junos_command](https://docs.ansible.com/ansible/latest/modules/junos_command_module.html) など。
-- \*\_facts/info モジュール: 主に環境の情報を取得するモジュールです。例 [ec2_vol_info_module](https://docs.ansible.com/ansible/latest/modules/ec2_vol_info_module.html) [netapp_e_facts](https://docs.ansible.com/ansible/latest/modules/netapp_e_facts_module.html)
-- [assert](https://docs.ansible.com/ansible/latest/modules/assert_module.html) モジュール: 条件式を評価して真ならば ok を返す。
-- [fail](https://docs.ansible.com/ansible/latest/modules/fail_module.html) モジュール: 条件式を評価して真ならば failed を返す。
-- [template](https://docs.ansible.com/ansible/latest/modules/template_module.html) モジュール: テスト結果を出力するのに用いられます。
+- [shell](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html) モジュール: 任意のコマンドを実行してその結果を回収します。
+- [uri](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/uri_module.html) モジュール: 任意のURLにHTTPメソッドを発行します。
+- \*\_command モジュール: 主にネットワーク機器に対して任意のコマンドを発行し、その結果を回収するモジュールです。
+- \*\_facts/info モジュール: 主に環境の情報を取得するモジュールです。
+- [assert](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/assert_module.html) モジュール: 条件式を評価して真ならば ok を返す。
+- [fail](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fail_module.html) モジュール: 条件式を評価して真ならば failed を返す。
+- [template](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html) モジュール: テスト結果を出力するのに用いられます。
+- [validate\_argument\_spec](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/validate_argument_spec_module.html) モジュール: ロールのパラメーターを検証する。
 
 > Note: Ansible で構築・変更した環境を、Ansible 自体を使ってテストする場合には、構築に使ったモジュールとは異なるモジュールを使ってテストを行うことが推奨です。例えば、 `copy` モジュールを使って配布したファイルの確認を `shell` モジュールを使って行うなどの方法です。
 
 
 ## テストの記述方法
 ---
-Ansible でのテストはよく使われるパターンがあり、`shell`, `*_command`, `*_facts` で情報を取得し、その結果を `assert`, `fail` で判定します。
+Ansible でのテストでよく使われる記述パターンは、`shell`, `*_command`, `*_facts` で情報を取得し、その結果を `assert`, `fail` で判定します。
 
 サンプル
 ```yaml
@@ -169,5 +170,5 @@ Playbookを実行します。
 
 ## 演習の解答
 ---
-- [testing_assert_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/testing_assert_playbook.yml)
+- [testing\_assert\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/materials/solutions/testing_assert_playbook.yml)
 

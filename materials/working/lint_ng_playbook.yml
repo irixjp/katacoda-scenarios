@@ -1,6 +1,5 @@
 ---
-- hosts: localhost
-  connection: local
+- hosts: node-1
   gather_facts: no
   tasks:
     - shell: |
