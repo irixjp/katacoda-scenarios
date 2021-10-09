@@ -61,7 +61,7 @@ playbook は YAML 形式で表記するため、基本的には作業やパラ�
 
 `ansible-playbook loop_playbook.yml`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [Gathering Facts] *******************************
 ok: [node-1]
@@ -78,7 +78,7 @@ changed: [node-1] => (item=pineapple)
 
 `ansible node-1 -b -m shell -a 'cat /etc/passwd'`{{execute}}
 
-```bash
+```text
 (省略)
 apple:x:1001:1001::/home/apple:/bin/bash
 orange:x:1002:1002::/home/orange:/bin/bash
@@ -91,7 +91,7 @@ pineapple:x:1003:1003::/home/pineapple:/bin/bash
 
 `ansible-playbook loop_playbook.yml`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [Gathering Facts] *******************************
 ok: [node-1]
@@ -165,7 +165,7 @@ playbook を実行する前に、httpd を停止しておきます(これはエ�
 
 `ansible-playbook when_playbook.yml`{{execute}}
 
-```bash
+```text
 TASK [check httpd processes is running] **************
 fatal: [node-1]: FAILED! => {"changed": false, "cmd": "ps -ef |grep http[d]", "delta": "0:00:00.023918", "end": "2019-11-18 06:07:44.403881", "msg": "non-zero return code", "rc": 1, "start": "2019-11-18 06:07:44.379963", "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
 ...ignoring
@@ -198,7 +198,7 @@ changed: [node-1]
 
 `ansible-playbook when_playbook.yml`{{execute}}
 
-```bash
+```text
 TASK [check httpd processes is running] **************
 ok: [node-1]
 
@@ -246,7 +246,7 @@ skipping: [node-1]
 
 `ansible node-1 -m fetch -a 'src=/etc/httpd/conf/httpd.conf dest=files/httpd.conf flat=yes'`{{execute}}
 
-```bash
+```text
 node-1 | CHANGED => {
     "changed": true,
     "checksum": "fdb1090d44c1980958ec96d3e2066b9a73bfda32",
@@ -259,13 +259,13 @@ node-1 | CHANGED => {
 
 `ls -l files/`{{execute}}
 
-```bash
+```text
 total 16
 -rw-r--r-- 1 jupyter jupyter 11753 Nov 18 07:40 httpd.conf
 -rw-r--r-- 1 jupyter jupyter     2 Nov 17 14:35 index.html
 ```
 
-- [`fetch`](https://docs.ansible.com/ansible/latest/modules/fetch_module.html) モジュールはリモートサーバーのファイルをローカルへ取得するモジュールです(`copy` モジュールの逆)
+- [`fetch`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fetch_module.html) モジュールはリモートサーバーのファイルをローカルへ取得するモジュールです(`copy` モジュールの逆)
 
 `~/working/handler_playbook.yml` を以下のように編集します。
 ```yaml
@@ -298,7 +298,7 @@ total 16
 
 `ansible-playbook handler_playbook.yml`{{execute}}
 
-```bash
+```text
 PLAY [restart httpd if httpd.conf is changed] ********
 
 TASK [Gathering Facts] *******************************
@@ -326,7 +326,7 @@ ServerAdmin centos@localhost
 
 `ansible-playbook handler_playbook.yml`{{execute}}
 
-```bash
+```text
 PLAY [restart httpd if httpd.conf is changed] ********
 
 TASK [Gathering Facts] *******************************
@@ -349,7 +349,7 @@ node-1 : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 ## 演習の解答
 ---
-- [loop_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/loop_playbook.yml)
-- [when_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/when_playbook.yml)
-- [handler_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/handler_playbook.yml)
+- [loop\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/loop_playbook.yml)
+- [when\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/when_playbook.yml)
+- [handler\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/handler_playbook.yml)
 

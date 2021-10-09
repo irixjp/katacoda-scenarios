@@ -48,7 +48,7 @@ Ansible における変数は以下の特徴を持っています。
 
 `ansible-playbook vars_debug_playbook.yml`{{execute}}
 
-```bash
+```text
 PLAY [node-1] ****************************************
 
 TASK [print all variables] ***************************
@@ -120,7 +120,7 @@ ok: [node-1] => {
 
 `ansible-playbook vars_play_playbook.yml`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [print play_vars] **************
 ok: [node-1] => {
@@ -184,7 +184,7 @@ ok: [node-1] => {
 
 `ansible-playbook vars_task_playbook.yml`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [print task_vars 1] ************
 ok: [node-1] => {
@@ -210,7 +210,7 @@ ok: [node-1] => {
 
 `ansible-playbook vars_task_playbook.yml -e 'task_vars=50'`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [print task_vars 1] ************
 ok: [node-1] => {
@@ -311,7 +311,7 @@ vars_by_host_vars: 333
 
 `ansible-playbook vars_host_group_playbook.yml`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [print group_vars] ******************************
 ok: [node-1] => {
@@ -391,7 +391,7 @@ Ansible のモジュールは実行されると様々な戻り値を返します
 
 `ansible-playbook vars_register_playbook.yml`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [exec hostname command] *************************
 changed: [node-1]
@@ -451,20 +451,19 @@ ok: [node-1] => {
 }
 ```
 
-この例では、まず `shell` モジュールで hostname コマンドを実行した結果を変数 `ret` に格納し、直後の `debug` モジュールで内容を表示しています。次に、[`file`](https://docs.ansible.com/ansible/latest/modules/file_module.html) モジュールを使ってディレクトリを作成し、その戻り値を `ret` に格納しています。そして同じく `debug` モジュールで内容を確認しています。
+この例では、まず `shell` モジュールで hostname コマンドを実行した結果を変数 `ret` に格納し、直後の `debug` モジュールで内容を表示しています。次に、[`file`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html) モジュールを使ってディレクトリを作成し、その戻り値を `ret` に格納しています。そして同じく `debug` モジュールで内容を確認しています。
 
 各モジュールの戻り値が何を返すかはモジュールのドキュメントで確認することができます。
 
 
 ## 演習の解答
 ---
-- [vars_debug_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_debug_playbook.yml)
-- [vars_play_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_play_playbook.yml)
-- [vars_task_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_task_playbook.yml)
-- [vars_host_group_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_host_group_playbook.yml)
-  - [host_vars/node-1.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/host_vars/node-1.yml)
-  - [host_vars/node-2.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/host_vars/node-2.yml)
-  - [host_vars/node-3.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/host_vars/node-3.yml)
-  - [group_vars/all.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/group_vars/all.yml)
-- [vars_register_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/vars_register_playbook.yml)
-
+- [vars\_debug\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/vars_debug_playbook.yml)
+- [vars\_play\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/vars_play_playbook.yml)
+- [vars\_task\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/vars_task_playbook.yml)
+- [vars\_host\_group\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/vars_host_group_playbook.yml)
+  - [host\_vars/node-1.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/host_vars/node-1.yml)
+  - [host\_vars/node-2.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/host_vars/node-2.yml)
+  - [host\_vars/node-3.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/host_vars/node-3.yml)
+  - [group\_vars/all.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/group_vars/all.yml)
+- [vars\_register\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/vars_register_playbook.yml)

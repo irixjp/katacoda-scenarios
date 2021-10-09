@@ -1,4 +1,4 @@
-# テンプレート
+# テンプレートとフィルター
 ---
 Ansible はテンプレート機能を備えており、動的なファイル作成が可能です。テンプレートエンジンとしては [`jinja2`](https://palletsprojects.com/p/jinja/) を利用しています。
 
@@ -9,7 +9,7 @@ Ansible はテンプレート機能を備えており、動的なファイル作
 テンプレートを利用するには2つの要素が必要になります。
 
 - テンプレートファイル: jinja2 形式の表現が埋め込まれたファイルで、一般的に j2 拡張子を付加します。
-- [`template`](https://docs.ansible.com/ansible/latest/modules/template_module.html) モジュール: コピーモジュールに似ています。src にテンプレートファイルを指定し、dest に配置先を指定すると、テンプレートファイルをコピーする際に、jinja2 部分を処理してからファイルをコピーします。
+- [`template`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html) モジュール: コピーモジュールに似ています。src にテンプレートファイルを指定し、dest に配置先を指定すると、テンプレートファイルをコピーする際に、jinja2 部分を処理してからファイルをコピーします。
 
 実際に作成します。`~/working/templates/index.html.j2` ファイルを作成し、中身を以下となるように編集してください。このファイルが `jinja2` テンプレートファイルになります。
 
@@ -63,7 +63,7 @@ Ansible はテンプレート機能を備えており、動的なファイル作
 
 `ansible-playbook template_playbook.yml -e 'LANG=JP'`{{execute}}
 
-```bash
+```text
 (省略)
 TASK [Put index.html from template] **********************
 changed: [node-2]
@@ -78,7 +78,7 @@ changed: [node-1]
 
 このコマンドは [`uri`](https://docs.ansible.com/ansible/latest/modules/uri_module.html) モジュールという HTTPリクエストを発行するモジュールを利用しています。このモジュールを使って、それぞれのノード上から `http://localhost/` へアクセスしてコンテンツを取得しています。
 
-```bash
+```text
 node-1 | SUCCESS => {
     (省略)
     "content": "<html><body>\n<h1>This server is running on node-1.</h1>\n\n<p>\n     Konnichiwa!\n</p>\n</body></html>\n",
@@ -129,7 +129,7 @@ Jinja2 の機能の一つで [`filter`](https://docs.ansible.com/ansible/latest/
 
 `ansible node-1 -m debug -a 'msg={{ hoge | default("abc") }}'`{{execute}}
 
-```bash
+```text
 node-1 | SUCCESS => {
     "msg": "abc"
 }
@@ -141,7 +141,7 @@ node-1 | SUCCESS => {
 
 `ansible node-1 -e 'str=abc' -m debug -a 'msg="{{ str | upper }}"'`{{execute}}
 
-```bash
+```text
 node-1 | SUCCESS => {
     "msg": "ABC"
 }
@@ -153,7 +153,7 @@ node-1 | SUCCESS => {
 
 `ansible node-1 -m debug -a 'msg="{{ [5, 1, 10] | min }}"'`{{execute}}
 
-```bash
+```text
 node-1 | SUCCESS => {
     "msg": "1"
 }
@@ -161,7 +161,7 @@ node-1 | SUCCESS => {
 
 `ansible node-1 -m debug -a 'msg="{{ [5, 1, 10] | max }}"'`{{execute}}
 
-```bash
+```text
 node-1 | SUCCESS => {
     "msg": "10"
 }
@@ -171,5 +171,5 @@ node-1 | SUCCESS => {
 
 ## 演習の解答
 ---
-- [template_html_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/block_playbook.yml)
-- [index.html.j2](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/templates/index.html.j2)
+- [template\_html\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/block_playbook.yml)
+- [files/index.html.j2](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/templates/index.html.j2)

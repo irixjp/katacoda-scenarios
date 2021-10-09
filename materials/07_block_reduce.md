@@ -44,7 +44,7 @@ playbook で一連のタスクをグループ化し、まとめて `when` や `i
 
 `ansible-playbook block_playbook.yml -e 'exec_block=no'`{{execute}}
 
-```bash
+```text
 TASK [install httpd] *********************************
 skipping: [node-1]
 
@@ -59,7 +59,7 @@ skipping: [node-1]
 
 `ansible-playbook block_playbook.yml -e 'exec_block=yes'`{{execute}}
 
-```bash
+```text
 TASK [install httpd] *********************************
 ok: [node-1]
 
@@ -126,7 +126,7 @@ ok: [node-1]
 
 `ansible-playbook rescue_playbook.yml -e 'error_flag=no'`{{execute}}
 
-```bash
+```text
 TASK [block task] ************************************
 ok: [node-1] => {
     "msg": "message from block"
@@ -150,7 +150,7 @@ ok: [node-1] => {
 
 `ansible-playbook rescue_playbook.yml -e 'error_flag=yes'`{{execute}}
 
-```bash
+```text
 TASK [block task] ************************************
 ok: [node-1] => {
     "msg": "message from block"
@@ -190,5 +190,5 @@ ok: [node-1] => {
 
 ## 演習の解答
 ---
-- [block_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/block_playbook.yml)
-- [rescue_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/master-course-data/assets/solutions/rescue_playbook.yml)
+- [block\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/block_playbook.yml)
+- [rescue\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/rescue_playbook.yml)
