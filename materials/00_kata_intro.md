@@ -22,7 +22,6 @@
 - 104
   - ansible-lint による規約チェック
   - テストの自動化(作成中)
-  - Molecule(作成中)
 
 本教材の作成にあたり以下のコンテンツを参考にしています。
 - https://github.com/ansible/workshops
