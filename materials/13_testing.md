@@ -261,7 +261,9 @@ Playbookを実行します。
 - `assemble` モジュール: ファイルを結合するモジュールです。
 - `run_once: true` このオプションが指定されると複数ホストが存在しても1台だけで実行されます。これは結合処理は1回だけ実行できれば良いからです。
 
-`ansible-playbook testing_assert_playbook.yml`{{execute}}
+`cd ~/working`{{execute}}
+
+`ansible-playbook reporting_playbook.yml`{{execute}}
 
 実行すると `setting_report.md` というファイルが working ディレクトリに作成されるので内容を確認します(Markdownのプレビューモードで確認してください)
 
