@@ -1,0 +1,26 @@
+---
+- name: Report with Ansible
+  hosts: web
+  gather_facts: true
+  tasks:
+  - name: build report
+    copy:
+      content: |
+        # Server Configuration Reports: {{ inventory_hostname }}
+        ---
+        | name | value  |
+        | ---- | ------ |
+        {% for key, value in ansible_default_ipv4.items() %}
+        | {{ key }} | {{ value }} |
+        {% endfor %}
+      dest: /tmp/setting_report_{{ inventory_hostname }}.md
+    delegate_to: localhost
+  
+  - name: concatenate reports
+    assemble:
+      src: /tmp
+      regexp: 'setting\_report\_*'
+      dest: setting_report.md
+      delimiter: "\n"
+    run_once: true
+    delegate_to: localhost

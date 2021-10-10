@@ -140,7 +140,7 @@ Playbookを実行します。
 
 `ansible-playbook testing_assert_playbook.yml`{{execute}}
 
-こんどは失敗したはずです。
+今回のテストは失敗したはずです。httpd が起動していないため、 `assert` でのチェックに失敗しています。
 
 
 ## テスト結果のレポート作成
@@ -209,7 +209,7 @@ Playbookを実行します。
 
 `ansible-playbook testing_assert_playbook.yml`{{execute}}
 
-このテストは成功するはずです。 `~/working/result_report_node-1.md` というレポートファイルが作成されているはずなので中身を確認してください。
+このテストは成功するはずです。 `~/working/result_report_node-1.md` というレポートファイルが作成されているはずなので中身を確認してください(ファイルを右クリックして Markdown のプレビューモードで開いてください)
 
 次にテストを失敗させてレポートを確認します。 httpd プロセスを停止してからテストを実行します。
 
@@ -217,15 +217,59 @@ Playbookを実行します。
 
 `ansible-playbook testing_assert_playbook.yml`{{execute}}
 
-## 補足事項
+テストのレポートがどのように変化したか確認してください。
 
-今回の例ではテスト結果を出力させていますが、同じような方法で設定報告書を自動生成することも可能で、実際に活用されている例も多数あります。
+## 設定レポート作成
+---
+先の例ではテスト結果を出力させていますが、同じような方法で設定報告書を自動生成することも可能で、実際に活用されている例も多数あります。ここでは簡単なサーバー設定レポートを作成してみます。
 
-出力されたレポートは [pandoc](https://pandoc.org/) などを使うことで html 形式 → pdf と変換できるため、もう少し見た目を整えればそのまま報告書と提出することも可能です。
+ファイル `working/reporting_playbook.yml` を以下のように作成します。
+
+```yaml
+---
+- name: Report with Ansible
+  hosts: web
+  gather_facts: true
+  tasks:
+  - name: build report
+    copy:
+      content: |
+        # Server Configuration Reports: {{ inventory_hostname }}
+        ---
+        | name | value  |
+        | ---- | ------ |
+        {% for key, value in ansible_default_ipv4.items() %}
+        | {{ key }} | {{ value }} |
+        {% endfor %}
+      dest: /tmp/setting_report_{{ inventory_hostname }}.md
+    delegate_to: localhost
+  
+  - name: concatenate reports
+    assemble:
+      src: /tmp
+      regexp: 'setting\_report\_*'
+      dest: setting_report.md
+      delimiter: "\n"
+    run_once: true
+    delegate_to: localhost
+```
+
+- `gather_facts: true` playbook実行前に `setup` を実行させて、その結果を活用できるようにしています。
+- `{% for key, value in ansible_default_ipv4.items() %}` 今回はネットワークに関する設定を取り出しています。
+  - 変数 `ansible_default_ipv4` を確認するには以下を実行します。
+  - `ansible node-1 -m setup -a 'filter=ansible_default_ipv4'`{{execute}}
+- `assemble` モジュール: ファイルを結合するモジュールです。
+- `run_once: true` このオプションが指定されると複数ホストが存在しても1台だけで実行されます。これは結合処理は1回だけ実行できれば良いからです。
+
+`ansible-playbook testing_assert_playbook.yml`{{execute}}
+
+実行すると `setting_report.md` というファイルが working ディレクトリに作成されるので内容を確認します(Markdownのプレビューモードで確認してください)
+
+ここで出力されたレポートは [pandoc](https://pandoc.org/) などを使うことで html 形式 → pdf と変換できるため、もう少し見た目を整えればそのまま報告書と提出することも可能です。
 
 また今回のようなテストを体系立てて実行する方法として、[molecule](https://github.com/ansible-community/molecule) というテストツール(フレームワーク)も準備されています。molecule を使うことで統一されたテストを実行して、品質の高い自動化を実行することが可能となります。
 
 ## 演習の解答
 ---
 - [testing\_assert\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/materials/solutions/testing_assert_playbook.yml)
-
+- [reporting\_playbook](https://github.com/irixjp/katacoda-scenarios/blob/materials/solutions/reporting_playbook.yml)
