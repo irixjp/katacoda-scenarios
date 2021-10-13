@@ -54,10 +54,10 @@
       copy:
         content: |
           [defaults]
-          inventory         = {{ inventory_path }}
-          host_key_checking = False
-          force_color       = True
-          forks             = 1
+          inventory          = {{ inventory_path }}
+          host_key_checking  = False
+          force_color        = True
+          forks              = 1
 
           [ssh_connection]
           ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
