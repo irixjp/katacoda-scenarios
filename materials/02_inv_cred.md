@@ -69,7 +69,7 @@ ansible コマンドに `--version` オプションをつけると、実行環�
 
 - `config file = /root/.ansible.cfg`
 
-> Note: jupyter labs 上では `/jupyter/.ansible.cfg`
+> Note: jupyter labs 上で演習を実施している場合は `/jupyter/.ansible.cfg` となります。以降の演習でも /root は /jupyter と読み替えてください。
 
 これは、このディレクトリで ansible コマンドを実行した際に読み込まれる Ansible の設定ファイルのパスを表示しています。このファイルは Ansible の基本的な挙動を制御するための設定ファイルです。
 
@@ -83,7 +83,7 @@ ansible コマンドに `--version` オプションをつけると、実行環�
 
 ```ini
 [defaults]
-inventory         = ~/inventory_file
+inventory         = /root/inventory_file
 host_key_checking = False
 force_color       = True
 
@@ -91,9 +91,10 @@ force_color       = True
 ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
 ```
 
+
 いくつかの設定が演習用に設定されています。ここで重要となるのが以下の設定です。
 
-- `inventory         = ~/inventory_file`
+- `inventory         = /root/inventory_file`
 
 これは、Ansible が自動化の実行対象を決定する「インベントリー」に関する設定です。
 
@@ -113,7 +114,7 @@ node-3 ansible_host=52.195.15.8
 
 [all:vars]
 ansible_user=centos
-ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
+ansible_ssh_private_key_file=/root/aitac-automation-keypair.pem
 ```
 
 > Note: 演習環境によっては `http_access=http://35.73.128.87:8083` のような出力がされる場合がありますが、気にせず進めてください。
@@ -219,7 +220,7 @@ node-3 | SUCCESS => {"ansible_facts": {"discovered_interpreter_python": "/usr/bi
 ```ini
 [all:vars]
 ansible_user=centos
-ansible_ssh_private_key_file=/jupyter/aitac-automation-keypair.pem
+ansible_ssh_private_key_file=/root/aitac-automation-keypair.pem
 ```
 
 ここでは、全てのグループに対する変数として `[all:vars]` を定義し、そこで認証に利用する変数を定義しています。
