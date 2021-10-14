@@ -1,0 +1,344 @@
+---
+- name: Setup handson environment
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Collect a ami id
+      amazon.aws.ec2_ami_info:
+        filters:
+          "product-code": "{{ AMI_PRODUCT_CODE }}"
+      register: amis
+
+    - debug: var=amis
+
+    - name: Select latest CentOS7 image
+      set_fact:
+        ami: "{{ temp[0] }}"
+      vars:
+        temp: "{{ amis.images | sort(attribute='creation_date', reverse=True) }}"
+
+    - debug: var=ami
+
+    - name: Collect subnet info
+      amazon.aws.ec2_vpc_subnet_info:
+        region: "{{ REGION }}"
+        filters:
+          "tag:role": "{{ RESOURCE_TAG_ROLE }}"
+      register: subnets
+
+    - debug: var=subnets
+
+    - name:  Create handson instances
+      amazon.aws.ec2:
+        key_name: "{{ KEYPAIR_NAME }}"
+        instance_type: "{{ INSTANCE_TYPE }}"
+        image: "{{ ami.image_id }}"
+        wait: yes
+        group: "{{ SEC_GROUP_NAME }}"
+        exact_count: "{{ INSTANCE_NUM }}"
+        count_tag:
+          Name: "{{ INSTANCE_TAG_NAME }}"
+          role: "{{ RESOURCE_TAG_ROLE }}"
+          automation_group: "{{ INSTANCE_TAG_TARGET }}"
+        vpc_subnet_id: "{{ subnets.subnets[0].id }}"
+        assign_public_ip: yes
+        region: "{{ REGION }}"
+        instance_tags:
+          Name: "{{ INSTANCE_TAG_NAME }}"
+          role: "{{ RESOURCE_TAG_ROLE }}"
+          automation_group: "{{ INSTANCE_TAG_TARGET }}"
+        volumes:
+          - device_name: /dev/sda1
+            volume_type: standard
+            volume_size: "{{ VOLUME_SIZE }}"
+            delete_on_termination: true
+      register: ec2
+
+    - debug: var=ec2
+
+    - name: Create a default inventory
+      copy:
+        content: |
+          [students]
+          {% for i in ec2.tagged_instances %}
+          node-{{ loop.index }} ansible_host={{ i.public_ip }}
+          {% endfor %}
+
+          [all:vars]
+          ansible_user=centos
+          ansible_ssh_private_key_file={{ KEYPAIR_PEM_PATH }}
+        dest: "{{ INVENTORY_PATH }}"
+
+    - name: Create ansible.cfg
+      copy:
+        content: |
+          [defaults]
+          inventory          = {{ INVENTORY_PATH }}
+          host_key_checking  = False
+          force_color        = True
+          interpreter_python = /usr/bin/python
+
+          [ssh_connection]
+          ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+        dest: "{{ ANSIBLECFG_PATH }}"
+
+    - name: Create a in-memory inventory
+      add_host:
+        host: node-{{ ansible_loop.index }}
+        group: tag_automation_group_target
+        ansible_user: centos
+        ansible_host: "{{ item.public_ip }}"
+        ansible_ssh_private_key_file: "{{ KEYPAIR_PEM_PATH }}"
+      loop: "{{ ec2.tagged_instances }}"
+      loop_control:
+        extended: yes
+
+- hosts: tag_automation_group_target
+  gather_facts: False
+  become: yes
+  tasks:
+    - name: SSH port is up? Waiting a sec ...
+      wait_for:
+        host: "{{ ansible_host }}"
+        port: 22
+        delay: 1
+        sleep: 5
+        state: started
+        timeout: 600
+      connection: local
+      vars:
+        ansible_python_interpreter: /usr/bin/python
+
+    - ping:
+
+    - name: delete original repo setttings
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop: "{{ DELETE_REPO_SETTINGS }}"
+
+    - name: setting fast repo site
+      copy:
+        content: "{{ REPO_SETTINGS }}"
+        dest: /etc/yum.repos.d/aitac.repo
+
+    - name: install docker & docker-py
+      yum:
+        name:
+          - docker
+          - python-docker-py
+        state: latest
+
+    - name: start & enable docker
+      systemd:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Log into DockerHub
+      docker_login:
+        username: "{{ DOCKERHUB_USERNAME }}"
+        password: "{{ DOCKERHUB_PASSWORD }}"
+
+    - name: launch ansible target nodes by container
+      community.docker.docker_container:
+        name: "{{ item.NAME }}"
+        hostname: "{{ item.NAME }}"
+        image: "{{ CON_IMAGE_NAME }}"
+        command: /sbin/init
+        state: started
+        ports:
+          - "{{ item.HTTP_PORT }}:80"
+          - "{{ item.SSH_PORT }}:22"
+        security_opts:
+          - "label:disable"
+        capabilities:
+          - "SYS_ADMIN"
+      loop: "{{ TARGET_CONTAINERS }}"
+      register: containers
+
+    - debug: var=containers
+
+    - name: check password file container_pass.txt
+      stat:
+        path: /root/container_pass.txt
+      register: ret_container_pass
+
+    - block:
+        - name: load container password
+          shell: cat /root/container_pass.txt
+          changed_when: False
+          register: load_content
+
+        - set_fact:
+            container_password: "{{ load_content.stdout }}"
+      when: ret_container_pass.stat.exists
+
+    - block:
+        - name: generate passwords for containers
+          set_fact:
+            container_password: "{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=12') }}"
+
+        - name: write password to file
+          copy:
+            content: |
+              {{ container_password }}
+            dest: /root/container_pass.txt
+      when: not ret_container_pass.stat.exists
+
+    - name: create ssh keypair
+      community.crypto.openssh_keypair:
+        path: "{{ STUDENT_KEYPAIR_PATH }}"
+      register: keypair
+
+    - name: Create a student inventory
+      copy:
+        content: |
+          [web]
+          {% for i in containers.results %}
+          {{ i.container.Config.Hostname }} ansible_host={{ i.container.NetworkSettings.IPAddress }} http_access=http://{{ ansible_host }}:{{ loop.index + 8080}}
+          {% endfor %}
+          
+          [all:vars]
+          ansible_user=centos
+          ansible_ssh_private_key_file={{ KEYPAIR_PEM_PATH }}
+        dest: "{{ STUDENT_INVENTORY_PATH }}"
+
+    - name: Create a teacher inventory
+      copy:
+        content: |
+          [student{{ inventory_hostname | replace('node-', '') }}]
+          {% for i in containers.results %}
+          student{{ inventory_hostname | replace('node-', '') }}-{{ i.ansible_facts.docker_container.Config.Hostname }} ansible_host={{ ansible_host }} ansible_port={{ loop.index + 10220 }} http_access={{ ansible_host }}:{{ loop.index + 8080}}
+          {% endfor %}
+          
+          [student{{ inventory_hostname | replace('node-', '') }}:vars]
+          ansible_user=centos
+          ansible_password={{ container_password }}
+          ansible_ssh_private_key_file=/jupyter/student{{ inventory_hostname | replace('node-', '') }}_automation-keypair.pem
+        dest: "{{ TEACHER_INVENTORY_PATH }}"
+
+    - name: set password for centos user on container / start sshd / put pub key
+      shell: |
+        docker exec {{ item.NAME }} sh -c 'echo {{ container_password }} | passwd --stdin centos'
+        docker exec {{ item.NAME }} sh -c 'systemctl start sshd && systemctl enable sshd'
+        docker exec {{ item.NAME }} sh -c 'mkdir -p /home/centos/.ssh && chown centos:centos /home/centos/.ssh && chmod 755 /home/centos/.ssh'
+        docker cp {{ STUDENT_KEYPAIR_PATH }}.pub {{ item.NAME }}:/home/centos/.ssh/authorized_keys
+        docker exec {{ item.NAME }} sh -c 'chown centos:centos /home/centos/.ssh/authorized_keys && chmod 600 /home/centos/.ssh/authorized_keys'
+      loop: "{{ TARGET_CONTAINERS }}"
+      register: ret
+
+    - name: initialize temp dir
+      block:
+        - name: delete tmp dir
+          file:
+            path: /jupyter/tmp
+            state: absent
+
+        - name: create tmp dir
+          file:
+            path: /jupyter/tmp/
+            state: directory
+
+    - name: get student inventory
+      fetch:
+        src: "{{ STUDENT_INVENTORY_PATH }}"
+        dest: /jupyter/tmp/inv_student{{ inventory_hostname | replace('node-', '') }}
+        flat: yes
+
+    - name: get teacher inventory
+      fetch:
+        src: "{{ TEACHER_INVENTORY_PATH }}"
+        dest: /jupyter/tmp/inv_student{{ inventory_hostname | replace('node-', '') }}_instructor
+        flat: yes
+
+    - name: get student pem
+      fetch:
+        src: "{{ STUDENT_KEYPAIR_PATH }}"
+        dest: /jupyter/student{{ inventory_hostname | replace('node-', '') }}_automation-keypair.pem
+        flat: yes
+
+    - name: centralize teacher inventory
+      shell: cat /jupyter/tmp/inv_student*_instructor > /jupyter/inv_teacher
+      register: ret
+      run_once: true
+      delegate_to: localhost
+
+    - name: check password file jupyter_pass.txt
+      stat:
+        path: /root/jupyter_pass.txt
+      register: ret_jupyter_pass
+
+    - block:
+        - name: load jupyter password
+          shell: cat /root/jupyter_pass.txt
+          changed_when: False
+          register: load_content
+
+        - set_fact:
+            jupyter_password: "{{ load_content.stdout }}"
+      when: ret_jupyter_pass.stat.exists
+
+    - block:
+        - name: generate passwords for jupyter
+          set_fact:
+            jupyter_password: "{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=12') }}"
+
+        - name: write password to file
+          copy:
+            content: |
+              {{ jupyter_password }}
+            dest: /root/jupyter_pass.txt
+      when: not ret_jupyter_pass.stat.exists
+
+    - name: launch jupyter container
+      community.docker.docker_container:
+        name: jupyter
+        hostname: jupyter
+        image: "{{ JUPYTER_IMAGE_NAME }}"
+        state: started
+        ports:
+          - "80:8888"
+        env:
+          PASSWORD: "{{ jupyter_password }}"
+      register: containers
+      async: 600
+      poll: 10
+
+    - name: setup jupyter container
+      shell: |
+        docker cp {{ STUDENT_KEYPAIR_PATH }}   jupyter:{{ KEYPAIR_PATH }}
+        docker cp {{ STUDENT_INVENTORY_PATH }} jupyter:{{ INVENTORY_PATH }}
+        docker exec jupyter sh -c 'sudo chown jupyter:jupyter {{ KEYPAIR_PATH }} {{ INVENTORY_PATH }}'
+        docker exec jupyter sh -c 'sudo chmod 600 {{ KEYPAIR_PATH }}'
+      register: ret
+
+    - name: copy handson contents
+      shell: |
+        docker exec jupyter sh -c "cd /notebooks && git clone https://github.com/irixjp/katacoda-scenarios.git ."
+        docker exec jupyter sh -c "cp -r /notebooks/master-course-data ~/texts"
+        docker exec jupyter sh -c "cp -r /notebooks/master-course-data/assets/solutions ~/"
+        docker exec jupyter sh -c "cp -r /notebooks/master-course-data/assets/working ~/"
+        docker exec jupyter sh -c "cp -r /notebooks/master-course-data/assets/tools ~/"
+
+    - name: write jupyter url
+      copy:
+        content: |
+          http://{{ ansible_host }} {{ jupyter_password }}
+        dest: /root/jupyter_url.txt
+
+    - name: get jupyter url
+      fetch:
+        src: /root/jupyter_url.txt
+        dest: /jupyter/tmp/url_student{{ inventory_hostname | replace('node-', '') }}.txt
+        flat: yes
+
+    - name: centralize jupyter url
+      shell: cat /jupyter/tmp/url_student* > /jupyter/jupyter_url.txt
+      register: ret
+      run_once: true
+      delegate_to: localhost
+
+    - name: Log out of DockerHub
+      docker_login:
+        state: absent

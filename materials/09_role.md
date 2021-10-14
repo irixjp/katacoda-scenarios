@@ -75,7 +75,9 @@ roles
 
 各ファイルを作成していきます。
 
-### `~/working/roles/web_setup/tasks/main.yml`
+### タスクファイルの作成
+
+`~/working/roles/web_setup/tasks/main.yml` を編集
 
 ```yaml
 ---
@@ -106,7 +108,9 @@ roles
 `tasks` ディレクトリには実行したいタスクのみを記述します。
 またロールには `play` パートを記述する必要はありませんのでタスクのみを列挙していきます。また、ロール内の `templates` `files` ディレクトリは、明示的にパスを指定しなくてもモジュールからファイルを参照できるようになっています。そのため、`copy` と `template` モジュールの `src` にはファイル名しか記述されていません。
 
-### `~/working/roles/web_setup/handlers/main.yml`
+### ハンドラーファイルの作成
+
+`~/working/roles/web_setup/handlers/main.yml` を編集。
 
 ```yaml
 ---
@@ -118,7 +122,9 @@ roles
 
 `handlers` ディレクトリにはハンドラーとして呼び出したい処理のみを記述します。
 
-### `~/working/roles/web_setup/defaults/main.yml`
+### デフォルト変数の作成
+
+`~/working/roles/web_setup/defaults/main.yml` の編集
 
 ```yaml
 ---
@@ -129,7 +135,9 @@ LANG: JP
 
 > Note: 一般的にRole内で利用する変数名にはプリフィックスとしてRole名をつけることが多い。
 
-### `~/working/roles/web_setup/templates/index.html.j2`
+### テンプレートファイルの作成
+
+`~/working/roles/web_setup/templates/index.html.j2` の編集
 
 ```jinja2
 <html><body>
@@ -145,7 +153,9 @@ LANG: JP
 
 `templates` には `template` モジュールが利用するテンプレートファイルを配置しておく。ここに配置したファイルは、Role内で呼び出される特定のモジュールからファイル名のみでアクセスできるようになります。
 
-### `~/working/roles/web_setup/files/httpd.conf`
+### 配布ファイルの作成
+
+`~/working/roles/web_setup/files/httpd.conf` の編集
 
 このファイルはサーバー側から取得します。以下のようにコマンドを実行してファイルを取得した後にファイルを編集してください。
 
@@ -170,7 +180,9 @@ ServerAdmin centos_role@localhost
 `files` にはRoleで配布等に利用するファイルを配置します。このディレクトリもRole内から特定のモジュールがファイル名のみでアクセスできるようになります。
 
 
-### `~/working/role_playbook.yml`
+### playbook の作成
+
+`~/working/role_playbook.yml` の編集
 
 実際にロールを呼び出す playbook を作成します。
 

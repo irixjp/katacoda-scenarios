@@ -2,7 +2,7 @@
 ---
 ここでは作成したロールの管理と再利用方法についてみていきます。ロールによって playbook の部品化が可能となりますが、その部品を再利用する時に、毎回 `roles` ディレクトリにロール一式をコピーする方法は好ましく有りません。コピーした後に元ロールが変更された場合に、その変更に追随できないためです。またこのようなソースコードの分散を管理しようとしたときの手間も膨大となります。
 
-この問題を解決するために、Ansible では playbook 実行に必要となるロール一式をまとめて取得する方法があります。それが [ansible-galaxy](https://docs.ansible.com/ansible/latest/galaxy/user_guide.html) です。
+この問題を解決するために、Ansible では playbook 実行に必要となるロール一式をまとめて取得する方法があります。それが [ansible-galaxy](https://docs.ansible.com/ansible/latest/galaxy/user_guide.html) コマンドです。
 
 Galaxy の利用とあわせて、Role 管理の手法について解説していきます。
 
@@ -108,7 +108,7 @@ ok: [node-1] => {
 }
 ```
 
-このようにロールを git 上で管理し、必要なロールを `requirements.yml` で管理することで、ソースコードの分散を抑え、効率と安全性を高めることが可能になります。
+このようにロールを Galaxy や git 上で管理し、Playbookが必要とするロールを `requirements.yml` で管理することで、ソースコードの分散を抑え、効率と安全性を高めることが可能になります。
 
 ## Role 内のカスタムモジュールやカスタムフィルターの利用
 ---

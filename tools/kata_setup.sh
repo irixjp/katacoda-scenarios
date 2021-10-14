@@ -9,6 +9,7 @@ DOCKER_PY=5.0.0
 
 DOCKER_COLLECTION=1.8.0
 CRYPT_COLLECTION=1.7.1
+GENERAL_COLLECTION=3.8.0
 
 pip install -U pip setuptools
 pip install \
@@ -21,6 +22,7 @@ pip install \
 hash -r
 ansible-galaxy collection install community.docker:${DOCKER_COLLECTION}
 ansible-galaxy collection install community.crypto:${CRYPT_COLLECTION}
+ansible-galaxy collection install community.general:${GENERAL_COLLECTION}
 
 ansible --version
 ansible-galaxy collection list

@@ -1,0 +1,111 @@
+---
+- name: Setup handson environment
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Create a VPC
+      amazon.aws.ec2_vpc_net:
+        name: "{{ VPC_NAME }}"
+        cidr_block: "{{ VPC_CIDR_BLOCK }}"
+        dns_hostnames: yes
+        dns_support: yes
+        tags:
+          role: "{{ RESOURCE_TAG_ROLE }}"
+        region: "{{ REGION }}"
+        state: present
+      register: vpc
+
+    - debug: var=vpc
+
+    - name: Create a subnet
+      amazon.aws.ec2_vpc_subnet:
+        cidr: "{{ SUBNET_CIDR_BLOCK }}"
+        vpc_id: "{{ vpc.vpc.id }}"
+        map_public: yes
+        tags:
+          role: "{{ RESOURCE_TAG_ROLE }}"
+        region: "{{ REGION }}"
+        state: present
+      register: subnet
+
+    - debug: var=subnet
+
+    - name: Connect to the internet gateway
+      amazon.aws.ec2_vpc_igw:
+        vpc_id: "{{ vpc.vpc.id }}"
+        tags:
+          role: "{{ RESOURCE_TAG_ROLE }}"
+        region: "{{ REGION }}"
+        state: present
+      register: igw
+
+    - debug: var=igw
+
+    - name: Create a route table
+      amazon.aws.ec2_vpc_route_table:
+        vpc_id: "{{ vpc.vpc.id }}"
+        subnets:
+          - "{{ subnet.subnet.id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ igw.gateway_id }}"
+        tags:
+          role: "{{ RESOURCE_TAG_ROLE }}"
+        region: "{{ REGION }}"
+        state: present
+      register: route_table
+
+    - debug: var=route_table
+
+    - name: Create a security group
+      amazon.aws.ec2_group:
+        name: "{{ SEC_GROUP_NAME }}"
+        description: "{{ SEC_GROUP_DESC }}"
+        vpc_id: "{{ vpc.vpc.id }}"
+        purge_rules: yes
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 443
+            to_port: 443
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 8080
+            to_port: 8888
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 10220
+            to_port: 10229
+            cidr_ip: 0.0.0.0/0
+        tags:
+          role: "{{ RESOURCE_TAG_ROLE }}"
+        region: "{{ REGION }}"
+        state: present
+      register: sg
+
+    - debug: var=sg
+
+    - name: Create a keypair
+      amazon.aws.ec2_key:
+        name: "{{ KEYPAIR_NAME }}"
+        region: "{{ REGION }}"
+        state: present
+      register: keypair
+
+    - debug: var=keypair
+
+    - name: Output private key
+      copy:
+        content: "{{ keypair.key.private_key }}"
+        dest: "{{ KEYPAIR_PEM_PATH }}"
+        owner: jupyter
+        group: jupyter
+        mode: "0700"
+      when: keypair.key.private_key is defined

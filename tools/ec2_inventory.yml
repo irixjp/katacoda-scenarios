@@ -1,0 +1,66 @@
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python
+  vars:
+    INSTANCE_NUM: 2
+    AMI_PRODUCT_CODE: aw0evgkw8e5c1q413zgy5pjce
+    INSTANCE_TYPE: t3.medium
+    VOLUME_SIZE: 20
+    REGION: ap-northeast-1
+    VPC_NAME: aitac-automation-master-vpc
+    VPC_CIDR_BLOCK: 10.1.0.0/23
+    SUBNET_CIDR_BLOCK: 10.1.0.0/24
+    SEC_GROUP_NAME: aitac-automation-master-sg
+    SEC_GROUP_DESC: security group for aitac handson student env
+    KEYPAIR_NAME: aitac-keypair-master
+    KEYPAIR_PEM_PATH: /jupyter/aitac-automation-keypair.pem
+    RESOURCE_TAG_ROLE: aitac-automation-master-role
+    INSTANCE_TAG_NAME: aitac-automation-master-instance
+    INSTANCE_TAG_TARGET: aitac-automation-master-target
+    INVENTORY_PATH: /jupyter/inventory_file
+    ANSIBLECFG_PATH: /jupyter/.ansible.cfg
+    JUPYTER_IMAGE_NAME: irixjp/aitac-automation-jupyter:2.11.5
+    CON_IMAGE_NAME: irixjp/katacoda:centos8-node
+    TARGET_CONTAINERS:
+      - NAME: node-1
+        HTTP_PORT: 8081
+        SSH_PORT: 10221
+      - NAME: node-2
+        HTTP_PORT: 8082
+        SSH_PORT: 10222
+      - NAME: node-3
+        HTTP_PORT: 8083
+        SSH_PORT: 10223
+    STUDENT_KEYPAIR_PATH: /root/automation-keypair.pem
+    STUDENT_INVENTORY_PATH: /root/inventory_student
+    TEACHER_INVENTORY_PATH: /root/inventory_teacher
+    DELETE_REPO_SETTINGS:
+      - /etc/yum.repos.d/CentOS-Base.repo
+      - /etc/yum.repos.d/CentOS-CR.repo
+      - /etc/yum.repos.d/CentOS-Debuginfo.repo
+      - /etc/yum.repos.d/CentOS-Media.repo
+      - /etc/yum.repos.d/CentOS-Sources.repo
+      - /etc/yum.repos.d/CentOS-Vault.repo
+      - /etc/yum.repos.d/CentOS-fasttrack.repo
+    REPO_SETTINGS: |
+      [base]
+      name=CentOS-$releasever - Base
+      baseurl=http://ftp.iij.ad.jp/pub/linux/centos/7/os/x86_64/
+      gpgcheck=1
+      gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+      #released updates
+      [updates]
+      name=CentOS-$releasever - Updates
+      baseurl=http://ftp.iij.ad.jp/pub/linux/centos/7/updates/x86_64/
+      gpgcheck=1
+      gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+      #additional packages that may be useful
+      [extras]
+      name=CentOS-$releasever - Extras
+      baseurl=http://ftp.iij.ad.jp/pub/linux/centos/7/extras/x86_64/
+      gpgcheck=1
+      gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
