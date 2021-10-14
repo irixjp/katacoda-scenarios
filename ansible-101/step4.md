@@ -1,1 +1,1 @@
-../master-course-data/04_playbook.md
+../materials/04_playbook.md

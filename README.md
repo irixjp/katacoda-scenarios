@@ -14,7 +14,7 @@ For examples, visit https://github.com/katacoda/scenario-example
 
 Katacoda 上でどのくらい演習が実行されたか（最初の `setup.sh` を実行した回数）
 
-![result-kata.png](http://18.182.66.157/result-kata.png)
+![result-kata.png](http://18.182.66.157/kata.png)
 
 > Note: たまに表示されないことがあります。
 

@@ -1,1 +1,1 @@
-../master-course-data/11_collections.md
+../materials/11_collections.md

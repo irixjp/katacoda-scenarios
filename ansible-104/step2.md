@@ -1,1 +1,1 @@
-../master-course-data/12_lint.md
+../materials/12_lint.md

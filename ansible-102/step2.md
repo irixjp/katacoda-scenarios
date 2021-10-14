@@ -1,1 +1,1 @@
-../master-course-data/05_variables.md
+../materials/05_variables.md

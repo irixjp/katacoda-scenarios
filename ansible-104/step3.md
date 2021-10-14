@@ -1,1 +1,1 @@
-../master-course-data/13_testing.md
+../materials/13_testing.md

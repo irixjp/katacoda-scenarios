@@ -1,1 +1,1 @@
-../master-course-data/10_galaxy.md
+../materials/10_galaxy.md

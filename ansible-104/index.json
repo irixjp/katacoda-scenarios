@@ -1,25 +1,25 @@
 {
-  "title": "Ansible 104",
-  "description": "lint, testing",
+  "title": "Test Ansible 104(2.11)",
+  "description": "Lint, testing, reporting",
   "difficulty": "beginner",
-  "time": "60 minutes",
+  "time": "30 minutes",
   "details": {
-    "steps": [
-      { "title": "Step 1", "text": "step1.md" },
-      { "title": "Step 2", "text": "step2.md" },
-      { "title": "Step 3", "text": "step3.md" }
-    ],
     "intro": {
       "text": "intro.md",
-      "credits": "",
-      "courseData": "env-init.sh"
+      "credits": "https://github.com/irixjp/katacoda-scenarios"
     },
     "finish": {
       "text": "finish.md"
-    }
+    },
+    "steps": [
+      { "title": "Step1", "text": "step1.md" },
+      { "title": "Step2", "text": "step2.md" },
+      { "title": "Step3", "text": "step3.md" }
+    ]
   },
   "environment": {
-    "uilayout": "terminal",
+    "uilayout": "vscode-terminal-split",
+    "showide": true,
     "hideintro": false,
     "hidefinish": false,
     "showdashboard": true,
@@ -31,6 +31,6 @@
     "uimessage1": "\u001b[32mYour Interactive Bash Terminal. A safe place to learn and execute commands.\u001b[m\r\n"
   },
   "backend": {
-    "imageid": "centos-vm"
+    "imageid": "ubuntu:2004"
   }
 }

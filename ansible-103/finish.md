@@ -1,1 +1,1 @@
-../master-course-data/99_finish_kata.md
+../materials/99_kata_finish.md

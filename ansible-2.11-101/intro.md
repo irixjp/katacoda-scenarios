@@ -1,1 +1,0 @@
-../materials/00_kata_intro.md

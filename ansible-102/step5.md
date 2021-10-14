@@ -1,1 +1,1 @@
-../master-course-data/08_template.md
+../materials/08_template.md

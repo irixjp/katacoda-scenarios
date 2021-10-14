@@ -1,1 +1,1 @@
-../master-course-data/03_adhoc_modules.md
+../materials/03_adhoc_modules.md

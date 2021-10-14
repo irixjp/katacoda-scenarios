@@ -1,1 +1,1 @@
-../master-course-data/02_inv_cred.md
+../materials/02_inv_cred.md
