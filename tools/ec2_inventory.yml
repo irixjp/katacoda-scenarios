@@ -20,7 +20,6 @@ all:
     INSTANCE_TAG_NAME: aitac-automation-master-instance
     INSTANCE_TAG_TARGET: aitac-automation-master-target
     INVENTORY_PATH: /jupyter/inventory_file
-    ANSIBLECFG_PATH: /jupyter/.ansible.cfg
     JUPYTER_IMAGE_NAME: irixjp/aitac-automation-jupyter:2.11.5
     CON_IMAGE_NAME: irixjp/katacoda:centos8-node
     TARGET_CONTAINERS:

@@ -69,19 +69,6 @@
           ansible_ssh_private_key_file={{ KEYPAIR_PEM_PATH }}
         dest: "{{ INVENTORY_PATH }}"
 
-    - name: Create ansible.cfg
-      copy:
-        content: |
-          [defaults]
-          inventory          = {{ INVENTORY_PATH }}
-          host_key_checking  = False
-          force_color        = True
-          interpreter_python = /usr/bin/python
-
-          [ssh_connection]
-          ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-        dest: "{{ ANSIBLECFG_PATH }}"
-
     - name: Create a in-memory inventory
       add_host:
         host: node-{{ ansible_loop.index }}
@@ -209,7 +196,7 @@
         content: |
           [student{{ inventory_hostname | replace('node-', '') }}]
           {% for i in containers.results %}
-          student{{ inventory_hostname | replace('node-', '') }}-{{ i.ansible_facts.docker_container.Config.Hostname }} ansible_host={{ ansible_host }} ansible_port={{ loop.index + 10220 }} http_access={{ ansible_host }}:{{ loop.index + 8080}}
+          student{{ inventory_hostname | replace('node-', '') }}-{{ i.container.Config.Hostname }} ansible_host={{ ansible_host }} ansible_port={{ loop.index + 10220 }} http_access={{ ansible_host }}:{{ loop.index + 8080}}
           {% endfor %}
           
           [student{{ inventory_hostname | replace('node-', '') }}:vars]
@@ -307,10 +294,10 @@
 
     - name: setup jupyter container
       shell: |
-        docker cp {{ STUDENT_KEYPAIR_PATH }}   jupyter:{{ KEYPAIR_PATH }}
+        docker cp {{ STUDENT_KEYPAIR_PATH }}   jupyter:{{ KEYPAIR_PEM_PATH }}
         docker cp {{ STUDENT_INVENTORY_PATH }} jupyter:{{ INVENTORY_PATH }}
-        docker exec jupyter sh -c 'sudo chown jupyter:jupyter {{ KEYPAIR_PATH }} {{ INVENTORY_PATH }}'
-        docker exec jupyter sh -c 'sudo chmod 600 {{ KEYPAIR_PATH }}'
+        docker exec jupyter sh -c 'sudo chown jupyter:jupyter {{ KEYPAIR_PEM_PATH }} {{ INVENTORY_PATH }}'
+        docker exec jupyter sh -c 'sudo chmod 600 {{ KEYPAIR_PEM_PATH }}'
       register: ret
 
     - name: copy handson contents
