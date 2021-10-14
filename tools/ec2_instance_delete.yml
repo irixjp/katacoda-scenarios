@@ -32,3 +32,29 @@
         region: "{{ REGION }}"
       when: delete_ids | length > 0
 
+    - name: delete retrive files
+      file:
+        path: /jupyter/tmp
+        state: absent
+
+    - name: get student pems
+      find:
+        paths: /jupyter
+        patterns: student*.pem
+      register: files_to_delete
+
+    - name: delete student keypair
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ files_to_delete.files }}"
+
+    - name: delete jupyter url file
+      file:
+        path: /jupyter/jupyter_url.txt
+        state: absent
+
+    - name: delete teacher inventory
+      file:
+        path: /jupyter/inv_teacher
+        state: absent

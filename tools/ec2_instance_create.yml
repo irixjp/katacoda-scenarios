@@ -245,6 +245,12 @@
         dest: /jupyter/student{{ inventory_hostname | replace('node-', '') }}_automation-keypair.pem
         flat: yes
 
+    - name: set permission to student pems
+      shell: chmod 600 /jupyter/student*
+      register: ret
+      run_once: true
+      delegate_to: localhost
+
     - name: centralize teacher inventory
       shell: cat /jupyter/tmp/inv_student*_instructor > /jupyter/inv_teacher
       register: ret
@@ -303,10 +309,11 @@
     - name: copy handson contents
       shell: |
         docker exec jupyter sh -c "cd /notebooks && git clone https://github.com/irixjp/katacoda-scenarios.git ."
-        docker exec jupyter sh -c "cp -r /notebooks/master-course-data ~/texts"
-        docker exec jupyter sh -c "cp -r /notebooks/master-course-data/assets/solutions ~/"
-        docker exec jupyter sh -c "cp -r /notebooks/master-course-data/assets/working ~/"
-        docker exec jupyter sh -c "cp -r /notebooks/master-course-data/assets/tools ~/"
+        docker exec jupyter sh -c "mkdir -p ~/texts"
+        docker exec jupyter sh -c "cp -r /notebooks/materials/*.md ~/texts"
+        docker exec jupyter sh -c "rm -rf ~/texts/*kata*"
+        docker exec jupyter sh -c "cp -r /notebooks/materials/solutions ~/"
+        docker exec jupyter sh -c "cp -r /notebooks/materials/working ~/"
 
     - name: write jupyter url
       copy:
