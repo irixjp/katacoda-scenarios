@@ -6,9 +6,9 @@
 ---
 本演習では以下の環境を必要とします。
 
-- AWSアカウント(アクセスキー、シークレットキー)
 - インターネット接続可能なPC
-- ブラウザ(最新版の Chrome を推奨、IEでは実施不可)
+  - VPNやプロキシ経由では接続できない場合があります。
+- インターネットブラウザ(最新版の Chrome, Firefox, Safari を推奨、IEでは実施不可)
 
 ## 演習内容
 ---
@@ -26,15 +26,14 @@
 10. [Role の管理と再利用(Galaxy)](10_galaxy.md)
 11. [Collection による共通化](11_collections.md)
 12. [コーディング規約](12_lint.md)
-13. [テスト自動化](13_testing.md)
-15. [演習問題](50_exercises.md)
+13. [規約チェック、テスト自動化、レポート作成](13_testing.md)
 
 ## 演習教材について
 ---
 本演習環境の素材は以下で管理されています。
 
-- [演習内容](https://github.com/irixjp/katacoda-scenarios/tree/master/master-course-data)
-- [演習用コンテナ](https://hub.docker.com/r/irixjp/aitac-automation-jupyter), [Dockerfile](https://github.com/irixjp/aitac-automation-jupyter-docker)
+- [演習テキスト](https://github.com/irixjp/katacoda-scenarios/tree/master/materials)
+- [演習コンテナ](https://hub.docker.com/r/irixjp/aitac-automation-jupyter), [Dockerfile](https://github.com/irixjp/katacoda-scenarios/tree/master/container/jupyter)
 
 
 本演習環境で利用しているソフトウェアは以下になります。
