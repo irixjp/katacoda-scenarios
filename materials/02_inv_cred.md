@@ -136,7 +136,7 @@ ansible_ssh_private_key_file=/root/aitac-automation-keypair.pem
   - ここで与えられている、 `ansible_user` `ansible_ssh_private_key_file` は特別な変数で、各ノードへのログインに使われるユーザー名とSSH秘密鍵のパスを示しています。
     - `ansible_xxxx` という[マジック変数](https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html)で、Ansible の挙動を制御したり、Ansible が自動的に取得する環境情報など特別な値が格納されています。詳細は変数の項目で解説します。
 
-実際にこのインベントリーを利用して定義されたノードの対して Ansible を実行してみます。以下のコマンドを実行してください。
+実際にこのインベントリーを利用して定義されたノードへ対して Ansible を実行してみます。以下のコマンドを実行してください。
 
 `ansible web -i ~/inventory_file -m ping -o`{{execute}}
 

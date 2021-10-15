@@ -21,6 +21,7 @@ Ansible における変数は以下の特徴を持っています。
 定義した変数の中身を確認するはに [`debug`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html) モジュールが便利です。
 
 `~/working/vars_debug_playbook.yml` を以下のように編集してください。
+
 ```yaml
 ---
 - hosts: node-1
@@ -82,6 +83,7 @@ ok: [node-1] => {
 では実際に変数の定義を行ってみましょう。
 
 `~/working/vars_play_playbook.yml` を以下のように編集します。
+
 ```yaml
 ---
 - hosts: node-1
@@ -158,6 +160,7 @@ ok: [node-1] => {
 1つのタスク内だけで使う変数を定義したり、一時的に上書きを行うことが可能です。
 
 `~/working/vars_task_playbook.yml` を以下のように編集します。
+
 ```yaml
 ---
 - hosts: node-1
@@ -202,11 +205,11 @@ ok: [node-1] => {
 }
 ```
 
-タスクの中での `vars:` はそのタスク内でのみ [変数の優先順位](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable) が `play vars` より高いため、上記のような結果となります。
+タスクの中での `vars:` はそのタスク内でのみ有効な変数となります。 [変数の優先順位](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable) が `play vars` より高いため、2つ目のタスクでは変数の値が上書きされ、上記のような結果となります。
 
 では更に優先順位の高い `extra_vars` (コマンドラインから指定する変数) を使うとどうなるか見てみましょう。
 
-`extra_vars` を与えるには `vars_task_playbook.yml` に `-e` オプションをつけて実行します。
+`extra_vars` を与えるには `ansible-playbook` コマンドに `-e` オプションをつけて実行します。
 
 `ansible-playbook vars_task_playbook.yml -e 'task_vars=50'`{{execute}}
 
@@ -228,14 +231,14 @@ ok: [node-1] => {
 }
 ```
 
-全てのタスクにおいて最も優先順位の高い `extra_vars` の値が用いられています。このように、Ansible では変数を定義した場所によって優先順位が異なるため注意が必要です。
+全てのタスクにおいて最も優先順位の高い `extra_vars` の値が用いられています。このように、Ansible では変数を定義した場所によって上書きの優先順位が異なるため注意が必要です。
 
 ## その他の変数定義
 ---
 その他の変数の定義方法について紹介します。
 
 
-### set_fact での定義
+### set\_fact での定義
 ---
 [set_fact](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/set_fact_module.html) モジュールを使って、タスクパートの中で任意の変数を定義することができます。一般的な用途として、1つのタスクの実行結果を受け取り、その値を加工して新たな変数を定義し、その値を後続のタスクで利用する場合があります。
 
@@ -253,6 +256,7 @@ ok: [node-1] => {
 ### `~/working/group_vars/all.yml` 
 
 グループ変数を定義します。
+
 ```yaml
 ---
 vars_by_group_vars: 1000
@@ -260,7 +264,8 @@ vars_by_group_vars: 1000
 
 ### `~/working/host_vars/node-1.yml` 
 
-ホスト変数を定義します。
+node-1用のホスト変数を定義します。
+
 ```yaml
 ---
 vars_by_host_vars: 111
@@ -268,7 +273,8 @@ vars_by_host_vars: 111
 
 ### `~/working/host_vars/node-2.yml`
 
-ホスト変数を定義します。
+node-2用のホスト変数を定義します。
+
 ```yaml
 ---
 vars_by_host_vars: 222
@@ -276,15 +282,33 @@ vars_by_host_vars: 222
 
 ### `~/working/host_vars/node-3.yml`
 
-ホスト変数を定義します。
+node-3用のホスト変数を定義します。
+
 ```yaml
 ---
 vars_by_host_vars: 333
 ```
 
+### 変数ファイルの確認
+
+ここまでに作成したファイルを確認しておきます。
+
+`tree group_vars host_vars`{{execute}}
+
+```text
+group_vars
+└── all.yml     <- vars_by_group_vars: 1000
+host_vars
+├── node-1.yml  <- vars_by_host_vars: 111
+├── node-2.yml  <- vars_by_host_vars: 222
+└── node-3.yml  <- vars_by_host_vars: 333
+```
+
+
 ### `~/working/vars_host_group_playbook.yml`
 
 これらの変数を利用する playbook を作成します。
+
 ```yaml
 ---
 - hosts: all
@@ -353,7 +377,7 @@ ok: [node-3] => {
 (省略)
 ```
 
-このように、同じ変数でグループやホストごとに別々の値を持たせることが可能となります。
+このように、同じ変数名でグループやホストごとに別々の値を持たせることが可能となります。
 
 
 ### register による実行結果の保存
@@ -361,6 +385,7 @@ ok: [node-3] => {
 Ansible のモジュールは実行されると様々な戻り値を返します。playbook の中ではこの戻り値を保存して後続のタスクで利用することができます。その際に利用するのが `register` 句です。`register` に変数名を指定すると、その変数に戻り値を格納します。
 
 `~/working/vars_register_playbook.yml` を以下のように編集します。
+
 ```yaml
 ---
 - hosts: node-1
@@ -455,6 +480,7 @@ ok: [node-1] => {
 
 各モジュールの戻り値が何を返すかはモジュールのドキュメントで確認することができます。
 
+変数を使うことで playbook に大きな柔軟性を持たせることが可能になります。この後に登場するループや条件式と組み合わせについても続けて学んでいきましょう。
 
 ## 演習の解答
 ---

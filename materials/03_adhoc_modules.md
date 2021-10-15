@@ -1,6 +1,6 @@
 # Ad-Hocコマンドとモジュール
 ---
-ここでは Ansible における重要な要素である `Module` と、モジュールを実行するための `Ad-hoc コマンド` について学習します。
+ここでは Ansible における重要な要素である `Module` (モジュール) と、モジュールを実行するための `Ad-hoc コマンド` について学習します。
 
 ![structure.png](https://raw.githubusercontent.com/irixjp/katacoda-scenarios/master/materials/images/structure.png)
 
@@ -220,7 +220,7 @@ node-1 | CHANGED => {
 
 再度、screen コマンドの確認を行うと、今度はパッケージがインストールされたため成功するはずです。
 
-`ansible all -m shell -a 'which screen'`{{execute}}
+`ansible node-1 -m shell -a 'which screen'`{{execute}}
 
 ```text
 node-1 | CHANGED | rc=0 >>

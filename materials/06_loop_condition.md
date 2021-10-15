@@ -1,6 +1,6 @@
 # ループ、条件式、ハンドラー
 ---
-playbook は YAML 形式で表記するため、基本的には作業やパラメーターを「データ」として表現するためのフォーマットになります。しかし、時にはプログラミングとしての表現を用いたほうが簡潔に作業を記述できる場合も多くあります。この演習では、 playbook が持つ「プログラミングとしての機能」をみていきます。
+playbook は YAML 形式で表記するため、基本的には作業やパラメーターを「データ」として表現することになります。しかし、時にはプログラミングとしての表現を用いたほうが簡潔に作業を記述できる場合も多くあり、Ansibleはそのための機能を備えています。この演習では、 playbook が持つ「プログラミングとしての機能」をみていきます。
 
 ## ループ
 ---
@@ -33,6 +33,7 @@ playbook は YAML 形式で表記するため、基本的には作業やパラ�
 このような繰り返し処理に利用できるのが `loop` 句です。
 
 `~/working/loop_playbook.yml` を以下のように編集してください。
+
 ```yaml
 ---
 - name: add users by loop
@@ -153,7 +154,8 @@ Ansible の条件式は特定の条件下でタスクを実行「する・しな
 
 - `register: ret` ここで `ps -ef | grep http[d]` の結果を格納しています。
 - `ignore_errors: yes` タスク内で発生したエラーを無視するオプションです。このコマンドはプロセスが見つからない場合にエラーとなるため、このオプションをつけないとここでタスクが停止します。
-- `changed_when: no` このタスクが `changed` になる条件を記載します。`shell` モジュールは常に `changed` を返しますが、このオプションに `no` を指定すると `ok` を返します。
+- `changed_when: no` このタスクが `changed` になる条件を記載します。通常 `shell` モジュールは常に `changed` を返しますが、このオプション `changed` になる条件をしているすことができます。
+  - ここに `no` を指定すると常に `ok` を返すようになります。今回の `ps -ef` コマンドを実行するだけのように、OSに影響を与えないコマンド実行の場合によく使う方法です(何も変更しないコマンドが `changed` を返すのは混乱を招くため)
 - `when:` ここに条件をリスト形式で記載します。もし複数の条件をリストで与えた場合には、AND条件となります。
   - `- ret.rc == 1` shell モジュールの戻り値である `rc` の値を比較しています。`rc` にはコマンドラインの戻り値が格納されています。つまり、`ps -ef | grep http[d]` でプロセスが「見つからない」場合にはエラーとなり `1` がここに格納されます。
 
@@ -268,6 +270,7 @@ total 16
 - [`fetch`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/fetch_module.html) モジュールはリモートサーバーのファイルをローカルへ取得するモジュールです(`copy` モジュールの逆)
 
 `~/working/handler_playbook.yml` を以下のように編集します。
+
 ```yaml
 ---
 - name: restart httpd if httpd.conf is changed
@@ -311,12 +314,13 @@ PLAY RECAP *******************************************
 node-1  : ok=2 changed=0 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
 
-この状態では全てのタスクは `ok` となりました。この時点ではサーバーから取得した httpd.conf をそのままサーバーに配布しているためです。そのため `handler` は動きません。
+この状態では全てのタスクは `ok` となりました。これは、この時点ではサーバーから取得した httpd.conf をそのままサーバーに配布しているため `changed` が発生しないためです。そのため今の状態では `handler` は起動しません。
 
 > Note: copy モジュールの冪等性が働いているためです。コピーしようとしたファイルが既に存在し、かつ中身も同じためコピーする必要がないため ok となります。
 
 では、`~/working/files/httpd.conf` を編集して、コピーが `changed` となるようにします。以下のようにファイルを編集してください。
-```
+
+```text
 ServerAdmin root@localhost
       ↓
 ServerAdmin centos@localhost
@@ -342,7 +346,7 @@ PLAY RECAP *******************************************
 node-1 : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 ```
 
-`httpd.conf` を更新したため、`copy` モジュールが `chaged` となりました。すると設定した `notify` が呼び出され `restart_apache` が実行されています。
+`httpd.conf` を更新したため、`copy` モジュールが `changed` となりました。すると設定した `notify` が呼び出され `restart_apache` が実行されています。
 
 このようにタスクの `changed` をトリガーに、別のタスクを実行する方法がハンドラーになります。
 
