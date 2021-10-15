@@ -6,13 +6,12 @@
 
 ## Collection の種類
 ---
-Collection の配布方法は大きく分類すると以下のようになります。
+Collection の種類は大きく分類すると以下のようになります。
 
-- [Community Collections](https://docs.ansible.com/ansible/latest/collections/index.html): 広く認知され活用されており、Ansible コミュニティからもリンクされている（認定等があるわけではない）
-- [Certified Collections](https://access.redhat.com/articles/3642632): Red Hat 社によりサポートされるコレクション(Ansible Automation Platform を購入することで利用可能となる)
-- [その他のCollections](https://galaxy.ansible.com/): 個人や企業によって開発された上記以外の膨大なコレクション。
+- [Community Collections](https://docs.ansible.com/ansible/latest/collections/index.html): 広く認知され活用されており、Ansible コミュニティからもリンクされている（認定等があるわけではない）。Galaxy からインストール可能。
+- [Certified Collections](https://access.redhat.com/articles/3642632): Red Hat 社によりサポートされるコレクション(Ansible Automation Platform を購入することで利用可能となる)。Automation Hub からインストール可能。
+- [その他のCollections](https://galaxy.ansible.com/): 個人や企業によって開発された上記以外の膨大なコレクション。Galaxy や github 等からインストール可能。
 
-上記以外にも、個人が github 上で公開しているものや、企業が独自に準備しているコレクションも存在しています。
 
 ## コマンドラインからのインストール
 ---
@@ -36,13 +35,13 @@ community.docker 1.8.0
 
 > Note: コレクション名は `<namespace>.<collection_name>` という形式で表現されます。
 
-またこの状態で利用可能なモジュールの数を確認しておきます。
+この状態で利用可能なモジュールの数を確認しておきます。
 
 `ansible-doc -l | wc -l`{{execute}}
 
 このコマンドで数字が表示されるので、その値をメモしていてください（警告が表示される場合もありますが無視してください）
 
-ここに新たなコレクション [`cisco.ios`](https://docs.ansible.com/ansible/latest/collections/cisco/ios/index.html) をインストールしてみます。
+ここに新たなコレクション [`cisco.ios`](https://docs.ansible.com/ansible/latest/collections/cisco/ios/index.html) をインストールしてみます。これは Cisco 社のネットワーク機器を操作するモジュール群を含んだコレクションです。
 
 `ansible-galaxy collection install cisco.ios`{{execute}}
 
@@ -78,7 +77,7 @@ community.crypto  1.7.1
 community.docker  1.8.0
 ```
 
-依存関係の解決で、複数のコレクションがインストールされていることが確認できるはずです。
+依存関係が解決されて、複数のコレクションがインストールされていることが確認できるはずです。
 
 利用可能なモジュールが増えているはずです。確認しておきましょう。
 

@@ -11,7 +11,9 @@ Ansible はテンプレート機能を備えており、動的なファイル作
 - テンプレートファイル: jinja2 形式の表現が埋め込まれたファイルで、一般的に j2 拡張子を付加します。
 - [`template`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html) モジュール: コピーモジュールに似ています。src にテンプレートファイルを指定し、dest に配置先を指定すると、テンプレートファイルをコピーする際に、jinja2 部分を処理してからファイルをコピーします。
 
-実際に作成します。`~/working/templates/index.html.j2` ファイルを作成し、中身を以下となるように編集してください。このファイルが `jinja2` テンプレートファイルになります。
+実際にテンプレートを作成します。
+
+`~/working/templates/index.html.j2` ファイルを作成し、中身を以下となるように編集してください。このファイルが `jinja2` テンプレートファイルになります。
 
 ```jinja2
 <html><body>
