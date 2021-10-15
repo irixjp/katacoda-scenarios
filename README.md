@@ -25,22 +25,6 @@ Katacoda は時間によっては重いので、AWS上に自分専用の環境�
 必要なもの
 
 - AWS アカウント
-- 最新版 docker
 
-```bash
-mkdir ~/src && cd ~/src
-
-git clone https://github.com/irixjp/katacoda-scenarios.git
-
-docker run -d -p 8888:8888 --name aitac -e PASSWORD=password \
--v ~/src/katacoda-scenarios/master-course-data:/jupyter/texts \
--v ~/src/katacoda-scenarios/master-course-data/assets/solutions:/jupyter/solutions \
--v ~/src/katacoda-scenarios/master-course-data/assets/working:/jupyter/working \
--v ~/src/katacoda-scenarios/master-course-data/assets/tools:/jupyter/tools \
-irixjp/aitac-automation-jupyter:dev
-```
-
-上記のようにコンテナを起動して、ブラウザで `localhost:8888` へアクセスすると、 jupyter lab へアクセスできます。
-
-`texts/00_start_here.md` を開いて、テキストの指示に従い演習を進めてください。
+環境の構築方法は [こちら](./materials/99_ec2_setup.md) をご確認ください。
 
