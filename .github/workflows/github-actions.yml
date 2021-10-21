@@ -1,0 +1,33 @@
+name: Katacoda Ansible 101
+on:
+  schedule:
+    - cron: '0 1 * * 1'
+jobs:
+  Ansible-Katacoda:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Setting up the environment and testing the operation of first_playbook.yml
+        run: |
+          bash -ex
+          mkdir -p /opt/kata-materials
+          cd /opt/kata-materials
+          git clone --depth 1 https://github.com/irixjp/katacoda-scenarios.git .
+          pip install virtualenv
+          virtualenv ansible
+          source /opt/kata-materials/ansible/bin/activate
+          cd tools
+          sed -i -e 's/\/root\/automation-keypair\.pem/\/home\/runner\/automation-keypair\.pem/g' kata_prepare.yml
+          sed -i -e 's/\/root\/inventory_file/\/home\/runner\/inventory_file/g' kata_prepare.yml
+          sed -i -e 's/\/root\/\.ansible\.cfg/\/home\/runner\/\.ansible\.cfg/g' kata_prepare.yml
+          sed -i -e 's/\/root\/working/\/home\/runner\/working/g' kata_setup.sh
+          bash ./kata_setup.sh
+          cd ~/
+          ansible --version
+          cat ~/.ansible.cfg
+          cat ~/inventory_file
+          ansible all -m ping -o
+          cp -r /opt/kata-materials/materials/solutions .
+          cd solutions
+          ansible-playbook first_playbook.yml
+          ansible all -c local -m uri -a 'url=http://{{ansible_host}}/ return_content=yes'
+
