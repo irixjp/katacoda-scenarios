@@ -1,7 +1,11 @@
 name: Katacoda Ansible 101
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '0 1 * * 1'
+
 jobs:
   Ansible-Katacoda:
     runs-on: ubuntu-20.04
