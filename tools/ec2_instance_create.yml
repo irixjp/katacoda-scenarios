@@ -98,16 +98,16 @@
 
     - ping:
 
-    - name: delete original repo setttings
-      file:
-        path: "{{ item }}"
-        state: absent
-      loop: "{{ DELETE_REPO_SETTINGS }}"
+#    - name: delete original repo setttings
+#      file:
+#        path: "{{ item }}"
+#        state: absent
+#      loop: "{{ DELETE_REPO_SETTINGS }}"
 
-    - name: setting fast repo site
-      copy:
-        content: "{{ REPO_SETTINGS }}"
-        dest: /etc/yum.repos.d/aitac.repo
+#    - name: setting fast repo site
+#      copy:
+#        content: "{{ REPO_SETTINGS }}"
+#        dest: /etc/yum.repos.d/aitac.repo
 
     - name: install docker & docker-py
       yum:
