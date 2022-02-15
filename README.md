@@ -1,32 +1,29 @@
-# Interactive Katacoda Scenarios
-
 [![](http://shields.katacoda.com/katacoda/irixjp/count.svg)](https://www.katacoda.com/irixjp "Get your profile on Katacoda.com")
 
-Visit https://www.katacoda.com/irixjp to view the profile and interactive scenarios
+このリポジトリにはAnsibleの演習コンテンツが格納されています。特にこれからAnsibleによる自動化を学習しようとする人に最適なコンテンツとなっています。
 
-### 演習実績
+This repository contains the contents of Ansible exercises. It is especially suitable for those who are learning automation with Ansible.
 
-Katacoda 上でどのくらい演習が実行されたか（最初の `setup.sh` を実行した回数）
+
+この演習を実施するには [katacoda](https://www.katacoda.com/irixjp) を利用するのが最も簡単です。知識のある方はAWS上に演習環境を構築することもできます。
+
+The easiest way to run this exercise is to use katacoda. If you are knowledgeable, you can also build your own training environment on AWS.
+
+
+本リポジトリのドキュメントやコードは [MITライセンス](./LICENSE) で公開されています。
+
+The documentation and code in this repository are released under the [MIT license](./LICENSE).
+
+
+## Katacoda 上の演習実施回数 / Number of exercises run on Katacoda
+(./setup.sh の実行回数をカウントしています / . /setup.sh is counted)
 
 ![result-kata.png](http://18.182.66.157/kata.png)
 
-> Note: たまに表示されないことがあります。
-
-### この演習内容はAWSでも試すことができます
-
-Katacoda は時間によっては重いので、AWS上に自分専用の環境を立ててじっくり演習することも可能です。
-
-必要なもの
-
-- AWS アカウント
-
-環境の構築方法は [こちら](./materials/99_ec2_setup.md) をご確認ください。
+> Note: たまに表示されないことがあります。 / Sometimes it is not displayed.
 
 
-### License
+## AWS上での環境構築方法 / How to build an environment on AWS
 
-Copyright (c) 2022 Tomoaki Nakajima
+[./materials/99_ec2_setup.md](./materials/99_ec2_setup.md) をご確認ください。
 
-Released under the MIT license
-
-https://opensource.org/licenses/mit-license.php
