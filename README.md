@@ -4,12 +4,6 @@
 
 Visit https://www.katacoda.com/irixjp to view the profile and interactive scenarios
 
-### Writing Scenarios
-Visit https://www.katacoda.com/docs to learn more about creating Katacoda scenarios
-
-For examples, visit https://github.com/katacoda/scenario-example
-
-
 ### 演習実績
 
 Katacoda 上でどのくらい演習が実行されたか（最初の `setup.sh` を実行した回数）
@@ -28,3 +22,11 @@ Katacoda は時間によっては重いので、AWS上に自分専用の環境�
 
 環境の構築方法は [こちら](./materials/99_ec2_setup.md) をご確認ください。
 
+
+### License
+
+Copyright (c) 2022 Tomoaki Nakajima
+
+Released under the MIT license
+
+https://opensource.org/licenses/mit-license.php
