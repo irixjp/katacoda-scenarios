@@ -1,0 +1,18 @@
+---
+- name: add users by loop
+  hosts: node-1
+  become: yes
+  vars:
+    user_list:
+      - apple
+      - orange
+      - pineapple
+      - mango
+      - peach
+  tasks:
+    - name: add a user
+      user:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ user_list }}"
+
