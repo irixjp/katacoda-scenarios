@@ -27,3 +27,41 @@ The documentation and code in this repository are released under the [MIT licens
 
 [./materials/99_ec2_setup.md](./materials/99_ec2_setup.md) をご確認ください。
 
+
+## リポジトリの構造 / Structure of the repository
+
+``` text
+├── Dockerfile          (deprecated) for 2.9
+├── License             License Description
+├── README.md           This file
+├── ansible-101         katacoda course for Japanese
+├── ansible-102         katacoda course for Japanese
+├── ansible-103         katacoda course for Japanese
+├── ansible-104         katacoda course for Japanese
+├── ansible-en-101      katacoda course for English
+├── ansible-en-102      katacoda course for English
+├── ansible-en-103      katacoda course for English
+├── ansible-en-104      katacoda course for English
+├── ansible-playground  katacoda ansible playground
+├── assets              Author's icon
+├── container           Container definition for target nodes
+├── master-course-data  (deprecated) for 2.9
+├── materials           Course Documentation(main contents)
+├── old_ansible-2.9-101 (deprecated) for 2.9
+├── old_ansible-2.9-102 (deprecated) for 2.9
+├── old_ansible-2.9-103 (deprecated) for 2.9
+├── old_ansible-2.9-104 (deprecated) for 2.9
+├── old_ansible-2.9-playground (deprecated) for 2.9
+├── sandbox             test environments
+└── tools               Scripts for building an exercise environment
+```
+
+新しいコースを追加するには / To add a new course
+
+1. `materials` にコースドキュメントを格納する
+1. その後 `ansible-xxx` を作成して、`index.json` を追加してコースの作成する
+1. 必要なドキュメントへのシンボリックリンクを作成する。
+
+1. Store the course documentation in `materials`.
+1. Then create `ansible-xxx` and add `index.json` to create the course.
+1. Create symbolic links to the required documents.
