@@ -1,8 +1,8 @@
 {
-  "title": "Ansible 101(2.11) Japanese",
-  "description": "inventory, credential, modules, playbook",
+  "title": "Ansible 102(2.11) English",
+  "description": "variables, loop, condition, handler, block, template, filter",
   "difficulty": "beginner",
-  "time": "30 minutes",
+  "time": "60 minutes",
   "details": {
     "intro": {
       "text": "intro.md",
@@ -15,7 +15,8 @@
       { "title": "Step1", "text": "step1.md" },
       { "title": "Step2", "text": "step2.md" },
       { "title": "Step3", "text": "step3.md" },
-      { "title": "Step4", "text": "step4.md" }
+      { "title": "Step4", "text": "step4.md" },
+      { "title": "Step5", "text": "step5.md" }
     ]
   },
   "environment": {

@@ -1,6 +1,6 @@
 {
-  "title": "Ansible 101(2.11) Japanese",
-  "description": "inventory, credential, modules, playbook",
+  "title": "Ansible 104(2.11) English",
+  "description": "Lint, testing, reporting",
   "difficulty": "beginner",
   "time": "30 minutes",
   "details": {
@@ -14,8 +14,7 @@
     "steps": [
       { "title": "Step1", "text": "step1.md" },
       { "title": "Step2", "text": "step2.md" },
-      { "title": "Step3", "text": "step3.md" },
-      { "title": "Step4", "text": "step4.md" }
+      { "title": "Step3", "text": "step3.md" }
     ]
   },
   "environment": {

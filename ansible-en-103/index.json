@@ -1,8 +1,8 @@
 {
-  "title": "Ansible 101(2.11) Japanese",
-  "description": "inventory, credential, modules, playbook",
+  "title": "Ansible 103(2.11) English",
+  "description": "roles, galaxy, collections",
   "difficulty": "beginner",
-  "time": "30 minutes",
+  "time": "60 minutes",
   "details": {
     "intro": {
       "text": "intro.md",
