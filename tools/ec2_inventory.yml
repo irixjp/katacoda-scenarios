@@ -4,7 +4,7 @@ all:
       ansible_connection: local
       ansible_python_interpreter: /usr/bin/python
   vars:
-    INSTANCE_NUM: 35
+    INSTANCE_NUM: 20
     AMI_PRODUCT_CODE: aw0evgkw8e5c1q413zgy5pjce
     INSTANCE_TYPE: t3.medium
     VOLUME_SIZE: 20
