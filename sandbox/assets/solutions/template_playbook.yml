@@ -1,0 +1,20 @@
+---
+- name: using template
+  hosts: web
+  become: yes
+  tasks:
+    - name: install httpd
+      yum:
+        name: httpd
+        state: latest
+
+    - name: start & enabled httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Put index.html from template
+      template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
