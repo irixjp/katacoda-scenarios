@@ -1,1 +1,0 @@
-../master-course-data/03_adhoc_modules.md

@@ -1,1 +1,0 @@
-../master-course-data/06_loop_condition.md

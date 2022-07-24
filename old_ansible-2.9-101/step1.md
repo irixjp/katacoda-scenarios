@@ -1,1 +1,0 @@
-../master-course-data/01_overview_and_prepare_kata.md

@@ -1,1 +1,0 @@
-../master-course-data/07_block_reduce.md
