@@ -8,4 +8,3 @@ RUN yum clean all && yum update -y && \
 
 RUN useradd centos && \
     echo "centos  ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
-
