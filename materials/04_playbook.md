@@ -185,9 +185,9 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 上記のような出力となれば成功です。以下のリンクをクリックし、node-1,2,3 に対してブラウザでアクセスしてサイトの動作を確認してください。
 
-[node-1]({{TRAFFIC_HOST1_8081}})
-[node-2]({{TRAFFIC_HOST1_8082}})
-[node-3]({{TRAFFIC_HOST1_8083}})
+- [node-1]({{TRAFFIC_HOST1_8081}})
+- [node-2]({{TRAFFIC_HOST1_8082}})
+- [node-3]({{TRAFFIC_HOST1_8083}})
 
 > Note: Jupyter 上で演習をしている場合は、アクセスするIPアドレスを `~/inventory_file` で確認し、`http_access=http://35.73.128.87:8081` に示されたアドレスへブラウザでアクセスしてください。このアドレスは各ノードのポート80へリダイレクトされます。
 

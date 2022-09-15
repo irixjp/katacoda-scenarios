@@ -152,13 +152,13 @@ node-3 | SUCCESS => {
 
 ```text
 node-1 | CHANGED | rc=0 >>
-ip-10-0-0-92.ap-northeast-1.compute.internal
+node-1
 
 node-3 | CHANGED | rc=0 >>
-ip-10-0-0-204.ap-northeast-1.compute.internal
+node-3
 
 node-2 | CHANGED | rc=0 >>
-ip-10-0-0-218.ap-northeast-1.compute.internal
+node-2
 ```
 
 他にもいくつかのコマンドを実行して結果を確かめてください。
