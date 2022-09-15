@@ -1,13 +1,13 @@
-[![](http://shields.katacoda.com/katacoda/irixjp/count.svg)](https://www.katacoda.com/irixjp "Get your profile on Katacoda.com")
+[14scenarios on Killercoda](https://killercoda.com/ansible "Get your profile on killercoda.com")
 
 このリポジトリにはAnsibleの演習コンテンツが格納されています。特にこれからAnsibleによる自動化を学習しようとする人に最適なコンテンツとなっています。
 
 This repository contains the contents of Ansible exercises. It is especially suitable for those who are learning automation with Ansible.
 
 
-この演習を実施するには [katacoda](https://www.katacoda.com/irixjp) を利用するのが最も簡単です。知識のある方はAWS上に演習環境を構築することもできます。
+この演習を実施するには [Killercoda](https://killercoda.com/ansible) を利用するのが最も簡単です。知識のある方はAWS上に演習環境を構築することもできます。
 
-The easiest way to run this exercise is to use katacoda. If you are knowledgeable, you can also build your own training environment on AWS.
+The easiest way to run this exercise is to use Killercoda. If you are knowledgeable, you can also build your own training environment on AWS.
 
 
 本リポジトリのドキュメントやコードは [MITライセンス](./LICENSE) で公開されています。
@@ -15,7 +15,7 @@ The easiest way to run this exercise is to use katacoda. If you are knowledgeabl
 The documentation and code in this repository are released under the [MIT license](./LICENSE).
 
 
-## Katacoda 上の演習実施回数 / Number of exercises run on Katacoda
+## Killercoda 上の演習実施回数 / Number of exercises run on Killercoda
 (./setup.sh の実行回数をカウントしています / . /setup.sh is counted)
 
 ![result-kata.png](http://18.182.66.157/kata.png)
@@ -34,15 +34,15 @@ The documentation and code in this repository are released under the [MIT licens
 ├── Dockerfile          (deprecated) for 2.9
 ├── License             License Description
 ├── README.md           This file
-├── ansible-101         katacoda course for Japanese
-├── ansible-102         katacoda course for Japanese
-├── ansible-103         katacoda course for Japanese
-├── ansible-104         katacoda course for Japanese
-├── ansible-en-101      katacoda course for English
-├── ansible-en-102      katacoda course for English
-├── ansible-en-103      katacoda course for English
-├── ansible-en-104      katacoda course for English
-├── ansible-playground  katacoda ansible playground
+├── ansible-101         killercoda course for Japanese
+├── ansible-102         killercoda course for Japanese
+├── ansible-103         killercoda course for Japanese
+├── ansible-104         killercoda course for Japanese
+├── ansible-en-101      killercoda course for English
+├── ansible-en-102      killercoda course for English
+├── ansible-en-103      killercoda course for English
+├── ansible-en-104      killercoda course for English
+├── ansible-playground  killercoda ansible playground
 ├── assets              Author's icon
 ├── container           Container definition for target nodes
 ├── master-course-data  (deprecated) for 2.9
