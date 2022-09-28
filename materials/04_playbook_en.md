@@ -185,7 +185,11 @@ node-3  : ok=3 changed=2 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
 
 If the output is as the above, access node-1,2,3 with a browser and see how the site works.
 
-> Note: If you are doing the exercise on katacoda, click on `node-1,2,3` at the top of the screen. These will redirect you to port 80 for each node.
+- [node-1]({{TRAFFIC_HOST1_8081}})
+- [node-2]({{TRAFFIC_HOST1_8082}})
+- [node-3]({{TRAFFIC_HOST1_8083}})
+
+> Note: Please click on `node-1,2,3` at the above link. These will redirect you to port 80 for each node.
 
 > Note: If you are doing the exercise on Jupyter, check `~/inventory_file` for the IP address you want to access, and use your browser to access the address shown in `http_access=http://35.73.128.87:8081`. This address will be redirected to port 80 of each node.
 
