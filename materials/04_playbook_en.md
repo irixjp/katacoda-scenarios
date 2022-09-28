@@ -187,7 +187,7 @@ If the output is as the above, access node-1,2,3 with a browser and see how the 
 
 > Note: If you are doing the exercise on katacoda, click on `node-1,2,3` at the top of the screen. These will redirect you to port 80 for each node.
 
-> Note: f you are doing the exercise on Jupyter, check `~/inventory_file` for the IP address you want to access, and use your browser to access the address shown in `http_access=http://35.73.128.87:8081`. This address will be redirected to port 80 of each node.
+> Note: If you are doing the exercise on Jupyter, check `~/inventory_file` for the IP address you want to access, and use your browser to access the address shown in `http_access=http://35.73.128.87:8081`. This address will be redirected to port 80 of each node.
 
 If you see a screen similar to the following, you have succeeded.
 
