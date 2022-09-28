@@ -151,13 +151,11 @@ Next, [`shell`](https://docs.ansible.com/ansible/latest/collections/ansible/buil
 
 ```text
 node-1 | CHANGED | rc=0 >>
-ip-10-0-0-92.ap-northeast-1.compute.internal
-
-node-3 | CHANGED | rc=0 >>
-ip-10-0-0-204.ap-northeast-1.compute.internal
-
+node-1
 node-2 | CHANGED | rc=0 >>
-ip-10-0-0-218.ap-northeast-1.compute.internal
+node-2
+node-3 | CHANGED | rc=0 >>
+node-3
 ```
 
 Please run a few other commands to see the results.

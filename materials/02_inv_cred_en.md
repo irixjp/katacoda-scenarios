@@ -111,9 +111,9 @@ Inventory is what Ansible uses to determine which nodes to run automations on. L
 
 ```text
 [web]
-node-1 ansible_host=3.114.16.114
-node-2 ansible_host=3.114.209.178
-node-3 ansible_host=52.195.15.8
+node-1 ansible_host=172.17.0.2
+node-2 ansible_host=172.17.0.3
+node-3 ansible_host=172.17.0.4
 
 [all:vars]
 ansible_user=centos
