@@ -64,10 +64,10 @@ TASK [install httpd] *********************************
 ok: [node-1]
 
 TASK [start & enabled httpd] *************************
-ok: [node-1]
+changed: [node-1]
 
 TASK [copy index.html] *******************************
-ok: [node-1]
+changed: [node-1]
 ```
 
 `block` でグループ化された3つのタスクが実行されていることがわかります。
