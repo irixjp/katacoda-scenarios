@@ -112,8 +112,15 @@ Now, let's change the condition and confirm what happens if `LANG == "JP"` is no
 `ansible web -m uri -a 'url=http://localhost/ return_content=yes'`{{execute}}
 
 In the next execution, you should see that "Hello!
+Access node-1,2,3 with a browser and see how the site works.
 
-> Note: You can also check to access each node in your browser.
+- [node-1]({{TRAFFIC_HOST1_8081}})
+- [node-2]({{TRAFFIC_HOST1_8082}})
+- [node-3]({{TRAFFIC_HOST1_8083}})
+
+> Note: Please click on `node-1,2,3` at the above link. These will redirect you to port 80 for each node.
+
+> Note: If you are doing the exercise on Jupyter, check `~/inventory_file` for the IP address you want to access, and use your browser to access the address shown in `http_access=http://35.73.128.87:8081`. This address will be redirected to port 80 of each node.
 
 By using templates in this way, it is possible to generate files dynamically. This feature has a very wide range of applications and can be used in various situations such as automatic generation of configuration files and configuration reports.
 
