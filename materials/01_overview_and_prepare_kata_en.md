@@ -6,7 +6,7 @@ The VSCode editor will be displayed in the upper right corner of the screen. It 
 ---
 Prepare the exercise environment by running the following command. This should take about 1-2 minutes (the command will automatically be copied to the terminal and executed when you click on it).
 
-`apt install -y python3-pip && mkdir -p /opt/kata-materials && cd /opt/kata-materials && git clone --depth 1 https://github.com/irixjp/katacoda-scenarios.git . && pip install virtualenv && virtualenv ansible && source /opt/kata-materials/ansible/bin/activate && cd tools && bash ./kata_setup.sh && cd ~/`{{execute}}
+`apt install -y python3-pip tree && mkdir -p /opt/kata-materials && cd /opt/kata-materials && git clone --depth 1 https://github.com/irixjp/katacoda-scenarios.git . && pip install virtualenv && virtualenv ansible && source /opt/kata-materials/ansible/bin/activate && cd tools && bash ./kata_setup.sh && cd ~/`{{execute}}
 
 > Note: The Ansible environment for the exercise will be built in a virtualenv.
 
