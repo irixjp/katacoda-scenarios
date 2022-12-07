@@ -78,7 +78,7 @@ ps -ef |grep -v grep
 
 独自ルールは python で定義します。`AnsibleLintRule` というクラスを継承することで簡単にルールが作成できるようになっています。
 
-詳細は[サンプル](https://github.com/ansible/ansible-lint/blob/master/examples/rules/TaskHasTag.py)を確認してください。
+詳細は[サンプル](https://github.com/ansible/ansible-lint/blob/master/examples/rules/task_has_tag.py)を確認してください。
 
 独自ルールには以下のようなものが定義されることになるでしょう。
 
