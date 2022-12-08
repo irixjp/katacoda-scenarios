@@ -35,16 +35,14 @@ Ansible では [ansible-lint](https://github.com/ansible/ansible-lint) という
 
 エラー例1
 ```text
-[502] All tasks should be named
-lint_ng_playbook.yml:6
-Task/Handler: shell set -o pipefail
-ps -ef |grep -v grep
+yaml: truthy value should be one of [false, true] (truthy)
+lint_ng_playbook.yml:3
 ```
 
 エラー例2
 ```text
 unnamed-task: All tasks should be named
-lint_ng_playbook.yml:6 Task/Handler: shell  set -o pipefail
+lint_ng_playbook.yml:5 Task/Handler: shell  set -o pipefail
 ps -ef |grep -v grep
 ```
 
