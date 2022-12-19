@@ -273,5 +273,5 @@ A testing tool (framework) called [molecule](https://github.com/ansible-communit
 
 ## Answers to the exercises
 ---
-- [testing\_assert\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/materials/solutions/testing_assert_playbook.yml)
-- [reporting\_playbook](https://github.com/irixjp/katacoda-scenarios/blob/materials/solutions/reporting_playbook.yml)
+- [testing\_assert\_playbook.yml](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/testing_assert_playbook.yml)
+- [reporting\_playbook](https://github.com/irixjp/katacoda-scenarios/blob/master/materials/solutions/reporting_playbook.yml)

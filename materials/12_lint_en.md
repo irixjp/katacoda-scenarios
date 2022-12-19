@@ -37,16 +37,14 @@ This will be end normally.
 
 Example Error 1
 ```text
-[502] All tasks should be named
-lint_ng_playbook.yml:6
-Task/Handler: shell set -o pipefail
-ps -ef |grep -v grep
+yaml: truthy value should be one of [false, true] (truthy)
+lint_ng_playbook.yml:3
 ```
 
 Example Error 2
 ```text
 unnamed-task: All tasks should be named
-lint_ng_playbook.yml:6 Task/Handler: shell  set -o pipefail
+lint_ng_playbook.yml:5 Task/Handler: shell  set -o pipefail
 ps -ef |grep -v grep
 ```
 
@@ -66,7 +64,7 @@ To confirm the tag list, execute the following:
 
 `ansible-lint -T`{{execute}}
 
-You can exclude the tag you want to exclude by using the `-x` option. Run the line exclude for the rule so that 'int_ng_playbook.yml' becomes OK as a test. Check the error, check the tag of the rule which are violating and specify it following `-x`.
+You can exclude the tag you want to exclude by using the `-x` option. Run the line exclude for the rule so that 'lint_ng_playbook.yml' becomes OK as a test. Check the error, check the tag of the rule which are violating and specify it following `-x`.
 
 > Note: `-x` can be used multiple times in a single command. For example `ansible-lint -x unnamed-task -x yaml`
 
@@ -80,7 +78,7 @@ In addition to standard checks, you can define rules specific to projects and or
 
 Custom rules are defined in python, and rules can be easily created by inheriting a class called `AnsibleLintRule`.
 
-For more information, please check this [sample](https://github.com/ansible/ansible-lint/blob/master/examples/rules/TaskHasTag.py).
+For more information, please check this [sample](https://github.com/ansible/ansible-lint/blob/master/examples/rules/task_has_tag.py).
 
 The following will be defined in the independent rules.
 
