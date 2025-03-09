@@ -18,7 +18,7 @@ The documentation and code in this repository are released under the [MIT licens
 ## Killercoda 上の演習実施回数 / Number of exercises run on Killercoda
 (./setup.sh の実行回数をカウントしています / . /setup.sh is counted)
 
-![result-kata.png](http://18.182.66.157/kata.png)
+![result-kata.png]([http://www.emacs-lisp.net/materials/kata.png](http://www.emacs-lisp.net/materials/kata.png))
 
 > Note: たまに表示されないことがあります。 / Sometimes it is not displayed.
 
